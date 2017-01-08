@@ -43,11 +43,14 @@ struct Constants {
         static let venues = "venues"
         static let venueName = "name"
         static let venueId = "id"
+        static let venueLocation = "location"
+        static let venueAddress = "formattedAddress"
     }
     
     static var searchingLatLon: String!
     static var searchedCafeNames: [String]!
     static var searchedCafeIDs: [String]!
+    static var searchedCafeAddresses: [String]!
     static var searchingLocation: String!
     
 }

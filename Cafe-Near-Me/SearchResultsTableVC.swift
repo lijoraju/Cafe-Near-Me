@@ -28,6 +28,7 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
                 else {
                     performUIUpdateOnMain {
                         self.noResultsLabel.isHidden = false
+                        self.noResultsLabel.text = "Sorry, No Cafes Found"
                         self.activityIndicator.stopAnimating()
                         self.displayAnAlert(title: "Searching Failed", message: error!)
                     }
@@ -53,6 +54,7 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")!
         cell.textLabel?.text = Constants.searchedCafeNames[indexPath.row]
+        cell.detailTextLabel?.text = Constants.searchedCafeAddresses[indexPath.row]
         return cell
     }
     
@@ -65,7 +67,8 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
         }
         else {
             tableView.isHidden = true
-            noResultsLabel.isHidden = true
+            noResultsLabel.isHidden = false
+            noResultsLabel.text = "Searching..."
             activityIndicator.startAnimating()
         }
     }

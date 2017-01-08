@@ -18,6 +18,7 @@ class FoursquareAPI {
     func searchCafesForALocation(LatitudeAndLongitude LatLon: String, completionHandler: @escaping(_ sucess: Bool, _ errorString: String?)-> Void ) {
         var venueIDs: [String] = []
         var venueNames: [String] = []
+        var venueAddresses: [String] = []
         formatter.dateFormat = "yyyyMMdd"
         let formatedDate = formatter.string(from: date)
         let parameters = [Constants.ParameterKeys.LatLon: LatLon,
@@ -66,11 +67,26 @@ class FoursquareAPI {
                     completionHandler(false, "Can't find key '\(Constants.ResponseKeys.venueId)'")
                     return
                 }
+                guard let location = venue[Constants.ResponseKeys.venueLocation] as? [String: AnyObject] else {
+                    completionHandler(false, "Can't find key '\(Constants.ResponseKeys.venueLocation)'")
+                    return
+                }
+                print("loc = \(location)")
+                guard let formattedAddress = location[Constants.ResponseKeys.venueAddress] else {
+                    completionHandler(false, "Can't find address")
+                    return
+                }
+                var venueAddress = ""
+                for item in (formattedAddress as? NSArray)! {
+                    venueAddress = "\(venueAddress) \(item)"
+                }
+                venueAddresses.append(venueAddress)
                 venueIDs.append(venueId as! String)
                 venueNames.append(venueName as! String)
             }
             Constants.searchedCafeNames = venueNames
             Constants.searchedCafeIDs = venueIDs
+            Constants.searchedCafeAddresses = venueAddresses
             completionHandler(true, nil)
         }
         task.resume()
