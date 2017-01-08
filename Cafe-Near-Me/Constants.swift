@@ -48,5 +48,6 @@ struct Constants {
     static var searchingLatLon: String!
     static var searchedCafeNames: [String]!
     static var searchedCafeIDs: [String]!
+    static var searchingLocation: String!
     
 }

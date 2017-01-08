@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Search Cafe-->
+        <!--Cafe Near Me-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="SearchCityViewController" customModule="Cafe_Near_Me" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="SearchCafeViewController" customModule="Cafe_Near_Me" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -69,7 +69,7 @@
                             <constraint firstAttribute="leadingMargin" secondItem="t3g-8o-UNP" secondAttribute="leading" id="s3t-g7-JvT"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Search Cafe" id="iSc-9c-TQk"/>
+                    <navigationItem key="navigationItem" title="Cafe Near Me" id="iSc-9c-TQk"/>
                     <connections>
                         <outlet property="activityIndicator" destination="gJo-mN-Nuk" id="1YU-Y7-bmr"/>
                         <outlet property="locationTextField" destination="t3g-8o-UNP" id="efP-3u-aqS"/>
@@ -81,10 +81,10 @@
             </objects>
             <point key="canvasLocation" x="1056.8" y="122.78860569715144"/>
         </scene>
-        <!--Cafes Near Me-->
+        <!--Search Results Table View Controller-->
         <scene sceneID="K9V-WY-iNk">
             <objects>
-                <viewController id="fNg-o8-r59" customClass="SearchResultsViewController" customModule="Cafe_Near_Me" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="fNg-o8-r59" customClass="SearchResultsTableViewController" customModule="Cafe_Near_Me" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="YQl-sR-pGJ"/>
                         <viewControllerLayoutGuide type="bottom" id="7br-wP-CeE"/>
@@ -97,15 +97,36 @@
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="cj7-S1-1OZ">
                                 <color key="color" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sorry, No Cafes Found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MX6-t4-ACd">
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="22"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2s4-wB-BDT">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="Eaf-NR-h5x">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="Ybo-e8-KYF" detailTextLabel="iyY-ZN-UGE" style="IBUITableViewCellStyleSubtitle" id="Eaf-NR-h5x">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Eaf-NR-h5x" id="tp8-DP-TMz">
                                             <frame key="frameInset" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ybo-e8-KYF">
+                                                    <frame key="frameInset" minX="15" minY="4" width="34" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iyY-ZN-UGE">
+                                                    <frame key="frameInset" minX="15" minY="25" width="33" height="15"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
@@ -115,6 +136,7 @@
                         <constraints>
                             <constraint firstItem="7br-wP-CeE" firstAttribute="top" secondItem="rEX-4u-SsW" secondAttribute="bottom" constant="414" id="0wU-zQ-7u5"/>
                             <constraint firstItem="cj7-S1-1OZ" firstAttribute="centerX" secondItem="w48-Rz-hvd" secondAttribute="centerX" id="2Sd-rG-CQL"/>
+                            <constraint firstAttribute="trailing" secondItem="MX6-t4-ACd" secondAttribute="trailing" id="75c-5i-YU9"/>
                             <constraint firstItem="rEX-4u-SsW" firstAttribute="top" secondItem="YQl-sR-pGJ" secondAttribute="bottom" constant="25" id="Cuj-gq-vRo"/>
                             <constraint firstItem="7br-wP-CeE" firstAttribute="top" secondItem="2s4-wB-BDT" secondAttribute="bottom" id="ICS-Kl-JBs"/>
                             <constraint firstItem="cj7-S1-1OZ" firstAttribute="centerY" secondItem="w48-Rz-hvd" secondAttribute="centerY" id="IQi-Ut-MWD"/>
@@ -122,12 +144,21 @@
                             <constraint firstAttribute="trailing" secondItem="rEX-4u-SsW" secondAttribute="trailing" id="VLU-KR-e8h"/>
                             <constraint firstItem="2s4-wB-BDT" firstAttribute="leading" secondItem="w48-Rz-hvd" secondAttribute="leading" id="de3-j4-i1d"/>
                             <constraint firstItem="2s4-wB-BDT" firstAttribute="top" secondItem="rEX-4u-SsW" secondAttribute="bottom" constant="30" id="o1C-DR-0Xj"/>
+                            <constraint firstItem="MX6-t4-ACd" firstAttribute="top" secondItem="rEX-4u-SsW" secondAttribute="bottom" constant="80" id="oRj-o8-O1J"/>
+                            <constraint firstItem="MX6-t4-ACd" firstAttribute="leading" secondItem="w48-Rz-hvd" secondAttribute="leading" id="pyC-0M-nGU"/>
                             <constraint firstAttribute="trailing" secondItem="2s4-wB-BDT" secondAttribute="trailing" id="xTG-oh-dZJ"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Cafes Near Me" id="Qlr-1f-L49"/>
+                    <navigationItem key="navigationItem" id="Qlr-1f-L49">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="FAR-VD-BV9">
+                            <connections>
+                                <action selector="cancelButtonAction:" destination="fNg-o8-r59" id="CIh-0o-rkf"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="cj7-S1-1OZ" id="VmK-6T-E2r"/>
+                        <outlet property="noResultsLabel" destination="MX6-t4-ACd" id="Xim-zN-zWi"/>
                         <outlet property="tableView" destination="2s4-wB-BDT" id="tfx-KZ-cqn"/>
                     </connections>
                 </viewController>

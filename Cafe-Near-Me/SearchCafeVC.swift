@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class SearchCityViewController: UIViewController {
+class SearchCafeViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var searchButton: UIButton!
@@ -20,6 +20,7 @@ class SearchCityViewController: UIViewController {
     @IBAction func searchButtonAction(_ sender: AnyObject) {
         configureUI(enable: false)
         if locationTextField.text != "" {
+            Constants.searchingLocation = locationTextField.text
             getLatLonForLocation()
         }
         else {

@@ -52,6 +52,10 @@ class FoursquareAPI {
                 completionHandler(false, "Can't find key '\(Constants.ResponseKeys.venues)'")
                 return
             }
+            if venues.count == 0 {
+                completionHandler(false, "No results")
+                return
+            }
             for index in 0...venues.count - 1 {
                 let venue = venues[index]
                 guard let venueName = venue[Constants.ResponseKeys.venueName] else {

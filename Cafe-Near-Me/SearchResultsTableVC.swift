@@ -8,21 +8,29 @@
 
 import UIKit
 
-class SearchResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SearchResultsTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var noResultsLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let searchLocation = Constants.searchingLocation.capitalized
+        self.title = "Cafes In " + searchLocation
         if let LatLon = Constants.searchingLatLon {
             FoursquareAPI.sharedInstance.searchCafesForALocation(LatitudeAndLongitude: LatLon) { sucess, error in
                 if sucess {
-                    self.configureUI(enable: true)
-                    self.tableView.reloadData()
+                    performUIUpdateOnMain {
+                        self.configureUI(enable: true)
+                        self.tableView.reloadData()
+                    }
                 }
                 else {
-                    self.configureUI(enable: true)
-                    self.displayAnAlert(title: "Searching Failed", message: error!)
+                    performUIUpdateOnMain {
+                        self.noResultsLabel.isHidden = false
+                        self.activityIndicator.stopAnimating()
+                        self.displayAnAlert(title: "Searching Failed", message: error!)
+                    }
                 }
             }
         }
@@ -52,13 +60,19 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     func configureUI(enable: Bool) {
         if enable {
             tableView.isHidden = false
+            noResultsLabel.isHidden = true
             activityIndicator.stopAnimating()
         }
         else {
             tableView.isHidden = true
+            noResultsLabel.isHidden = true
             activityIndicator.startAnimating()
         }
     }
 
+    // MARK: Cancel button action
+    @IBAction func cancelButtonAction(_ sender: AnyObject) {
+        dismiss(animated: true, completion: nil)
+    }
     
 }
