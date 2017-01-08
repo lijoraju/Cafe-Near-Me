@@ -99,13 +99,10 @@
 		DA6C4AE41E21E6AE001289BE /* Cafe-Near-Me */ = {
 			isa = PBXGroup;
 			children = (
-				DA6C4AE51E21E6AE001289BE /* AppDelegate.swift */,
-				DA6C4AE71E21E6AE001289BE /* ViewController.swift */,
-				DA6C4AE91E21E6AE001289BE /* Main.storyboard */,
-				DA6C4AEF1E21E6AE001289BE /* Assets.xcassets */,
-				DA6C4AF11E21E6AE001289BE /* LaunchScreen.storyboard */,
-				DA6C4AF41E21E6AE001289BE /* Info.plist */,
-				DA6C4AEC1E21E6AE001289BE /* Cafe_Near_Me.xcdatamodeld */,
+				DA6C4B191E21E6FC001289BE /* Model */,
+				DA6C4B181E21E6EF001289BE /* View */,
+				DA6C4B171E21E6DD001289BE /* Controller */,
+				DA6C4B161E21E6C0001289BE /* Supporting Files */,
 			);
 			path = "Cafe-Near-Me";
 			sourceTree = "<group>";
@@ -126,6 +123,41 @@
 				DA6C4B0A1E21E6AE001289BE /* Info.plist */,
 			);
 			path = "Cafe-Near-MeUITests";
+			sourceTree = "<group>";
+		};
+		DA6C4B161E21E6C0001289BE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DA6C4AE51E21E6AE001289BE /* AppDelegate.swift */,
+				DA6C4AEF1E21E6AE001289BE /* Assets.xcassets */,
+				DA6C4AF41E21E6AE001289BE /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DA6C4B171E21E6DD001289BE /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				DA6C4AE71E21E6AE001289BE /* ViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		DA6C4B181E21E6EF001289BE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DA6C4AE91E21E6AE001289BE /* Main.storyboard */,
+				DA6C4AF11E21E6AE001289BE /* LaunchScreen.storyboard */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		DA6C4B191E21E6FC001289BE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DA6C4AEC1E21E6AE001289BE /* Cafe_Near_Me.xcdatamodeld */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

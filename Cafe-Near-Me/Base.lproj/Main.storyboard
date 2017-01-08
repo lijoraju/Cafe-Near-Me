@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="XC5-HM-Pca">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Search Cafe-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Cafe_Near_Me" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -16,11 +18,80 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchBackgroundImage" translatesAutoresizingMaskIntoConstraints="NO" id="93Z-Rq-UjG"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Best Cafe To Have A Coffee In" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cLH-yZ-J1g">
+                                <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="25"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="highlightedColor" cocoaTouchSystemColor="darkTextColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search A City" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="t3g-8o-UNP" userLabel="Location-TextField">
+                                <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="0.8232489224137931" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="XDC-wY-aRO"/>
+                                    <constraint firstAttribute="height" constant="35" id="fbT-4U-QkL"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Italic" family="Helvetica Neue" pointSize="17"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kC3-He-NNv">
+                                <color key="backgroundColor" red="0.50196081400000003" green="0.25098040700000002" blue="0.0" alpha="0.79682112068965516" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="59" id="Twb-GI-ygw"/>
+                                    <constraint firstAttribute="width" constant="59" id="t1E-Ee-r9t"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-MediumItalic" family="Helvetica Neue" pointSize="17"/>
+                                <state key="normal" title="Search">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="gJo-mN-Nuk" userLabel="Activity Indicator"/>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="93Z-Rq-UjG" secondAttribute="bottom" id="1Rk-Te-exj"/>
+                            <constraint firstItem="cLH-yZ-J1g" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="6iO-6F-hSd"/>
+                            <constraint firstItem="kC3-He-NNv" firstAttribute="leading" secondItem="t3g-8o-UNP" secondAttribute="trailing" constant="10" id="6j1-M6-9CK"/>
+                            <constraint firstItem="93Z-Rq-UjG" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="7sW-IX-Ppf"/>
+                            <constraint firstItem="gJo-mN-Nuk" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="A5W-bh-PhV"/>
+                            <constraint firstItem="t3g-8o-UNP" firstAttribute="top" secondItem="gJo-mN-Nuk" secondAttribute="bottom" constant="10" id="EGC-X4-oUD"/>
+                            <constraint firstItem="gJo-mN-Nuk" firstAttribute="top" secondItem="cLH-yZ-J1g" secondAttribute="bottom" constant="10" id="LNW-fh-fKW"/>
+                            <constraint firstAttribute="trailing" secondItem="93Z-Rq-UjG" secondAttribute="trailing" id="REf-we-jET"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="kC3-He-NNv" secondAttribute="trailing" id="VaY-5z-paF"/>
+                            <constraint firstItem="93Z-Rq-UjG" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="W0x-pe-T6M"/>
+                            <constraint firstAttribute="trailing" secondItem="cLH-yZ-J1g" secondAttribute="trailing" id="afi-em-g47"/>
+                            <constraint firstItem="cLH-yZ-J1g" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="270" id="nDO-ql-MEx"/>
+                            <constraint firstItem="kC3-He-NNv" firstAttribute="top" secondItem="cLH-yZ-J1g" secondAttribute="bottom" constant="59" id="puz-IN-jbV"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="t3g-8o-UNP" secondAttribute="leading" id="s3t-g7-JvT"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Search Cafe" id="iSc-9c-TQk"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="1056.8" y="122.78860569715144"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Dc4-xe-wUI">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="XC5-HM-Pca" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="sUA-Q1-YFm">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="qmC-KO-N8y"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9MI-4m-e0k" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="60" y="123"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="SearchBackgroundImage" width="1600" height="1067"/>
+    </resources>
 </document>
