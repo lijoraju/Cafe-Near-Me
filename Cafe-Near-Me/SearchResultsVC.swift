@@ -17,10 +17,11 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         if let LatLon = Constants.searchingLatLon {
             FoursquareAPI.sharedInstance.searchCafesForALocation(LatitudeAndLongitude: LatLon) { sucess, error in
                 if sucess {
-                    //self.tableView.isHidden = false
+                    self.configureUI(enable: true)
                     self.tableView.reloadData()
                 }
                 else {
+                    self.configureUI(enable: true)
                     self.displayAnAlert(title: "Searching Failed", message: error!)
                 }
             }
@@ -31,6 +32,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         super.viewWillAppear(animated)
         tableView.delegate = self
         tableView.dataSource = self
+        configureUI(enable: false)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -45,5 +47,18 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         cell.textLabel?.text = Constants.searchedCafeNames[indexPath.row]
         return cell
     }
+    
+    // MARK: Func configureUI
+    func configureUI(enable: Bool) {
+        if enable {
+            tableView.isHidden = false
+            activityIndicator.stopAnimating()
+        }
+        else {
+            tableView.isHidden = true
+            activityIndicator.startAnimating()
+        }
+    }
+
     
 }
