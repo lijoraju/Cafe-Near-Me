@@ -10,7 +10,7 @@
         <!--Search Cafe-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Cafe_Near_Me" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="SearchCityViewController" customModule="Cafe_Near_Me" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -45,6 +45,9 @@
                                 <state key="normal" title="Search">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="searchButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1Sl-MN-nVd"/>
+                                </connections>
                             </button>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="gJo-mN-Nuk" userLabel="Activity Indicator"/>
                         </subviews>
@@ -67,15 +70,56 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Search Cafe" id="iSc-9c-TQk"/>
+                    <connections>
+                        <outlet property="activityIndicator" destination="gJo-mN-Nuk" id="1YU-Y7-bmr"/>
+                        <outlet property="locationTextField" destination="t3g-8o-UNP" id="efP-3u-aqS"/>
+                        <outlet property="searchButton" destination="kC3-He-NNv" id="S9p-L5-1H2"/>
+                        <segue destination="iEl-yf-EY9" kind="show" identifier="SearchToResult" id="YNM-Pw-x58"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1056.8" y="122.78860569715144"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Cafes Near Me-->
+        <scene sceneID="K9V-WY-iNk">
+            <objects>
+                <viewController id="fNg-o8-r59" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="YQl-sR-pGJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="7br-wP-CeE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="w48-Rz-hvd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchResultsBackgroundImage" translatesAutoresizingMaskIntoConstraints="NO" id="rEX-4u-SsW"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2s4-wB-BDT">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="7br-wP-CeE" firstAttribute="top" secondItem="rEX-4u-SsW" secondAttribute="bottom" constant="414" id="0wU-zQ-7u5"/>
+                            <constraint firstItem="rEX-4u-SsW" firstAttribute="top" secondItem="YQl-sR-pGJ" secondAttribute="bottom" constant="50" id="Cuj-gq-vRo"/>
+                            <constraint firstItem="7br-wP-CeE" firstAttribute="top" secondItem="2s4-wB-BDT" secondAttribute="bottom" id="ICS-Kl-JBs"/>
+                            <constraint firstItem="rEX-4u-SsW" firstAttribute="leading" secondItem="w48-Rz-hvd" secondAttribute="leading" id="JVK-ma-3DI"/>
+                            <constraint firstAttribute="trailing" secondItem="rEX-4u-SsW" secondAttribute="trailing" id="VLU-KR-e8h"/>
+                            <constraint firstItem="2s4-wB-BDT" firstAttribute="leading" secondItem="w48-Rz-hvd" secondAttribute="leading" id="de3-j4-i1d"/>
+                            <constraint firstItem="2s4-wB-BDT" firstAttribute="top" secondItem="rEX-4u-SsW" secondAttribute="bottom" constant="60" id="o1C-DR-0Xj"/>
+                            <constraint firstAttribute="trailing" secondItem="2s4-wB-BDT" secondAttribute="trailing" id="xTG-oh-dZJ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Cafes Near Me" id="Qlr-1f-L49"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3xo-Zz-eEE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2654" y="123"/>
+        </scene>
+        <!--Search Navigation-->
         <scene sceneID="Dc4-xe-wUI">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="XC5-HM-Pca" sceneMemberID="viewController">
+                <navigationController title="Search Navigation" automaticallyAdjustsScrollViewInsets="NO" id="XC5-HM-Pca" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="sUA-Q1-YFm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -90,8 +134,27 @@
             </objects>
             <point key="canvasLocation" x="60" y="123"/>
         </scene>
+        <!--Search Results Navigation-->
+        <scene sceneID="qHi-5a-oP4">
+            <objects>
+                <navigationController title="Search Results Navigation" automaticallyAdjustsScrollViewInsets="NO" id="iEl-yf-EY9" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="q5i-71-Fgj">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="fNg-o8-r59" kind="relationship" relationship="rootViewController" id="ig8-KC-RoF"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0h8-Xx-fdB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1852" y="123"/>
+        </scene>
     </scenes>
     <resources>
         <image name="SearchBackgroundImage" width="1600" height="1067"/>
+        <image name="SearchResultsBackgroundImage" width="880" height="587"/>
     </resources>
 </document>
