@@ -16,6 +16,21 @@ class SearchCafeViewController: UIViewController {
     
     lazy var geocoder = CLGeocoder()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        subscribeToKeyboardNotifications()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        hideKeyboardWhenTappedAround()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        unsubscribeToKeyboardNotifications()
+    }
+    
     // MARK: Search button action
     @IBAction func searchButtonAction(_ sender: AnyObject) {
         configureUI(enable: false)
@@ -73,6 +88,55 @@ class SearchCafeViewController: UIViewController {
             searchButton.isEnabled = false
             activityIndicator.startAnimating()
         }
+    }
+    
+    // Shift the view's frame up from when keyboard appears
+    func keyboardWillShow(_ notification: NSNotification) {
+        if locationTextField.isFirstResponder {
+            view.frame.origin.y = -getKeyboardHeight(notification)
+        }
+    }
+    
+    // Shift the view's frame down from when keyboard disappears
+    func keyboardWillHide(_ notification: NSNotification) {
+        if locationTextField.isFirstResponder {
+            view.frame.origin.y = 0
+        }
+        
+    }
+    
+    // MARK: Subscribe keyboard notifications
+    func subscribeToKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(SearchCafeViewController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SearchCafeViewController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    // MARK: Unsubscribe keyboard notifications
+    func unsubscribeToKeyboardNotifications() {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    // MARK: Obtain keyboard height
+    func getKeyboardHeight(_ notification: NSNotification)-> CGFloat {
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
+        return keyboardSize.cgRectValue.height
+    }
+    
+    // MARK: Close keyboard by touching anywhere
+    func hideKeyboardWhenTappedAround() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(SearchCafeViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField)-> Bool {
+        locationTextField.resignFirstResponder()
+        return true
     }
     
 }

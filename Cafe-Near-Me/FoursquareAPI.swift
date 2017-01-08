@@ -71,7 +71,6 @@ class FoursquareAPI {
                     completionHandler(false, "Can't find key '\(Constants.ResponseKeys.venueLocation)'")
                     return
                 }
-                print("loc = \(location)")
                 guard let formattedAddress = location[Constants.ResponseKeys.venueAddress] else {
                     completionHandler(false, "Can't find address")
                     return

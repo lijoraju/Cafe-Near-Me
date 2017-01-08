@@ -39,8 +39,6 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
  
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.delegate = self
-        tableView.dataSource = self
         configureUI(enable: false)
     }
     
