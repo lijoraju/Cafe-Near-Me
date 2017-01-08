@@ -15,10 +15,13 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         if let LatLon = Constants.searchingLatLon {
-            FoursquareAPI.sharedInstance.searchCafesForALocation(LatitudeAndLongitude: LatLon) { sucess in
+            FoursquareAPI.sharedInstance.searchCafesForALocation(LatitudeAndLongitude: LatLon) { sucess, error in
                 if sucess {
                     //self.tableView.isHidden = false
                     self.tableView.reloadData()
+                }
+                else {
+                    self.displayAnAlert(title: "Searching Failed", message: error!)
                 }
             }
         }

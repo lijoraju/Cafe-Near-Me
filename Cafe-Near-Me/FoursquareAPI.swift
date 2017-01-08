@@ -15,7 +15,7 @@ class FoursquareAPI {
     let formatter = DateFormatter()
     
     // MARK: Func searchCafesForALocation
-    func searchCafesForALocation(LatitudeAndLongitude LatLon: String, completionHandler: @escaping(_ sucess: Bool)-> Void ) {
+    func searchCafesForALocation(LatitudeAndLongitude LatLon: String, completionHandler: @escaping(_ sucess: Bool, _ errorString: String?)-> Void ) {
         var venueIDs: [String] = []
         var venueNames: [String] = []
         formatter.dateFormat = "yyyyMMdd"
@@ -28,11 +28,11 @@ class FoursquareAPI {
         let request = URLRequest(url: getFoursquareAPIParameters(parameters: parameters as [String : AnyObject]))
         let task = session.dataTask(with: request) { (data, response, error) in
             guard error == nil else {
-                print("Error occured with request \(error)")
+                completionHandler(false, error?.localizedDescription)
                 return
             }
             guard let data = data else {
-                print("No data returned with request")
+                completionHandler(false, "No data returned with request")
                 return
             }
             var parseResult: Any
@@ -40,26 +40,26 @@ class FoursquareAPI {
                 parseResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
             }
             catch {
-                print("Could not parse to JSON \(data)")
+                completionHandler(false, "Couldn't parse to JSON")
                 return
             }
             let results = parseResult as AnyObject
             guard let response = results[Constants.ResponseKeys.response] as? [String: AnyObject] else {
-                print("can't find key \(Constants.ResponseKeys.response) in \(results)")
+                completionHandler(false, "Can't find key '\(Constants.ResponseKeys.response)'")
                 return
             }
             guard let venues = response[Constants.ResponseKeys.venues] as? [[String: AnyObject]] else {
-                print("can't find key \(Constants.ResponseKeys.venues) in \(response)")
+                completionHandler(false, "Can't find key '\(Constants.ResponseKeys.venues)'")
                 return
             }
             for index in 0...venues.count - 1 {
                 let venue = venues[index]
                 guard let venueName = venue[Constants.ResponseKeys.venueName] else {
-                    print("Can't find key \(Constants.ResponseKeys.venueName) in \(venue)")
+                    completionHandler(false, "Can't find key '\(Constants.ResponseKeys.venueName)'")
                     return
                 }
                 guard let venueId = venue[Constants.ResponseKeys.venueId] else {
-                    print("can't find key \(Constants.ResponseKeys.venueId) in \(venue)")
+                    completionHandler(false, "Can't find key '\(Constants.ResponseKeys.venueId)'")
                     return
                 }
                 venueIDs.append(venueId as! String)
@@ -67,7 +67,7 @@ class FoursquareAPI {
             }
             Constants.searchedCafeNames = venueNames
             Constants.searchedCafeIDs = venueIDs
-            completionHandler(true)
+            completionHandler(true, nil)
         }
         task.resume()
     }
@@ -83,7 +83,6 @@ class FoursquareAPI {
             let queryItem = URLQueryItem(name: key, value: "\(value)")
             components.queryItems!.append(queryItem)
         }
-        print("url = \(components.url)")
         return components.url!
     }
     
