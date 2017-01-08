@@ -18,10 +18,12 @@ class SearchCityViewController: UIViewController {
     
     // MARK: Search button action
     @IBAction func searchButtonAction(_ sender: AnyObject) {
+        configureUI(enable: false)
         if locationTextField.text != "" {
             getLatLonForLocation()
         }
         else {
+            configureUI(enable: true)
             displayAnAlert(title: "Alert", message: "No location specified. Type your desired location")
         }
     }
@@ -36,6 +38,7 @@ class SearchCityViewController: UIViewController {
     // MARK: Func processResponse process response from CLGeocoder
     func processResponse(withPlacemarks placemarks: [CLPlacemark]?, error: Error?) {
         if let error = error {
+            configureUI(enable: true)
             displayAnAlert(title: "Error", message: error.localizedDescription)
         }
         else {
@@ -45,11 +48,31 @@ class SearchCityViewController: UIViewController {
             }
             if let location = location {
                 let coordinates = location.coordinate
-                print("Lat = \(coordinates.latitude) and lon = \(coordinates.longitude)")
+                let latitude = coordinates.latitude
+                let longitude = coordinates.longitude
+                Constants.searchingLatLon = "\(latitude),\(longitude)"
+                completeSearchForCafes()
             }
         }
     }
     
+    // MARK: Func completeSearchForCafes
+    func completeSearchForCafes() {
+        configureUI(enable: true)
+        performSegue(withIdentifier: "SearchToResult", sender: self)
+    }
+    
+    // MARK: Func configureUI 
+    func configureUI(enable: Bool) {
+        if enable {
+            searchButton.isEnabled = true
+            activityIndicator.stopAnimating()
+        }
+        else {
+            searchButton.isEnabled = false
+            activityIndicator.startAnimating()
+        }
+    }
     
 }
 

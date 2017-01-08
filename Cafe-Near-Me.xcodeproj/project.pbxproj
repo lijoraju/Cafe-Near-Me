@@ -8,13 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		DA6C4AE61E21E6AE001289BE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6C4AE51E21E6AE001289BE /* AppDelegate.swift */; };
-		DA6C4AE81E21E6AE001289BE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6C4AE71E21E6AE001289BE /* ViewController.swift */; };
+		DA6C4AE81E21E6AE001289BE /* SearchCityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6C4AE71E21E6AE001289BE /* SearchCityVC.swift */; };
 		DA6C4AEB1E21E6AE001289BE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA6C4AE91E21E6AE001289BE /* Main.storyboard */; };
 		DA6C4AEE1E21E6AE001289BE /* Cafe_Near_Me.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DA6C4AEC1E21E6AE001289BE /* Cafe_Near_Me.xcdatamodeld */; };
 		DA6C4AF01E21E6AE001289BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA6C4AEF1E21E6AE001289BE /* Assets.xcassets */; };
 		DA6C4AF31E21E6AE001289BE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA6C4AF11E21E6AE001289BE /* LaunchScreen.storyboard */; };
 		DA6C4AFE1E21E6AE001289BE /* Cafe_Near_MeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6C4AFD1E21E6AE001289BE /* Cafe_Near_MeTests.swift */; };
 		DA6C4B091E21E6AE001289BE /* Cafe_Near_MeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6C4B081E21E6AE001289BE /* Cafe_Near_MeUITests.swift */; };
+		DA8578C41E221C7B00821868 /* FoursquareAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8578C31E221C7B00821868 /* FoursquareAPI.swift */; };
+		DA8578C61E2220E700821868 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8578C51E2220E700821868 /* Constants.swift */; };
+		DAAD02001E226EED004B1FB8 /* SearchResultsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAD01FF1E226EED004B1FB8 /* SearchResultsVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +40,7 @@
 /* Begin PBXFileReference section */
 		DA6C4AE21E21E6AE001289BE /* Cafe-Near-Me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cafe-Near-Me.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA6C4AE51E21E6AE001289BE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DA6C4AE71E21E6AE001289BE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		DA6C4AE71E21E6AE001289BE /* SearchCityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCityVC.swift; sourceTree = "<group>"; };
 		DA6C4AEA1E21E6AE001289BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DA6C4AED1E21E6AE001289BE /* Cafe_Near_Me.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Cafe_Near_Me.xcdatamodel; sourceTree = "<group>"; };
 		DA6C4AEF1E21E6AE001289BE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -49,6 +52,9 @@
 		DA6C4B041E21E6AE001289BE /* Cafe-Near-MeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Cafe-Near-MeUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA6C4B081E21E6AE001289BE /* Cafe_Near_MeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cafe_Near_MeUITests.swift; sourceTree = "<group>"; };
 		DA6C4B0A1E21E6AE001289BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DA8578C31E221C7B00821868 /* FoursquareAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoursquareAPI.swift; sourceTree = "<group>"; };
+		DA8578C51E2220E700821868 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		DAAD01FF1E226EED004B1FB8 /* SearchResultsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +137,7 @@
 				DA6C4AE51E21E6AE001289BE /* AppDelegate.swift */,
 				DA6C4AEF1E21E6AE001289BE /* Assets.xcassets */,
 				DA6C4AF41E21E6AE001289BE /* Info.plist */,
+				DA8578C51E2220E700821868 /* Constants.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -138,7 +145,8 @@
 		DA6C4B171E21E6DD001289BE /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				DA6C4AE71E21E6AE001289BE /* ViewController.swift */,
+				DA6C4AE71E21E6AE001289BE /* SearchCityVC.swift */,
+				DAAD01FF1E226EED004B1FB8 /* SearchResultsVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -156,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				DA6C4AEC1E21E6AE001289BE /* Cafe_Near_Me.xcdatamodeld */,
+				DA8578C31E221C7B00821868 /* FoursquareAPI.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -294,7 +303,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA6C4AE81E21E6AE001289BE /* ViewController.swift in Sources */,
+				DA8578C61E2220E700821868 /* Constants.swift in Sources */,
+				DA6C4AE81E21E6AE001289BE /* SearchCityVC.swift in Sources */,
+				DA8578C41E221C7B00821868 /* FoursquareAPI.swift in Sources */,
+				DAAD02001E226EED004B1FB8 /* SearchResultsVC.swift in Sources */,
 				DA6C4AE61E21E6AE001289BE /* AppDelegate.swift in Sources */,
 				DA6C4AEE1E21E6AE001289BE /* Cafe_Near_Me.xcdatamodeld in Sources */,
 			);
@@ -541,6 +553,7 @@
 				DA6C4B0F1E21E6AE001289BE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DA6C4B101E21E6AE001289BE /* Build configuration list for PBXNativeTarget "Cafe-Near-MeTests" */ = {
 			isa = XCConfigurationList;
@@ -549,6 +562,7 @@
 				DA6C4B121E21E6AE001289BE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DA6C4B131E21E6AE001289BE /* Build configuration list for PBXNativeTarget "Cafe-Near-MeUITests" */ = {
 			isa = XCConfigurationList;
@@ -557,6 +571,7 @@
 				DA6C4B151E21E6AE001289BE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
