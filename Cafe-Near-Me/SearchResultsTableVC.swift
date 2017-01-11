@@ -15,6 +15,7 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI(enable: false)
         let searchLocation = Constants.searchingLocation.capitalized
         self.title = "Cafes In " + searchLocation
         if let LatLon = Constants.searchingLatLon {
@@ -39,7 +40,7 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
  
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        configureUI(enable: false)
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -54,6 +55,12 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
         cell.textLabel?.text = Constants.searchedCafeNames[indexPath.row]
         cell.detailTextLabel?.text = Constants.searchedCafeAddresses[indexPath.row]
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        Constants.selectedCafeIndex = indexPath.row
+        tableView.deselectRow(at: indexPath, animated: true)
+        performSegue(withIdentifier: "TableViewToTabView", sender: self)
     }
     
     // MARK: Func configureUI

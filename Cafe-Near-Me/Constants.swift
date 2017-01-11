@@ -35,6 +35,8 @@ struct Constants {
     // MARK: API Paths
     struct APIPaths {
         static let VenuesSearch = "/v2/venues/search"
+        static let Venue = "/v2/venues/"
+        static let Photos = "/photos"
     }
     
     // MARK: Response Keys
@@ -45,6 +47,11 @@ struct Constants {
         static let venueId = "id"
         static let venueLocation = "location"
         static let venueAddress = "formattedAddress"
+        static let photos = "photos"
+        static let prefix = "prefix"
+        static let widthXheight = "375x204"
+        static let suffix = "suffix"
+        static let items = "items"
     }
     
     static var searchingLatLon: String!
@@ -52,5 +59,7 @@ struct Constants {
     static var searchedCafeIDs: [String]!
     static var searchedCafeAddresses: [String]!
     static var searchingLocation: String!
+    static var selectedCafeIndex: Int!
+    static var imageData: Data!
     
 }
