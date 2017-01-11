@@ -52,7 +52,8 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")!
-        cell.textLabel?.text = Constants.searchedCafeNames[indexPath.row]
+        let index = "\(indexPath.row + 1).  "
+        cell.textLabel?.text = index + Constants.searchedCafeNames[indexPath.row]
         cell.detailTextLabel?.text = Constants.searchedCafeAddresses[indexPath.row]
         return cell
     }

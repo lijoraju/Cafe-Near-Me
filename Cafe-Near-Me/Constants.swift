@@ -23,6 +23,7 @@ struct Constants {
         static let ClientSecret = "client_secret"
         static let version = "v"
         static let categoryID = "categoryId"
+        static let sort = "sort"
     }
     
     // MARK: Parameter Values
@@ -30,13 +31,15 @@ struct Constants {
         static let ClientID = "YJQD3KYUCHZMMF45FGRXUX5ZK2C5O2R2XJTBDHQN2ABYOLJD"
         static let ClientSecret = "WA43JEE4ZF1AVQPSOIEGZMC2B3JEUFKGVUTLYFDIYFZ3LAIF"
         static let categoryID = "4bf58dd8d48988d16d941735"
+        static let sort = "recent"
     }
     
     // MARK: API Paths
     struct APIPaths {
-        static let VenuesSearch = "/v2/venues/search"
+        static let Search = "search"
         static let Venue = "/v2/venues/"
         static let Photos = "/photos"
+        static let Tips = "/tips"
     }
     
     // MARK: Response Keys
@@ -52,6 +55,25 @@ struct Constants {
         static let widthXheight = "375x204"
         static let suffix = "suffix"
         static let items = "items"
+        static let tips = "tips"
+        static let text = "text"
+        static let user = "user"
+        static let firstName = "firstName"
+        static let lastName = "lastName"
+        static let photo = "photo"
+        static let photoWidthxHeight = "80x80"
+    }
+    
+    // MARK: Selected Cafe
+    struct SelectedCafe {
+        
+    }
+    
+    // MARK: Selected Cafe Reviews
+    struct SelectedCafeReviews {
+        static var reviews: [String]!
+        static var userNames: [String]!
+        static var userPhotoURLs: [String]!
     }
     
     static var searchingLatLon: String!

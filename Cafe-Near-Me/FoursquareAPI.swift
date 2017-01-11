@@ -23,7 +23,8 @@ class FoursquareAPI {
                           Constants.ParameterKeys.categoryID: Constants.ParameterValues.categoryID,
                           Constants.ParameterKeys.ClientID: Constants.ParameterValues.ClientID,
                           Constants.ParameterKeys.ClientSecret: Constants.ParameterValues.ClientSecret]
-        let request = URLRequest(url: getFoursquareAPIParameters(withAPIPath: Constants.APIPaths.VenuesSearch, withParameters: parameters as [String : AnyObject]))
+        let APIPath = Constants.APIPaths.Venue + Constants.APIPaths.Search
+        let request = URLRequest(url: getFoursquareAPIParameters(withAPIPath: APIPath, withParameters: parameters as [String : AnyObject]))
         let task = session.dataTask(with: request) { (data, response, error) in
             guard error == nil else {
                 completionHandler(false, error?.localizedDescription)
@@ -101,7 +102,7 @@ class FoursquareAPI {
                 return
             }
             guard let data = data else {
-                completionHandler(false, "No data returned with request")
+                completionHandler(false, "No data returned with get photos request")
                 return
             }
             var parseResult: Any
@@ -137,6 +138,96 @@ class FoursquareAPI {
                 }
             }
             completionHandler(true, nil)
+        }
+        task.resume()
+    }
+    
+    // MARK: Func getVenueReviews
+    func getVenueReviews(selectedVenueID venueID: String, completionHandler: @escaping(_ sucess: Bool, _ error: String?)-> Void) {
+        var venueReviews: [String] = []
+        var userPhotoURLs: [String] = []
+        var userNames: [String] = []
+        let parameters = [Constants.ParameterKeys.ClientID: Constants.ParameterValues.ClientID,
+                          Constants.ParameterKeys.ClientSecret: Constants.ParameterValues.ClientSecret]
+        let APIPath = Constants.APIPaths.Venue + venueID + Constants.APIPaths.Tips
+        let request = URLRequest(url: getFoursquareAPIParameters(withAPIPath: APIPath, withParameters: parameters as [String : AnyObject]))
+        let task = session.dataTask(with: request) { data, response, error in
+            guard error == nil else {
+                completionHandler(false, error?.localizedDescription)
+                return
+            }
+            func reportAnError() {
+                completionHandler(false, "Unable to obtain reviews for this cafe now")
+            }
+            guard let data = data else {
+                reportAnError()
+                return
+            }
+            let parseResult: Any
+            do {
+                parseResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+            }
+            catch {
+                reportAnError()
+                return
+            }
+            let result = parseResult as AnyObject
+            guard let response = result[Constants.ResponseKeys.response] as? [String: AnyObject] else {
+                reportAnError()
+                return
+            }
+            guard let tips = response[Constants.ResponseKeys.tips] as? [String: AnyObject] else {
+                reportAnError()
+                return
+            }
+            guard let items = tips[Constants.ResponseKeys.items] as? [[String: AnyObject]] else {
+                reportAnError()
+                return
+            }
+            if items.count == 0 {
+                completionHandler(false, "No reviews available")
+                return
+            }
+            for item in items {
+                guard let text = item[Constants.ResponseKeys.text] else {
+                    continue
+                }
+                guard let user = item[Constants.ResponseKeys.user] as? [String: AnyObject] else {
+                    continue
+                }
+                guard let firstname = user[Constants.ResponseKeys.firstName], let lastname = user[Constants.ResponseKeys.lastName] else {
+                    continue
+                }
+                guard let photo = user[Constants.ResponseKeys.photo] as? [String: AnyObject] else {
+                    continue
+                }
+                guard let prefix = photo[Constants.ResponseKeys.prefix], let suffix = photo[Constants.ResponseKeys.suffix] else {
+                    continue
+                }
+                let name = (firstname as! String) + " " + (lastname as! String)
+                let url = (prefix as! String) + Constants.ResponseKeys.photoWidthxHeight + (suffix as! String)
+                venueReviews.append(text as! String)
+                userNames.append(name)
+                userPhotoURLs.append(url)
+            }
+            Constants.SelectedCafeReviews.reviews = venueReviews
+            Constants.SelectedCafeReviews.userNames = userNames
+            Constants.SelectedCafeReviews.userPhotoURLs = userPhotoURLs
+            completionHandler(true, nil)
+        }
+        task.resume()
+    }
+    
+    // MARK: Func Download Images
+    func downloadImages(atImagePath imagePath: String, completionHandler: @escaping(_ imageData: Data?, _ error: String?)-> Void) {
+        let imageURL = NSURL(string: imagePath)
+        let request = NSURLRequest(url: imageURL! as URL)
+        let task = session.dataTask(with: request as URLRequest) { data, response, downloadError in
+            guard downloadError == nil else {
+                completionHandler(nil, downloadError?.localizedDescription)
+                return
+            }
+            completionHandler(data, nil)
         }
         task.resume()
     }
