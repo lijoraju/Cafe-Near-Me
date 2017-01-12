@@ -11,10 +11,16 @@ import MapKit
 
 class CafeMapViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var distanceLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         loadCafeLocationOnMap()
+        if let cafe = Constants.selectedCafeIndex {
+            let distance = Constants.SearchedCafes.Distances[cafe] / 1000
+            distanceLabel.text = "Estimated Distance \(distance) km"
+            
+        }
     }
     
     // MARK: Func LoadCafeLocationOnMap

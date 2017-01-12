@@ -24,6 +24,8 @@ struct Constants {
         static let version = "v"
         static let categoryID = "categoryId"
         static let sort = "sort"
+        static let radius = "radius"
+        static let limit = "limit"
     }
     
     // MARK: Parameter Values
@@ -32,6 +34,8 @@ struct Constants {
         static let ClientSecret = "WA43JEE4ZF1AVQPSOIEGZMC2B3JEUFKGVUTLYFDIYFZ3LAIF"
         static let categoryID = "4bf58dd8d48988d16d941735"
         static let sort = "recent"
+        static let radius = "3000"
+        static let limit = "50"
     }
     
     // MARK: API Paths
@@ -64,12 +68,14 @@ struct Constants {
         static let photoWidthxHeight = "80x80"
         static let latitude = "lat"
         static let longitude = "lng"
+        static let distance = "distance"
     }
     
     // MARK: Searched Cafes
     struct SearchedCafes {
         static var Latitudes: [Double]!
         static var Longitudes: [Double]!
+        static var Distances: [Int]!
     }
     
     // MARK: Selected Cafe
