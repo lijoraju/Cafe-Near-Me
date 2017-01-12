@@ -19,6 +19,8 @@ class FoursquareAPI {
         var venueIDs: [String] = []
         var venueNames: [String] = []
         var venueAddresses: [String] = []
+        var venueLatitudes: [Double] = []
+        var venueLongitudes: [Double] = []
         let parameters = [Constants.ParameterKeys.LatLon: LatLon,
                           Constants.ParameterKeys.categoryID: Constants.ParameterValues.categoryID,
                           Constants.ParameterKeys.ClientID: Constants.ParameterValues.ClientID,
@@ -69,6 +71,11 @@ class FoursquareAPI {
                     completionHandler(false, "Can't find key '\(Constants.ResponseKeys.venueLocation)'")
                     return
                 }
+                guard let latitude = location[Constants.ResponseKeys.latitude], let longitude = location[Constants.ResponseKeys.longitude] else {
+                    print("Can't find lat and lon")
+                    return
+                }
+                print("Lat = \(latitude) and Lon = \(longitude)")
                 guard let formattedAddress = location[Constants.ResponseKeys.venueAddress] else {
                     completionHandler(false, "Can't find address")
                     return
@@ -77,6 +84,8 @@ class FoursquareAPI {
                 for item in (formattedAddress as? NSArray)! {
                     venueAddress = "\(venueAddress) \(item)"
                 }
+                venueLatitudes.append(latitude as! Double)
+                venueLongitudes.append(longitude as! Double)
                 venueAddresses.append(venueAddress)
                 venueIDs.append(venueId as! String)
                 venueNames.append(venueName as! String)
@@ -84,6 +93,8 @@ class FoursquareAPI {
             Constants.searchedCafeNames = venueNames
             Constants.searchedCafeIDs = venueIDs
             Constants.searchedCafeAddresses = venueAddresses
+            Constants.SearchedCafes.Latitudes = venueLatitudes
+            Constants.SearchedCafes.Longitudes = venueLongitudes
             completionHandler(true, nil)
         }
         task.resume()

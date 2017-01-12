@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ReviewDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadingCafeImageLabel: UILabel!
     @IBOutlet weak var cafeAddressLabel: UILabel!

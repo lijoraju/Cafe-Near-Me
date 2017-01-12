@@ -17,7 +17,8 @@
 		DA6C4B091E21E6AE001289BE /* Cafe_Near_MeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6C4B081E21E6AE001289BE /* Cafe_Near_MeUITests.swift */; };
 		DA8578C41E221C7B00821868 /* FoursquareAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8578C31E221C7B00821868 /* FoursquareAPI.swift */; };
 		DA8578C61E2220E700821868 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8578C51E2220E700821868 /* Constants.swift */; };
-		DA86A51B1E235AC600A2AB9E /* ReviewDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86A51A1E235AC600A2AB9E /* ReviewDetailsVC.swift */; };
+		DA86A51B1E235AC600A2AB9E /* CafeReviewsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86A51A1E235AC600A2AB9E /* CafeReviewsVC.swift */; };
+		DA8D57A01E27641D002D21A3 /* CafeMapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8D579F1E27641D002D21A3 /* CafeMapVC.swift */; };
 		DAAD02001E226EED004B1FB8 /* SearchResultsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAD01FF1E226EED004B1FB8 /* SearchResultsTableVC.swift */; };
 		DAAD02021E2299C0004B1FB8 /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAD02011E2299C0004B1FB8 /* GCDBlackBox.swift */; };
 /* End PBXBuildFile section */
@@ -56,7 +57,8 @@
 		DA6C4B0A1E21E6AE001289BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA8578C31E221C7B00821868 /* FoursquareAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoursquareAPI.swift; sourceTree = "<group>"; };
 		DA8578C51E2220E700821868 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		DA86A51A1E235AC600A2AB9E /* ReviewDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewDetailsVC.swift; sourceTree = "<group>"; };
+		DA86A51A1E235AC600A2AB9E /* CafeReviewsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CafeReviewsVC.swift; sourceTree = "<group>"; };
+		DA8D579F1E27641D002D21A3 /* CafeMapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CafeMapVC.swift; sourceTree = "<group>"; };
 		DAAD01FF1E226EED004B1FB8 /* SearchResultsTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsTableVC.swift; sourceTree = "<group>"; };
 		DAAD02011E2299C0004B1FB8 /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -152,7 +154,8 @@
 			children = (
 				DA6C4AE71E21E6AE001289BE /* SearchCafeVC.swift */,
 				DAAD01FF1E226EED004B1FB8 /* SearchResultsTableVC.swift */,
-				DA86A51A1E235AC600A2AB9E /* ReviewDetailsVC.swift */,
+				DA86A51A1E235AC600A2AB9E /* CafeReviewsVC.swift */,
+				DA8D579F1E27641D002D21A3 /* CafeMapVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -310,11 +313,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA8578C61E2220E700821868 /* Constants.swift in Sources */,
-				DA86A51B1E235AC600A2AB9E /* ReviewDetailsVC.swift in Sources */,
+				DA86A51B1E235AC600A2AB9E /* CafeReviewsVC.swift in Sources */,
 				DA6C4AE81E21E6AE001289BE /* SearchCafeVC.swift in Sources */,
 				DA8578C41E221C7B00821868 /* FoursquareAPI.swift in Sources */,
 				DAAD02001E226EED004B1FB8 /* SearchResultsTableVC.swift in Sources */,
 				DA6C4AE61E21E6AE001289BE /* AppDelegate.swift in Sources */,
+				DA8D57A01E27641D002D21A3 /* CafeMapVC.swift in Sources */,
 				DA6C4AEE1E21E6AE001289BE /* Cafe_Near_Me.xcdatamodeld in Sources */,
 				DAAD02021E2299C0004B1FB8 /* GCDBlackBox.swift in Sources */,
 			);

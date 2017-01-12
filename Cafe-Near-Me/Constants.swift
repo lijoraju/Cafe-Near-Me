@@ -62,10 +62,19 @@ struct Constants {
         static let lastName = "lastName"
         static let photo = "photo"
         static let photoWidthxHeight = "80x80"
+        static let latitude = "lat"
+        static let longitude = "lng"
+    }
+    
+    // MARK: Searched Cafes
+    struct SearchedCafes {
+        static var Latitudes: [Double]!
+        static var Longitudes: [Double]!
     }
     
     // MARK: Selected Cafe
     struct SelectedCafe {
+
         
     }
     

@@ -210,10 +210,10 @@
             </objects>
             <point key="canvasLocation" x="4494" y="-416"/>
         </scene>
-        <!--Review Details View Controller-->
+        <!--Cafe Reviews View Controller-->
         <scene sceneID="5p0-hR-SCx">
             <objects>
-                <viewController id="xGJ-GY-vIo" customClass="ReviewDetailsViewController" customModule="Cafe_Near_Me" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="xGJ-GY-vIo" customClass="CafeReviewsViewController" customModule="Cafe_Near_Me" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="83U-4K-2SI"/>
                         <viewControllerLayoutGuide type="bottom" id="6Ul-6u-ntI"/>
@@ -360,10 +360,10 @@
             </objects>
             <point key="canvasLocation" x="4494" y="535"/>
         </scene>
-        <!--View Controller-->
+        <!--Cafe Map View Controller-->
         <scene sceneID="VOd-2N-usv">
             <objects>
-                <viewController id="Muj-mG-VLB" sceneMemberID="viewController">
+                <viewController id="Muj-mG-VLB" customClass="CafeMapViewController" customModule="Cafe_Near_Me" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="lpF-GG-THI"/>
                         <viewControllerLayoutGuide type="bottom" id="f8O-Gj-79y"/>
@@ -371,9 +371,21 @@
                     <view key="view" contentMode="scaleToFill" id="mbT-09-VlY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Ru3-4s-tD2"/>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Ru3-4s-tD2" secondAttribute="trailing" id="1fy-YP-Q6u"/>
+                            <constraint firstItem="Ru3-4s-tD2" firstAttribute="leading" secondItem="mbT-09-VlY" secondAttribute="leading" id="3AG-Z5-K8r"/>
+                            <constraint firstItem="f8O-Gj-79y" firstAttribute="top" secondItem="Ru3-4s-tD2" secondAttribute="bottom" id="UHF-sV-nyS"/>
+                            <constraint firstItem="Ru3-4s-tD2" firstAttribute="top" secondItem="lpF-GG-THI" secondAttribute="bottom" id="bQJ-n9-vJB"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="tKP-V5-CCx"/>
+                    <connections>
+                        <outlet property="mapView" destination="Ru3-4s-tD2" id="h39-A8-PZS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RX6-pm-DA9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
