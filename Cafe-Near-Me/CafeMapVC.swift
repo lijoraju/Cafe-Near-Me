@@ -16,21 +16,21 @@ class CafeMapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadCafeLocationOnMap()
-        if let cafe = Constants.selectedCafeIndex {
-            let distance = Constants.SearchedCafes.Distances[cafe] / 1000
-            distanceLabel.text = "Estimated Distance \(distance) km"
-            
+        if let cafe = Constants.SelectedCafe.Index {
+            let distance = Float(Constants.SearchedCafes.Distances[cafe]) / 1000
+            let searchLocation = Constants.searchingLocation.capitalized
+            distanceLabel.text = "Estimated Distance \(distance) km From \(searchLocation)"
         }
     }
     
     // MARK: Func LoadCafeLocationOnMap
     func loadCafeLocationOnMap() {
-        if let cafe = Constants.selectedCafeIndex {
+        if let cafe = Constants.SelectedCafe.Index {
             let latitude = Constants.SearchedCafes.Latitudes[cafe]
             let longitude = Constants.SearchedCafes.Longitudes[cafe]
             let annotation = MKPointAnnotation()
             let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            let cafeName = Constants.searchedCafeNames[cafe]
+            let cafeName = Constants.SearchedCafes.Names[cafe]
             let span = MKCoordinateSpanMake(0.09, 0.09)
             let region = MKCoordinateRegionMake(location, span)
             annotation.coordinate = location

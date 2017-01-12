@@ -81,10 +81,12 @@ class SearchCafeViewController: UIViewController {
     // MARK: Func configureUI 
     func configureUI(enable: Bool) {
         if enable {
+            locationTextField.isEnabled = true
             searchButton.isEnabled = true
             activityIndicator.stopAnimating()
         }
         else {
+            locationTextField.isEnabled = false
             searchButton.isEnabled = false
             activityIndicator.startAnimating()
         }

@@ -14,13 +14,16 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var cafeAddressLabel: UILabel!
     @IBOutlet weak var cafeNameLabel: UILabel!
     @IBOutlet weak var cafeImage: UIImageView!
-
+    @IBOutlet weak var reviewsLabel: UILabel!
+    @IBOutlet weak var imageActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var reviewActivityIndicator: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let selectedCafeIndex = Constants.selectedCafeIndex {
-            let venueID = Constants.searchedCafeIDs[selectedCafeIndex]
-            cafeNameLabel.text = Constants.searchedCafeNames[selectedCafeIndex]
-            cafeAddressLabel.text = Constants.searchedCafeAddresses[selectedCafeIndex]
+        if let selectedCafeIndex = Constants.SelectedCafe.Index {
+            let venueID = Constants.SearchedCafes.CafeIDs[selectedCafeIndex]
+            cafeNameLabel.text = Constants.SearchedCafes.Names[selectedCafeIndex]
+            cafeAddressLabel.text = Constants.SearchedCafes.Addresses[selectedCafeIndex]
             Constants.imageData = nil
             Constants.SelectedCafeReviews.reviews = nil
             Constants.SelectedCafeReviews.userNames = nil
@@ -29,31 +32,32 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
                 if sucess {
                     if Constants.imageData != nil {
                         performUIUpdateOnMain {
-                            self.loadingCafeImageLabel.isHidden = true
-                            self.cafeImage.isHidden = false
-                            self.cafeImage.image = UIImage(data: Constants.imageData)
+                            self.enableCafeImage(enable: true)
                         }
                     }
                     else {
                         performUIUpdateOnMain {
-                            self.loadingCafeImageLabel.text = "No Image Available"
+                            self.enableCafeImage(enable: false)
                         }
                     }
                     FoursquareAPI.sharedInstance.getVenueReviews(selectedVenueID: venueID) { sucess, errorString in
                         if sucess {
                             performUIUpdateOnMain {
-                                self.tableView.reloadData()
+                                self.enableCafeReviews(enable: true)
                             }
                         }
                         else {
                             performUIUpdateOnMain {
                                 self.displayAnAlert(title: "Error", message: errorString!)
+                                self.enableCafeReviews(enable: false)
                             }
                         }
                     }
                 }
                 else {
                     self.displayAnAlert(title: "Error", message: errorString!)
+                    self.enableCafeImage(enable: false)
+                    self.enableCafeReviews(enable: false)
                 }
             }
         }
@@ -95,6 +99,34 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
             }
         }
         return cell
+    }
+    
+    // MARK: Func enableCafeImage
+    func enableCafeImage(enable: Bool) {
+        if enable {
+            loadingCafeImageLabel.isHidden = true
+            imageActivityIndicator.stopAnimating()
+            cafeImage.isHidden = false
+            cafeImage.image = UIImage(data: Constants.imageData)
+        }
+        else {
+            loadingCafeImageLabel.text = "No Image Available"
+            imageActivityIndicator.stopAnimating()
+        }
+    }
+    
+    // MARK: Func enableCafeReviews
+    func enableCafeReviews(enable: Bool) {
+        if enable {
+            reviewsLabel.isHidden = true
+            tableView.isHidden = false
+            reviewActivityIndicator.stopAnimating()
+            tableView.reloadData()
+        }
+        else {
+            reviewActivityIndicator.stopAnimating()
+            reviewsLabel.text = "No Reviews Available"
+        }
     }
     
 }

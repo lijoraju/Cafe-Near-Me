@@ -35,8 +35,11 @@ class FoursquareAPI {
                 completionHandler(false, error?.localizedDescription)
                 return
             }
+            func reportAnError() {
+                completionHandler(false, "Unable to obtain cafes for the location")
+            }
             guard let data = data else {
-                completionHandler(false, "No data returned with request")
+                reportAnError()
                 return
             }
             var parseResult: Any
@@ -44,46 +47,40 @@ class FoursquareAPI {
                 parseResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
             }
             catch {
-                completionHandler(false, "Couldn't parse to JSON")
+                reportAnError()
                 return
             }
             let results = parseResult as AnyObject
             guard let response = results[Constants.ResponseKeys.response] as? [String: AnyObject] else {
-                completionHandler(false, "Can't find key '\(Constants.ResponseKeys.response)'")
+                reportAnError()
                 return
             }
             guard let venues = response[Constants.ResponseKeys.venues] as? [[String: AnyObject]] else {
-                completionHandler(false, "Can't find key '\(Constants.ResponseKeys.venues)'")
+                reportAnError()
                 return
             }
             if venues.count == 0 {
-                completionHandler(false, "No results")
+                reportAnError()
                 return
             }
-            for index in 0...venues.count - 1 {
-                let venue = venues[index]
+            for venue in venues {
                 guard let venueName = venue[Constants.ResponseKeys.venueName] else {
-                    completionHandler(false, "Can't find key '\(Constants.ResponseKeys.venueName)'")
-                    return
+                    continue
                 }
                 guard let venueId = venue[Constants.ResponseKeys.venueId] else {
-                    completionHandler(false, "Can't find key '\(Constants.ResponseKeys.venueId)'")
-                    return
+                    continue
                 }
                 guard let location = venue[Constants.ResponseKeys.venueLocation] as? [String: AnyObject] else {
-                    completionHandler(false, "Can't find key '\(Constants.ResponseKeys.venueLocation)'")
-                    return
+                    continue
                 }
                 guard let latitude = location[Constants.ResponseKeys.latitude], let longitude = location[Constants.ResponseKeys.longitude] else {
-                    print("Can't find lat and lon")
-                    return
+                    continue
                 }
                 guard let distance = location[Constants.ResponseKeys.distance] else {
                     return
                 }
                 guard let formattedAddress = location[Constants.ResponseKeys.venueAddress] else {
-                    completionHandler(false, "Can't find address")
-                    return
+                    continue
                 }
                 var venueAddress = ""
                 for item in (formattedAddress as? NSArray)! {
@@ -96,9 +93,9 @@ class FoursquareAPI {
                 venueNames.append(venueName as! String)
                 venueDistances.append(distance as! Int)
             }
-            Constants.searchedCafeNames = venueNames
-            Constants.searchedCafeIDs = venueIDs
-            Constants.searchedCafeAddresses = venueAddresses
+            Constants.SearchedCafes.Names = venueNames
+            Constants.SearchedCafes.CafeIDs = venueIDs
+            Constants.SearchedCafes.Addresses = venueAddresses
             Constants.SearchedCafes.Latitudes = venueLatitudes
             Constants.SearchedCafes.Longitudes = venueLongitudes
             Constants.SearchedCafes.Distances = venueDistances

@@ -234,11 +234,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading Image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RjM-oh-yQc">
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="22"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleAspectFit" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="48" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="f6g-r9-8ke">
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Era-8i-Zia">
+                                <color key="color" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </activityIndicatorView>
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleAspectFit" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="48" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="f6g-r9-8ke">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ReviewCell" textLabel="Hry-zj-bSt" detailTextLabel="YSX-0s-dIT" imageView="mpP-w4-HNR" style="IBUITableViewCellStyleSubtitle" id="Ary-wP-uab">
@@ -275,10 +278,20 @@
                                     <outlet property="delegate" destination="xGJ-GY-vIo" id="HzV-LH-MyO"/>
                                 </connections>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="msg-Mg-FgM" userLabel="Image Activity Indicator">
+                                <color key="color" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading Reviews" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vl4-Bv-aq7">
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="22"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="msg-Mg-FgM" firstAttribute="top" secondItem="RjM-oh-yQc" secondAttribute="bottom" constant="10" id="1Mm-wJ-cEU"/>
                             <constraint firstItem="tid-QV-yAD" firstAttribute="top" secondItem="GdO-fO-75Y" secondAttribute="bottom" constant="10" id="2dg-Vk-6ui"/>
+                            <constraint firstItem="f6g-r9-8ke" firstAttribute="top" secondItem="vl4-Bv-aq7" secondAttribute="bottom" constant="-80" id="5oC-uX-NIm"/>
                             <constraint firstItem="fTd-78-Ip9" firstAttribute="top" secondItem="IIc-dR-yK6" secondAttribute="topMargin" constant="64" id="9Uj-cN-c0I"/>
                             <constraint firstAttribute="bottomMargin" secondItem="fTd-78-Ip9" secondAttribute="bottom" constant="393.5" id="AGh-hN-TU4"/>
                             <constraint firstItem="f6g-r9-8ke" firstAttribute="leading" secondItem="IIc-dR-yK6" secondAttribute="leading" id="Cq5-q8-ecO"/>
@@ -288,12 +301,16 @@
                             <constraint firstItem="6Ul-6u-ntI" firstAttribute="top" secondItem="GdO-fO-75Y" secondAttribute="bottom" constant="250" id="O1U-6k-KqD"/>
                             <constraint firstAttribute="trailing" secondItem="f6g-r9-8ke" secondAttribute="trailing" id="Q4c-eT-FOw"/>
                             <constraint firstItem="6Ul-6u-ntI" firstAttribute="top" secondItem="f6g-r9-8ke" secondAttribute="bottom" id="Qml-E4-h3U"/>
+                            <constraint firstItem="msg-Mg-FgM" firstAttribute="centerX" secondItem="IIc-dR-yK6" secondAttribute="centerX" id="Sdk-uE-eCg"/>
                             <constraint firstItem="tid-QV-yAD" firstAttribute="leading" secondItem="IIc-dR-yK6" secondAttribute="leading" id="Svl-O6-M5c"/>
                             <constraint firstItem="RjM-oh-yQc" firstAttribute="centerY" secondItem="fTd-78-Ip9" secondAttribute="centerY" id="Tem-HX-kEQ"/>
+                            <constraint firstItem="Era-8i-Zia" firstAttribute="centerX" secondItem="f6g-r9-8ke" secondAttribute="centerX" id="Ubf-z9-6Sn"/>
                             <constraint firstItem="6Ul-6u-ntI" firstAttribute="top" secondItem="tid-QV-yAD" secondAttribute="bottom" constant="180" id="Vky-Ud-r1X"/>
                             <constraint firstItem="GdO-fO-75Y" firstAttribute="leading" secondItem="IIc-dR-yK6" secondAttribute="leading" id="WP5-eP-XBc"/>
+                            <constraint firstItem="f6g-r9-8ke" firstAttribute="top" secondItem="Era-8i-Zia" secondAttribute="bottom" constant="-50" id="ZE8-fl-6uN"/>
                             <constraint firstItem="fTd-78-Ip9" firstAttribute="leading" secondItem="IIc-dR-yK6" secondAttribute="leading" id="hsH-lw-kAp"/>
                             <constraint firstAttribute="trailing" secondItem="tid-QV-yAD" secondAttribute="trailing" id="mnA-ig-e9H"/>
+                            <constraint firstItem="vl4-Bv-aq7" firstAttribute="centerX" secondItem="f6g-r9-8ke" secondAttribute="centerX" id="p76-Cj-8xE"/>
                             <constraint firstItem="f6g-r9-8ke" firstAttribute="top" secondItem="tid-QV-yAD" secondAttribute="bottom" id="wCw-Hr-VfW"/>
                             <constraint firstItem="GdO-fO-75Y" firstAttribute="top" secondItem="fTd-78-Ip9" secondAttribute="bottom" constant="15" id="zWM-IF-yAi"/>
                         </constraints>
@@ -303,7 +320,10 @@
                         <outlet property="cafeAddressLabel" destination="tid-QV-yAD" id="mFm-wq-ZWH"/>
                         <outlet property="cafeImage" destination="fTd-78-Ip9" id="Pk3-CI-VjG"/>
                         <outlet property="cafeNameLabel" destination="GdO-fO-75Y" id="wUm-uN-hlg"/>
+                        <outlet property="imageActivityIndicator" destination="msg-Mg-FgM" id="pd1-Dk-rNp"/>
                         <outlet property="loadingCafeImageLabel" destination="RjM-oh-yQc" id="gWF-ew-tsl"/>
+                        <outlet property="reviewActivityIndicator" destination="Era-8i-Zia" id="vc0-2N-aQ5"/>
+                        <outlet property="reviewsLabel" destination="vl4-Bv-aq7" id="FGX-qo-rF0"/>
                         <outlet property="tableView" destination="f6g-r9-8ke" id="BN7-G2-E2H"/>
                     </connections>
                 </viewController>
@@ -379,7 +399,7 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Ru3-4s-tD2"/>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LYk-N1-atM">
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Estimated Distance 180 meters" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D54-0T-9eu">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Estimated Distance 180 meters" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D54-0T-9eu">
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>

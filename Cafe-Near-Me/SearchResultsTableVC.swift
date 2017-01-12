@@ -44,7 +44,7 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let searchResults = Constants.searchedCafeNames {
+        if let searchResults = Constants.SearchedCafes.Names {
             return searchResults.count
         }
         return 0
@@ -53,13 +53,13 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")!
         let index = "\(indexPath.row + 1).  "
-        cell.textLabel?.text = index + Constants.searchedCafeNames[indexPath.row]
-        cell.detailTextLabel?.text = Constants.searchedCafeAddresses[indexPath.row]
+        cell.textLabel?.text = index + Constants.SearchedCafes.Names[indexPath.row]
+        cell.detailTextLabel?.text = Constants.SearchedCafes.Addresses[indexPath.row]
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Constants.selectedCafeIndex = indexPath.row
+        Constants.SelectedCafe.Index = indexPath.row
         tableView.deselectRow(at: indexPath, animated: true)
         performSegue(withIdentifier: "TableViewToTabView", sender: self)
     }
