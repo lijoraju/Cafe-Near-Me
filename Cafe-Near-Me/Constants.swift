@@ -26,6 +26,7 @@ struct Constants {
         static let sort = "sort"
         static let radius = "radius"
         static let limit = "limit"
+        static let photosLimit = "limit"
     }
     
     // MARK: Parameter Values
@@ -36,6 +37,7 @@ struct Constants {
         static let sort = "recent"
         static let radius = "3000"
         static let limit = "50"
+        static let photosLimit = "52"
     }
     
     // MARK: API Paths
@@ -56,7 +58,7 @@ struct Constants {
         static let venueAddress = "formattedAddress"
         static let photos = "photos"
         static let prefix = "prefix"
-        static let widthXheight = "375x204"
+        static let cafePhotowidthXheight = "375x204"
         static let suffix = "suffix"
         static let items = "items"
         static let tips = "tips"
@@ -65,7 +67,7 @@ struct Constants {
         static let firstName = "firstName"
         static let lastName = "lastName"
         static let photo = "photo"
-        static let photoWidthxHeight = "80x80"
+        static let userPhotoWidthxHeight = "80x80"
         static let latitude = "lat"
         static let longitude = "lng"
         static let distance = "distance"
@@ -87,10 +89,12 @@ struct Constants {
     }
     
     // MARK: Selected Cafe Reviews
-    struct SelectedCafeReviews {
+    struct Cafe {
         static var reviews: [String]!
         static var userNames: [String]!
         static var userPhotoURLs: [String]!
+        static var photoURLs: [String]!
+        static var photosData: [Data]!
     }
     
     static var searchingLatLon: String!

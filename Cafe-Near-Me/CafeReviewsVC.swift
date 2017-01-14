@@ -25,9 +25,9 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
             cafeNameLabel.text = Constants.SearchedCafes.Names[selectedCafeIndex]
             cafeAddressLabel.text = Constants.SearchedCafes.Addresses[selectedCafeIndex]
             Constants.imageData = nil
-            Constants.SelectedCafeReviews.reviews = nil
-            Constants.SelectedCafeReviews.userNames = nil
-            Constants.SelectedCafeReviews.userPhotoURLs = nil
+            Constants.Cafe.reviews = nil
+            Constants.Cafe.userNames = nil
+            Constants.Cafe.userPhotoURLs = nil
             FoursquareAPI.sharedInstance.getVenuePhotos(selectedVenueID: venueID) { sucess, errorString in
                 if sucess {
                     if Constants.imageData != nil {
@@ -64,7 +64,7 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let reviews = Constants.SelectedCafeReviews.reviews {
+        if let reviews = Constants.Cafe.reviews {
             return reviews.count
         }
         return 0
@@ -72,18 +72,18 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReviewCell")!
-        if Constants.SelectedCafeReviews.reviews != nil {
+        if Constants.Cafe.reviews != nil {
             return configureCell(cell: cell, atIndexPath: indexPath)
         }
         return cell
     }
     
-    // MARK: Funs configureCell
+    // MARK: Function configureCell
     func configureCell(cell: UITableViewCell, atIndexPath indexPath: IndexPath)-> UITableViewCell {
-        let review = Constants.SelectedCafeReviews.reviews[indexPath.row]
-        let reviewerName = Constants.SelectedCafeReviews.userNames[indexPath.row]
-        let reviewerImagePath = Constants.SelectedCafeReviews.userPhotoURLs[indexPath.row]
-        FoursquareAPI.sharedInstance.downloadImages(atImagePath: reviewerImagePath) { imageData, errorString in
+        let review = Constants.Cafe.reviews[indexPath.row]
+        let reviewerName = Constants.Cafe.userNames[indexPath.row]
+        let reviewerImagePath = Constants.Cafe.userPhotoURLs[indexPath.row]
+        FoursquareAPI.sharedInstance.downloadImages(atImagePath: reviewerImagePath) { imageData in
             if imageData != nil {
                 performUIUpdateOnMain {
                     cell.imageView?.image = UIImage(data: imageData!)
@@ -101,7 +101,7 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
         return cell
     }
     
-    // MARK: Func enableCafeImage
+    // MARK: Function enableCafeImage
     func enableCafeImage(enable: Bool) {
         if enable {
             loadingCafeImageLabel.isHidden = true
@@ -115,7 +115,7 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
-    // MARK: Func enableCafeReviews
+    // MARK: Function enableCafeReviews
     func enableCafeReviews(enable: Bool) {
         if enable {
             reviewsLabel.isHidden = true

@@ -44,14 +44,14 @@ class SearchCafeViewController: UIViewController {
         }
     }
     
-    // MARK: Func getLatLonForLocation finding coordinates for search location
+    // MARK: Function getLatLonForLocation finding coordinates for search location
     func getLatLonForLocation() {
         geocoder.geocodeAddressString(locationTextField.text!) { (placemarks, error) in
             self.processResponse(withPlacemarks: placemarks, error: error)
         }
     }
     
-    // MARK: Func processResponse process response from CLGeocoder
+    // MARK: Function processResponse process response from CLGeocoder
     func processResponse(withPlacemarks placemarks: [CLPlacemark]?, error: Error?) {
         if let error = error {
             configureUI(enable: true)
@@ -72,13 +72,13 @@ class SearchCafeViewController: UIViewController {
         }
     }
     
-    // MARK: Func completeSearchForCafes
+    // MARK: Function completeSearchForCafes
     func completeSearchForCafes() {
         configureUI(enable: true)
         performSegue(withIdentifier: "SearchToResult", sender: self)
     }
     
-    // MARK: Func configureUI 
+    // MARK: Function configureUI 
     func configureUI(enable: Bool) {
         if enable {
             locationTextField.isEnabled = true

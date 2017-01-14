@@ -19,11 +19,11 @@ class CafeMapViewController: UIViewController {
         if let cafe = Constants.SelectedCafe.Index {
             let distance = Float(Constants.SearchedCafes.Distances[cafe]) / 1000
             let searchLocation = Constants.searchingLocation.capitalized
-            distanceLabel.text = "Estimated Distance \(distance) km From \(searchLocation)"
+            distanceLabel.text = "Within \(distance) km From \(searchLocation)"
         }
     }
     
-    // MARK: Func LoadCafeLocationOnMap
+    // MARK: Function loadCafeLocationOnMap
     func loadCafeLocationOnMap() {
         if let cafe = Constants.SelectedCafe.Index {
             let latitude = Constants.SearchedCafes.Latitudes[cafe]

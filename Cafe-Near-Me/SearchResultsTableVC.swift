@@ -64,7 +64,7 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
         performSegue(withIdentifier: "TableViewToTabView", sender: self)
     }
     
-    // MARK: Func configureUI
+    // MARK: Function configureUI
     func configureUI(enable: Bool) {
         if enable {
             tableView.isHidden = false

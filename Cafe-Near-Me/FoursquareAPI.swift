@@ -14,7 +14,7 @@ class FoursquareAPI {
     let date = Date()
     let formatter = DateFormatter()
     
-    // MARK: Func searchCafesForALocation
+    // MARK: Function searchCafesForALocation
     func searchCafesForALocation(LatitudeAndLongitude LatLon: String, completionHandler: @escaping(_ sucess: Bool, _ errorString: String?)-> Void ) {
         var venueIDs: [String] = []
         var venueNames: [String] = []
@@ -104,10 +104,11 @@ class FoursquareAPI {
         task.resume()
     }
     
-    // MARK Func getVenuePhotos
+    // MARK Function getVenuePhotos
     func getVenuePhotos(selectedVenueID venueID: String, completionHandler: @escaping(_ sucess: Bool, _ error: String?)->Void ) {
-       // var venuePhotoURLs: [String] = []
-        let parameters = [Constants.ParameterKeys.ClientID: Constants.ParameterValues.ClientID,
+        var venuePhotoURLs: [String] = []
+        let parameters = [Constants.ParameterKeys.photosLimit: Constants.ParameterValues.photosLimit,
+                          Constants.ParameterKeys.ClientID: Constants.ParameterValues.ClientID,
                           Constants.ParameterKeys.ClientSecret: Constants.ParameterValues.ClientSecret]
         let APIPath = Constants.APIPaths.Venue + venueID + Constants.APIPaths.Photos
         let request = URLRequest(url: getFoursquareAPIParameters(withAPIPath: APIPath, withParameters: parameters as [String : AnyObject]))
@@ -144,20 +145,27 @@ class FoursquareAPI {
             if let photo = items.first {
                 let prefix = photo[Constants.ResponseKeys.prefix] as! String
                 let suffix = photo[Constants.ResponseKeys.suffix] as! String
-                let widthXheight = Constants.ResponseKeys.widthXheight
+                let widthXheight = Constants.ResponseKeys.cafePhotowidthXheight
                 let urlString = prefix + widthXheight + suffix
                 let url = URL(string: urlString)!
                 if let imageData = NSData(contentsOf: url) {
                     Constants.imageData = imageData as Data!
-                    print("Downloaded data from url = \(url)")
                 }
             }
+            for photo in items {
+                let prefix = photo[Constants.ResponseKeys.prefix] as! String
+                let suffix = photo[Constants.ResponseKeys.suffix] as! String
+                let widthXheight = Constants.ResponseKeys.cafePhotowidthXheight
+                let urlString = prefix + widthXheight + suffix
+                venuePhotoURLs.append(urlString)
+            }
+            Constants.Cafe.photoURLs = venuePhotoURLs
             completionHandler(true, nil)
         }
         task.resume()
     }
     
-    // MARK: Func getVenueReviews
+    // MARK: Function getVenueReviews
     func getVenueReviews(selectedVenueID venueID: String, completionHandler: @escaping(_ sucess: Bool, _ error: String?)-> Void) {
         var venueReviews: [String] = []
         var userPhotoURLs: [String] = []
@@ -220,34 +228,34 @@ class FoursquareAPI {
                     continue
                 }
                 let name = (firstname as! String) + " " + (lastname as! String)
-                let url = (prefix as! String) + Constants.ResponseKeys.photoWidthxHeight + (suffix as! String)
+                let url = (prefix as! String) + Constants.ResponseKeys.userPhotoWidthxHeight + (suffix as! String)
                 venueReviews.append(text as! String)
                 userNames.append(name)
                 userPhotoURLs.append(url)
             }
-            Constants.SelectedCafeReviews.reviews = venueReviews
-            Constants.SelectedCafeReviews.userNames = userNames
-            Constants.SelectedCafeReviews.userPhotoURLs = userPhotoURLs
+            Constants.Cafe.reviews = venueReviews
+            Constants.Cafe.userNames = userNames
+            Constants.Cafe.userPhotoURLs = userPhotoURLs
             completionHandler(true, nil)
         }
         task.resume()
     }
     
-    // MARK: Func Download Images
-    func downloadImages(atImagePath imagePath: String, completionHandler: @escaping(_ imageData: Data?, _ error: String?)-> Void) {
+    // MARK: Function downloadImages
+    func downloadImages(atImagePath imagePath: String, completionHandler: @escaping(_ imageData: Data?)-> Void) {
         let imageURL = NSURL(string: imagePath)
         let request = NSURLRequest(url: imageURL! as URL)
         let task = session.dataTask(with: request as URLRequest) { data, response, downloadError in
             guard downloadError == nil else {
-                completionHandler(nil, downloadError?.localizedDescription)
+                completionHandler(nil)
                 return
             }
-            completionHandler(data, nil)
+            completionHandler(data)
         }
         task.resume()
     }
     
-    // MARK: Foursquare API parameters
+    // MARK: Function getFoursquareAPIParameters
     func getFoursquareAPIParameters(withAPIPath APIPath: String, withParameters parameters: [String: AnyObject])-> URL {
         var parameters = parameters
         var components = URLComponents()
