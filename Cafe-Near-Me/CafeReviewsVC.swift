@@ -10,54 +10,34 @@ import UIKit
 
 class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var loadingCafeImageLabel: UILabel!
-    @IBOutlet weak var cafeAddressLabel: UILabel!
-    @IBOutlet weak var cafeNameLabel: UILabel!
-    @IBOutlet weak var cafeImage: UIImageView!
     @IBOutlet weak var reviewsLabel: UILabel!
-    @IBOutlet weak var imageActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var reviewActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var reviewerImage: UIImageView!
+    @IBOutlet weak var reviewerName: UILabel!
+    @IBOutlet weak var review: UITextView!
+    @IBOutlet weak var reviewDetailView: UIView!
+    
+    var reviewerPhotos: [Data] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         if let selectedCafeIndex = Constants.SelectedCafe.Index {
             let venueID = Constants.SearchedCafes.CafeIDs[selectedCafeIndex]
-            cafeNameLabel.text = Constants.SearchedCafes.Names[selectedCafeIndex]
-            cafeAddressLabel.text = Constants.SearchedCafes.Addresses[selectedCafeIndex]
             Constants.imageData = nil
             Constants.Cafe.reviews = nil
             Constants.Cafe.userNames = nil
             Constants.Cafe.userPhotoURLs = nil
-            FoursquareAPI.sharedInstance.getVenuePhotos(selectedVenueID: venueID) { sucess, errorString in
+            FoursquareAPI.sharedInstance.getVenueReviews(selectedVenueID: venueID) { sucess, errorString in
                 if sucess {
-                    if Constants.imageData != nil {
-                        performUIUpdateOnMain {
-                            self.enableCafeImage(enable: true)
-                        }
-                    }
-                    else {
-                        performUIUpdateOnMain {
-                            self.enableCafeImage(enable: false)
-                        }
-                    }
-                    FoursquareAPI.sharedInstance.getVenueReviews(selectedVenueID: venueID) { sucess, errorString in
-                        if sucess {
-                            performUIUpdateOnMain {
-                                self.enableCafeReviews(enable: true)
-                            }
-                        }
-                        else {
-                            performUIUpdateOnMain {
-                                self.displayAnAlert(title: "Error", message: errorString!)
-                                self.enableCafeReviews(enable: false)
-                            }
-                        }
+                    performUIUpdateOnMain {
+                        self.enableCafeReviews(enable: true)
                     }
                 }
                 else {
-                    self.displayAnAlert(title: "Error", message: errorString!)
-                    self.enableCafeImage(enable: false)
-                    self.enableCafeReviews(enable: false)
+                    performUIUpdateOnMain {
+                        self.displayAnAlert(title: "Error", message: errorString!)
+                        self.enableCafeReviews(enable: false)
+                    }
                 }
             }
         }
@@ -78,6 +58,16 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let name = Constants.Cafe.userNames[indexPath.row]
+        let content = Constants.Cafe.reviews[indexPath.row]
+        let userImageData = reviewerPhotos[indexPath.row]
+        reviewerImage.image = UIImage(data: userImageData)
+        reviewerName.text = name
+        review.text = content
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     // MARK: Function configureCell
     func configureCell(cell: UITableViewCell, atIndexPath indexPath: IndexPath)-> UITableViewCell {
         let review = Constants.Cafe.reviews[indexPath.row]
@@ -90,6 +80,7 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
                     cell.textLabel?.text = reviewerName
                     cell.detailTextLabel?.text = review
                 }
+                self.reviewerPhotos.append(imageData!)
             }
             else {
                 performUIUpdateOnMain {
@@ -101,20 +92,6 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
         return cell
     }
     
-    // MARK: Function enableCafeImage
-    func enableCafeImage(enable: Bool) {
-        if enable {
-            loadingCafeImageLabel.isHidden = true
-            imageActivityIndicator.stopAnimating()
-            cafeImage.isHidden = false
-            cafeImage.image = UIImage(data: Constants.imageData)
-        }
-        else {
-            loadingCafeImageLabel.text = "No Image Available"
-            imageActivityIndicator.stopAnimating()
-        }
-    }
-    
     // MARK: Function enableCafeReviews
     func enableCafeReviews(enable: Bool) {
         if enable {
@@ -122,6 +99,21 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
             tableView.isHidden = false
             reviewActivityIndicator.stopAnimating()
             tableView.reloadData()
+            reviewDetailView.isHidden = false
+            reviewerName.text = Constants.Cafe.userNames.first
+            review.text = Constants.Cafe.reviews.first
+            FoursquareAPI.sharedInstance.downloadImages(atImagePath: Constants.Cafe.userPhotoURLs.first!) { imageData in
+                if imageData != nil {
+                    performUIUpdateOnMain {
+                        self.reviewerImage.image = UIImage(data: imageData!)
+                    }
+                }
+                else {
+                    performUIUpdateOnMain {
+                        self.reviewerImage.image = #imageLiteral(resourceName: "ReviewerPlaceholderImage")
+                    }
+                }
+            }
         }
         else {
             reviewActivityIndicator.stopAnimating()

@@ -313,22 +313,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fTd-78-Ip9"/>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Madona Cafeteria" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GdO-fO-75Y">
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="22"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bangalore Karnatka India" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tid-QV-yAD">
-                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="15"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading Image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RjM-oh-yQc">
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="22"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Era-8i-Zia">
                                 <color key="color" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
@@ -369,51 +353,67 @@
                                     <outlet property="delegate" destination="xGJ-GY-vIo" id="HzV-LH-MyO"/>
                                 </connections>
                             </tableView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="msg-Mg-FgM" userLabel="Image Activity Indicator">
-                                <color key="color" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                            </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading Reviews" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vl4-Bv-aq7">
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="22"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2hd-Xi-Hsd">
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ReviewerPlaceholderImage" translatesAutoresizingMaskIntoConstraints="NO" id="mom-oz-l1h">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="80" id="93b-5y-IFc"/>
+                                            <constraint firstAttribute="width" constant="80" id="dQh-Y6-H18"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2wL-np-ATN">
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-MediumItalic" family="Helvetica Neue" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Review" textAlignment="justified" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PY9-Ik-CDe">
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Italic" family="Helvetica Neue" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="mom-oz-l1h" firstAttribute="top" secondItem="2hd-Xi-Hsd" secondAttribute="top" id="0Qq-As-bRy"/>
+                                    <constraint firstItem="mom-oz-l1h" firstAttribute="leading" secondItem="2hd-Xi-Hsd" secondAttribute="leading" id="1bM-KC-432"/>
+                                    <constraint firstAttribute="bottom" secondItem="mom-oz-l1h" secondAttribute="bottom" constant="126.5" id="Tvs-hR-zDT"/>
+                                    <constraint firstItem="PY9-Ik-CDe" firstAttribute="leading" secondItem="2hd-Xi-Hsd" secondAttribute="leading" id="Yfw-FI-ROY"/>
+                                    <constraint firstItem="2wL-np-ATN" firstAttribute="centerY" secondItem="mom-oz-l1h" secondAttribute="centerY" id="aWv-0b-8f6"/>
+                                    <constraint firstAttribute="trailing" secondItem="2wL-np-ATN" secondAttribute="trailing" id="c34-QZ-MqG"/>
+                                    <constraint firstItem="2wL-np-ATN" firstAttribute="leading" secondItem="mom-oz-l1h" secondAttribute="trailing" constant="10" id="eJL-sw-C9u"/>
+                                    <constraint firstItem="PY9-Ik-CDe" firstAttribute="top" secondItem="mom-oz-l1h" secondAttribute="bottom" constant="20" id="jHE-lW-aPK"/>
+                                    <constraint firstAttribute="trailing" secondItem="PY9-Ik-CDe" secondAttribute="trailing" id="mTO-LX-YVC"/>
+                                    <constraint firstAttribute="bottom" secondItem="PY9-Ik-CDe" secondAttribute="bottom" id="yE1-iJ-tEW"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="msg-Mg-FgM" firstAttribute="top" secondItem="RjM-oh-yQc" secondAttribute="bottom" constant="10" id="1Mm-wJ-cEU"/>
-                            <constraint firstItem="tid-QV-yAD" firstAttribute="top" secondItem="GdO-fO-75Y" secondAttribute="bottom" constant="10" id="2dg-Vk-6ui"/>
                             <constraint firstItem="f6g-r9-8ke" firstAttribute="top" secondItem="vl4-Bv-aq7" secondAttribute="bottom" constant="-80" id="5oC-uX-NIm"/>
-                            <constraint firstItem="fTd-78-Ip9" firstAttribute="top" secondItem="IIc-dR-yK6" secondAttribute="topMargin" constant="64" id="9Uj-cN-c0I"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="fTd-78-Ip9" secondAttribute="bottom" constant="393.5" id="AGh-hN-TU4"/>
                             <constraint firstItem="f6g-r9-8ke" firstAttribute="leading" secondItem="IIc-dR-yK6" secondAttribute="leading" id="Cq5-q8-ecO"/>
-                            <constraint firstItem="RjM-oh-yQc" firstAttribute="centerX" secondItem="fTd-78-Ip9" secondAttribute="centerX" id="Jxk-89-z5T"/>
-                            <constraint firstAttribute="trailing" secondItem="GdO-fO-75Y" secondAttribute="trailing" id="K9U-Gb-eBg"/>
-                            <constraint firstAttribute="trailing" secondItem="fTd-78-Ip9" secondAttribute="trailing" id="MrC-MR-gpS"/>
-                            <constraint firstItem="6Ul-6u-ntI" firstAttribute="top" secondItem="GdO-fO-75Y" secondAttribute="bottom" constant="250" id="O1U-6k-KqD"/>
+                            <constraint firstItem="2hd-Xi-Hsd" firstAttribute="top" secondItem="83U-4K-2SI" secondAttribute="bottom" id="DM5-Bd-Pbx"/>
+                            <constraint firstItem="f6g-r9-8ke" firstAttribute="top" secondItem="2hd-Xi-Hsd" secondAttribute="bottom" id="JLt-7Z-dhC"/>
+                            <constraint firstAttribute="trailing" secondItem="2hd-Xi-Hsd" secondAttribute="trailing" id="PJK-js-F6E"/>
                             <constraint firstAttribute="trailing" secondItem="f6g-r9-8ke" secondAttribute="trailing" id="Q4c-eT-FOw"/>
                             <constraint firstItem="6Ul-6u-ntI" firstAttribute="top" secondItem="f6g-r9-8ke" secondAttribute="bottom" id="Qml-E4-h3U"/>
-                            <constraint firstItem="msg-Mg-FgM" firstAttribute="centerX" secondItem="IIc-dR-yK6" secondAttribute="centerX" id="Sdk-uE-eCg"/>
-                            <constraint firstItem="tid-QV-yAD" firstAttribute="leading" secondItem="IIc-dR-yK6" secondAttribute="leading" id="Svl-O6-M5c"/>
-                            <constraint firstItem="RjM-oh-yQc" firstAttribute="centerY" secondItem="fTd-78-Ip9" secondAttribute="centerY" id="Tem-HX-kEQ"/>
                             <constraint firstItem="Era-8i-Zia" firstAttribute="centerX" secondItem="f6g-r9-8ke" secondAttribute="centerX" id="Ubf-z9-6Sn"/>
-                            <constraint firstItem="6Ul-6u-ntI" firstAttribute="top" secondItem="tid-QV-yAD" secondAttribute="bottom" constant="180" id="Vky-Ud-r1X"/>
-                            <constraint firstItem="GdO-fO-75Y" firstAttribute="leading" secondItem="IIc-dR-yK6" secondAttribute="leading" id="WP5-eP-XBc"/>
                             <constraint firstItem="f6g-r9-8ke" firstAttribute="top" secondItem="Era-8i-Zia" secondAttribute="bottom" constant="-50" id="ZE8-fl-6uN"/>
-                            <constraint firstItem="fTd-78-Ip9" firstAttribute="leading" secondItem="IIc-dR-yK6" secondAttribute="leading" id="hsH-lw-kAp"/>
-                            <constraint firstAttribute="trailing" secondItem="tid-QV-yAD" secondAttribute="trailing" id="mnA-ig-e9H"/>
                             <constraint firstItem="vl4-Bv-aq7" firstAttribute="centerX" secondItem="f6g-r9-8ke" secondAttribute="centerX" id="p76-Cj-8xE"/>
-                            <constraint firstItem="f6g-r9-8ke" firstAttribute="top" secondItem="tid-QV-yAD" secondAttribute="bottom" id="wCw-Hr-VfW"/>
-                            <constraint firstItem="GdO-fO-75Y" firstAttribute="top" secondItem="fTd-78-Ip9" secondAttribute="bottom" constant="15" id="zWM-IF-yAi"/>
+                            <constraint firstItem="2hd-Xi-Hsd" firstAttribute="leading" secondItem="IIc-dR-yK6" secondAttribute="leading" id="ua4-Uk-1Gk"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="iws-hJ-Kza"/>
                     <connections>
-                        <outlet property="cafeAddressLabel" destination="tid-QV-yAD" id="mFm-wq-ZWH"/>
-                        <outlet property="cafeImage" destination="fTd-78-Ip9" id="Pk3-CI-VjG"/>
-                        <outlet property="cafeNameLabel" destination="GdO-fO-75Y" id="wUm-uN-hlg"/>
-                        <outlet property="imageActivityIndicator" destination="msg-Mg-FgM" id="pd1-Dk-rNp"/>
-                        <outlet property="loadingCafeImageLabel" destination="RjM-oh-yQc" id="gWF-ew-tsl"/>
+                        <outlet property="review" destination="PY9-Ik-CDe" id="PKt-J3-YqT"/>
                         <outlet property="reviewActivityIndicator" destination="Era-8i-Zia" id="vc0-2N-aQ5"/>
+                        <outlet property="reviewDetailView" destination="2hd-Xi-Hsd" id="qxh-Pa-fjz"/>
+                        <outlet property="reviewerImage" destination="mom-oz-l1h" id="mqi-Oa-bEW"/>
+                        <outlet property="reviewerName" destination="2wL-np-ATN" id="YME-GM-R9D"/>
                         <outlet property="reviewsLabel" destination="vl4-Bv-aq7" id="FGX-qo-rF0"/>
                         <outlet property="tableView" destination="f6g-r9-8ke" id="BN7-G2-E2H"/>
                     </connections>

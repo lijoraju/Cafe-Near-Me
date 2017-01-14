@@ -37,7 +37,7 @@ struct Constants {
         static let sort = "recent"
         static let radius = "3000"
         static let limit = "50"
-        static let photosLimit = "52"
+        static let photosLimit = "32"
     }
     
     // MARK: API Paths
