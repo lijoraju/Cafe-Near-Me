@@ -89,8 +89,8 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
                     cell.imageView?.image = UIImage(data: imageData!)
                     cell.textLabel?.text = reviewerName
                     cell.detailTextLabel?.text = review
-                    self.reviewerPhotos.append(imageData!)
                 }
+                self.reviewerPhotos.append(imageData!)
                 if self.reviewerPhotos.count == totalNumReviewerPhotos {
                     Constants.Cafe.reviewerPhotos = self.reviewerPhotos
                     performUIUpdateOnMain {

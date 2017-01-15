@@ -17,13 +17,14 @@ class CafePhotosViewController: UIViewController, UICollectionViewDelegate, UICo
     
     var Photos: [Data] = []
     var downloadedPhotos: Bool = false
-    let itemsPerRow: CGFloat = 3
-    let sectionInsects = UIEdgeInsets(top: 50, left: 30, bottom: 50, right: 30)
+    let itemsPerRow: CGFloat = 4
+    let sectionInsects = UIEdgeInsets(top: 5, left: -17, bottom: 5, right: -17)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         showAllPhotosForThisCafe()
-        Constants.Cafe.photosData = nil
+        flowlayout.minimumLineSpacing = 3.0
+        flowlayout.minimumInteritemSpacing = 3.0
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -108,8 +109,8 @@ class CafePhotosViewController: UIViewController, UICollectionViewDelegate, UICo
                     cell.imageLoadingLabel.isHidden = true
                     cell.imageLoadingIndicator.stopAnimating()
                     cell.CellImage.image = UIImage(data: imageData!)
-                    self.Photos.append(imageData!)
                 }
+                self.Photos.append(imageData!)
             }
             if self.Photos.count == totalNumPhotos {
                 Constants.Cafe.photosData = self.Photos
