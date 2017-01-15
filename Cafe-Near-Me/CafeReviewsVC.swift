@@ -26,6 +26,7 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     // MARK: Function showAllReviewsForThisCafe()
+    
     func showAllReviewsForThisCafe() {
         if let cafe = Constants.SelectedCafe.Index {
             let venueID = Constants.SearchedCafes.VenueIDs[cafe]

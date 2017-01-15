@@ -71,7 +71,8 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
         performSegue(withIdentifier: "TableViewToTabView", sender: self)
     }
     
-    // MARK: Function configureUI
+    // MARK: Function configureUI(enable: Bool)
+    
     func configureUI(enable: Bool) {
         if enable {
             tableView.isHidden = false
@@ -87,6 +88,7 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
     }
 
     // MARK: Cancel button action
+    
     @IBAction func cancelButtonAction(_ sender: AnyObject) {
         dismiss(animated: true, completion: nil)
     }

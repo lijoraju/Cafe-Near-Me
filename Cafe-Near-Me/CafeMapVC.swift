@@ -23,7 +23,8 @@ class CafeMapViewController: UIViewController {
         }
     }
     
-    // MARK: Function loadCafeLocationOnMap
+    // MARK: Function loadCafeLocationOnMap()
+    
     func loadCafeLocationOnMap() {
         if let cafe = Constants.SelectedCafe.Index {
             let latitude = Constants.SearchedCafes.Latitudes[cafe]

@@ -11,12 +11,14 @@ import Foundation
 struct Constants {
     
     // MARK: Foursquare API
+    
     struct Foursquare {
         static let APIScheme = "https"
         static let APIHost = "api.foursquare.com"
     }
     
     // MARK: Parameter Keys
+    
     struct ParameterKeys {
         static let LatLon = "ll"
         static let ClientID = "client_id"
@@ -30,6 +32,7 @@ struct Constants {
     }
     
     // MARK: Parameter Values
+    
     struct ParameterValues {
         static let ClientID = "YJQD3KYUCHZMMF45FGRXUX5ZK2C5O2R2XJTBDHQN2ABYOLJD"
         static let ClientSecret = "WA43JEE4ZF1AVQPSOIEGZMC2B3JEUFKGVUTLYFDIYFZ3LAIF"
@@ -41,6 +44,7 @@ struct Constants {
     }
     
     // MARK: API Paths
+    
     struct APIPaths {
         static let Search = "search"
         static let Venue = "/v2/venues/"
@@ -49,6 +53,7 @@ struct Constants {
     }
     
     // MARK: Response Keys
+    
     struct ResponseKeys {
         static let response = "response"
         static let venues = "venues"
@@ -74,6 +79,7 @@ struct Constants {
     }
     
     // MARK: Searched Cafes
+    
     struct SearchedCafes {
         static var Latitudes: [Double]!
         static var Longitudes: [Double]!
@@ -84,11 +90,13 @@ struct Constants {
     }
     
     // MARK: Selected Cafe
+    
     struct SelectedCafe {
         static var Index: Int!
     }
     
     // MARK: Selected Cafe Reviews
+    
     struct Cafe {
         static var photo: Data!
         static var reviews: [String]!

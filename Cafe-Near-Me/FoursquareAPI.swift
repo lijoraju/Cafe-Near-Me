@@ -14,7 +14,8 @@ class FoursquareAPI {
     let date = Date()
     let formatter = DateFormatter()
     
-    // MARK: Function searchCafesForALocation
+    // MARK: Function searchCafesForALocation(LatitudeAndLongitude LatLon: String, completionHandler: @escaping(_ sucess: Bool, _ errorString: String?)-> Void )
+    
     func searchCafesForALocation(LatitudeAndLongitude LatLon: String, completionHandler: @escaping(_ sucess: Bool, _ errorString: String?)-> Void ) {
         var venueIDs: [String] = []
         var venueNames: [String] = []
@@ -35,6 +36,9 @@ class FoursquareAPI {
                 completionHandler(false, error?.localizedDescription)
                 return
             }
+            
+            // MARK: Function reportAnError()
+            
             func reportAnError() {
                 completionHandler(false, "Unable to obtain cafes for the location")
             }
@@ -104,7 +108,8 @@ class FoursquareAPI {
         task.resume()
     }
     
-    // MARK Function getVenuePhotos
+    // MARK Function getVenuePhotos(selectedVenueID venueID: String, completionHandler: @escaping(_ sucess: Bool, _ error: String?)->Void )
+    
     func getVenuePhotos(selectedVenueID venueID: String, completionHandler: @escaping(_ sucess: Bool, _ error: String?)->Void ) {
         var venuePhotoURLs: [String] = []
         let parameters = [Constants.ParameterKeys.photosLimit: Constants.ParameterValues.photosLimit,
@@ -117,8 +122,14 @@ class FoursquareAPI {
                 completionHandler(false, error?.localizedDescription)
                 return
             }
+            
+            // MARK: Function reportAnError()
+            
+            func reportAnError() {
+                completionHandler(false, "Unable to obtains photos for this cafe now. Try again")
+            }
             guard let data = data else {
-                completionHandler(false, "No data returned with get photos request")
+                reportAnError()
                 return
             }
             var parseResult: Any
@@ -126,20 +137,20 @@ class FoursquareAPI {
                 parseResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
             }
             catch {
-                completionHandler(false, "Couldn't parse data as JSON")
+                reportAnError()
                 return
             }
             let results = parseResult as AnyObject
             guard let response = results[Constants.ResponseKeys.response] as? [String: AnyObject] else {
-                completionHandler(false, "Can't find key \(Constants.ResponseKeys.response)")
+                reportAnError()
                 return
             }
             guard let photos = response[Constants.ResponseKeys.photos] as? [String: AnyObject] else {
-                completionHandler(false, "Can't find key \(Constants.ResponseKeys.photos)")
+                reportAnError()
                 return
             }
             guard let items = photos[Constants.ResponseKeys.items] as? [[String: AnyObject]] else {
-                completionHandler(false, "Can't find key\(Constants.ResponseKeys.items)")
+                reportAnError()
                 return
             }
             for photo in items {
@@ -155,7 +166,8 @@ class FoursquareAPI {
         task.resume()
     }
     
-    // MARK: Function getVenueReviews
+    // MARK: Function getVenueReviews(selectedVenueID venueID: String, completionHandler: @escaping(_ sucess: Bool, _ error: String?)-> Void)
+    
     func getVenueReviews(selectedVenueID venueID: String, completionHandler: @escaping(_ sucess: Bool, _ error: String?)-> Void) {
         var venueReviews: [String] = []
         var userPhotoURLs: [String] = []
@@ -169,8 +181,11 @@ class FoursquareAPI {
                 completionHandler(false, error?.localizedDescription)
                 return
             }
+            
+            // MARK: Function reportAnError()
+            
             func reportAnError() {
-                completionHandler(false, "Unable to obtain reviews for this cafe now")
+                completionHandler(false, "Unable to obtain reviews for this cafe now. Try again")
             }
             guard let data = data else {
                 reportAnError()
@@ -227,7 +242,8 @@ class FoursquareAPI {
         task.resume()
     }
     
-    // MARK: Function downloadImages
+    // MARK: Function downloadImages(atImagePath imagePath: String, completionHandler: @escaping(_ imageData: Data?)-> Void)
+    
     func downloadImages(atImagePath imagePath: String, completionHandler: @escaping(_ imageData: Data?)-> Void) {
         let imageURL = NSURL(string: imagePath)
         let request = NSURLRequest(url: imageURL! as URL)
@@ -241,7 +257,8 @@ class FoursquareAPI {
         task.resume()
     }
     
-    // MARK: Function getFoursquareAPIParameters
+    // MARK: Function getFoursquareAPIParameters(withAPIPath APIPath: String, withParameters parameters: [String: AnyObject])-> URL
+    
     func getFoursquareAPIParameters(withAPIPath APIPath: String, withParameters parameters: [String: AnyObject])-> URL {
         var parameters = parameters
         var components = URLComponents()

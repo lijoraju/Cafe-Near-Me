@@ -32,6 +32,7 @@ class SearchCafeViewController: UIViewController {
     }
     
     // MARK: Search button action
+    
     @IBAction func searchButtonAction(_ sender: AnyObject) {
         configureUI(enable: false)
         if locationTextField.text != "" {
@@ -44,14 +45,16 @@ class SearchCafeViewController: UIViewController {
         }
     }
     
-    // MARK: Function getLatLonForLocation finding coordinates for search location
+    // MARK: Function getLatLonForLocation()
+    
     func getLatLonForLocation() {
         geocoder.geocodeAddressString(locationTextField.text!) { (placemarks, error) in
             self.processResponse(withPlacemarks: placemarks, error: error)
         }
     }
     
-    // MARK: Function processResponse process response from CLGeocoder
+    // MARK: Function processResponse(withPlacemarks placemarks: [CLPlacemark]?, error: Error?)
+    
     func processResponse(withPlacemarks placemarks: [CLPlacemark]?, error: Error?) {
         if let error = error {
             configureUI(enable: true)
@@ -72,13 +75,15 @@ class SearchCafeViewController: UIViewController {
         }
     }
     
-    // MARK: Function completeSearchForCafes
+    // MARK: Function completeSearchForCafes()
+    
     func completeSearchForCafes() {
         configureUI(enable: true)
         performSegue(withIdentifier: "SearchToResult", sender: self)
     }
     
-    // MARK: Function configureUI 
+    // MARK: Function configureUI(enable: Bool)
+    
     func configureUI(enable: Bool) {
         if enable {
             locationTextField.isEnabled = true
@@ -93,6 +98,7 @@ class SearchCafeViewController: UIViewController {
     }
     
     // Shift the view's frame up from when keyboard appears
+    
     func keyboardWillShow(_ notification: NSNotification) {
         if locationTextField.isFirstResponder {
             view.frame.origin.y = -getKeyboardHeight(notification)
@@ -100,6 +106,7 @@ class SearchCafeViewController: UIViewController {
     }
     
     // Shift the view's frame down from when keyboard disappears
+    
     func keyboardWillHide(_ notification: NSNotification) {
         if locationTextField.isFirstResponder {
             view.frame.origin.y = 0
@@ -107,26 +114,30 @@ class SearchCafeViewController: UIViewController {
         
     }
     
-    // MARK: Subscribe keyboard notifications
+    // MARK: Function subscribeToKeyboardNotifications()
+    
     func subscribeToKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(SearchCafeViewController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SearchCafeViewController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    // MARK: Unsubscribe keyboard notifications
+    // MARK: Function unsubscribeToKeyboardNotifications()
+    
     func unsubscribeToKeyboardNotifications() {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    // MARK: Obtain keyboard height
+    // MARK: Function getKeyboardHeight(_ notification: NSNotification)-> CGFloat
+    
     func getKeyboardHeight(_ notification: NSNotification)-> CGFloat {
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
         return keyboardSize.cgRectValue.height
     }
     
-    // MARK: Close keyboard by touching anywhere
+    // MARK: Function hideKeyboardWhenTappedAround()
+    
     func hideKeyboardWhenTappedAround() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(SearchCafeViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
@@ -144,9 +155,11 @@ class SearchCafeViewController: UIViewController {
 }
 
 // MARK: Extension UIViewController
+
 extension UIViewController {
     
-    // MARK: Displaying an alert
+    // MARK: Function displayAnAlert(title: String, message: String)
+    
     func  displayAnAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let alertAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
