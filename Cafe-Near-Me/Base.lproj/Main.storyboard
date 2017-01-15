@@ -281,7 +281,7 @@
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="etk-T7-7MC">
                                 <color key="color" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Photos Available" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z4X-Yb-PlR">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading Photos" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z4X-Yb-PlR">
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="22"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -294,7 +294,7 @@
                             <constraint firstItem="0WH-wk-nMm" firstAttribute="top" secondItem="1di-I1-BBb" secondAttribute="bottom" id="985-r3-WlI"/>
                             <constraint firstItem="etk-T7-7MC" firstAttribute="centerX" secondItem="fTe-7P-frB" secondAttribute="centerX" id="9Hd-Gw-EQV"/>
                             <constraint firstItem="1di-I1-BBb" firstAttribute="top" secondItem="fTe-7P-frB" secondAttribute="bottom" constant="52" id="JHK-dl-yf3"/>
-                            <constraint firstItem="z4X-Yb-PlR" firstAttribute="top" secondItem="etk-T7-7MC" secondAttribute="bottom" constant="186.5" id="NGz-Jy-Ff0"/>
+                            <constraint firstItem="z4X-Yb-PlR" firstAttribute="top" secondItem="etk-T7-7MC" secondAttribute="bottom" constant="187" id="NGz-Jy-Ff0"/>
                             <constraint firstItem="0WH-wk-nMm" firstAttribute="top" secondItem="fTe-7P-frB" secondAttribute="bottom" constant="300" id="Sa7-j9-qXM"/>
                             <constraint firstAttribute="trailing" secondItem="fTe-7P-frB" secondAttribute="trailing" id="VkO-ME-SUt"/>
                             <constraint firstItem="1di-I1-BBb" firstAttribute="leading" secondItem="ZmO-yK-7eQ" secondAttribute="leadingMargin" constant="-12" id="YMu-uz-TtT"/>

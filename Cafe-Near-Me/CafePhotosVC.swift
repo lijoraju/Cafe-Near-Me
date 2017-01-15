@@ -38,6 +38,7 @@ class CafePhotosViewController: UIViewController, UICollectionViewDelegate, UICo
     func showAllPhotosForThisCafe() {
         guard Constants.Cafe.photo == nil else {
             photoLoadingIndicator.stopAnimating()
+            noPhotosLabel.isHidden = true
             cafePhoto.image = UIImage(data: Constants.Cafe.photo)
             return
         }
@@ -47,7 +48,7 @@ class CafePhotosViewController: UIViewController, UICollectionViewDelegate, UICo
                 if sucess {
                     guard let cafePhotoURL = Constants.Cafe.photoURLs.first else {
                         performUIUpdateOnMain {
-                            self.noPhotosLabel.isHidden = false
+                            self.noPhotosLabel.text = "No Photos Available"
                             self.photoLoadingIndicator.stopAnimating()
                         }
                         return
@@ -56,13 +57,13 @@ class CafePhotosViewController: UIViewController, UICollectionViewDelegate, UICo
                         if imageData != nil {
                             performUIUpdateOnMain {
                                 self.photoLoadingIndicator.stopAnimating()
+                                self.noPhotosLabel.isHidden = true
                                 self.cafePhoto.image = UIImage(data: imageData!)
                             }
                         }
                         else {
                             performUIUpdateOnMain {
                                 self.noPhotosLabel.text = "Loading Photos Failed!"
-                                self.noPhotosLabel.isHidden = false
                                 self.photoLoadingIndicator.stopAnimating()
                             }
                         }
@@ -72,7 +73,6 @@ class CafePhotosViewController: UIViewController, UICollectionViewDelegate, UICo
                 else {
                     performUIUpdateOnMain {
                         self.noPhotosLabel.text = "Loading Photos Failed!"
-                        self.noPhotosLabel.isHidden = false
                         self.photoLoadingIndicator.stopAnimating()
                         self.displayAnAlert(title: "Error", message: errorString!)
                     }
@@ -87,7 +87,6 @@ class CafePhotosViewController: UIViewController, UICollectionViewDelegate, UICo
             cell.CellImage.image = UIImage(data: Photos[indexPath.row])
             return cell
         }
-        cell.CellImage.image = #imageLiteral(resourceName: "CafeImagePlaceholder")
         configureCell(cell, atIndexPath: indexPath)
         return cell
     }

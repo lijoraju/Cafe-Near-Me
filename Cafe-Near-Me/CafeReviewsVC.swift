@@ -22,8 +22,13 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let selectedCafeIndex = Constants.SelectedCafe.Index {
-            let venueID = Constants.SearchedCafes.VenueIDs[selectedCafeIndex]
+        showAllReviewsForThisCafe()
+    }
+    
+    // MARK: Function showAllReviewsForThisCafe()
+    func showAllReviewsForThisCafe() {
+        if let cafe = Constants.SelectedCafe.Index {
+            let venueID = Constants.SearchedCafes.VenueIDs[cafe]
             FoursquareAPI.sharedInstance.getVenueReviews(selectedVenueID: venueID) { sucess, errorString in
                 if sucess {
                     performUIUpdateOnMain {
@@ -105,7 +110,12 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
     // MARK: Function enableCafeReviews(enable: Bool)
     
     func enableCafeReviews(enable: Bool) {
-        if enable {
+        DisplayingReviews: if enable {
+            if Constants.Cafe.reviews.count == 0 {
+                reviewsLabel.text = "No Reviews Available"
+                reviewActivityIndicator.stopAnimating()
+                break DisplayingReviews
+            }
             reviewsLabel.isHidden = true
             tableView.isHidden = false
             reviewActivityIndicator.stopAnimating()
@@ -128,7 +138,7 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
         }
         else {
             reviewActivityIndicator.stopAnimating()
-            reviewsLabel.text = "No Reviews Available"
+            reviewsLabel.text = "Loading Reviews Failed!"
         }
     }
     

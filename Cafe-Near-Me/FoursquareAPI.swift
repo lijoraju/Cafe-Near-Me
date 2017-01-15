@@ -197,10 +197,6 @@ class FoursquareAPI {
                 reportAnError()
                 return
             }
-            if items.count == 0 {
-                completionHandler(false, "No reviews available")
-                return
-            }
             for item in items {
                 guard let text = item[Constants.ResponseKeys.text] else {
                     continue
