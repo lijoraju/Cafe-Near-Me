@@ -37,7 +37,7 @@ class FoursquareAPI {
                 return
             }
             
-            // MARK: Function reportAnError()
+            // MARK: Function reportAnError() for failed cafes loading for a search location
             
             func reportAnError() {
                 completionHandler(false, "Unable to obtain cafes for the location")
@@ -108,7 +108,7 @@ class FoursquareAPI {
         task.resume()
     }
     
-    // MARK: Function getVenueDetails(selectedVenueID venueID: String, completionHandler: @escaping(_ sucess: Bool, _ error: String?)->Void)
+    // MARK: Function getVenueDetails(selectedVenueID venueID: String, completionHandler: @escaping(_ sucess: Bool)->Void)
     func getVenueDetails(selectedVenueID venueID: String, completionHandler: @escaping(_ sucess: Bool)-> Void) {
         let parameters = [Constants.ParameterKeys.ClientID: Constants.ParameterValues.ClientID,
                           Constants.ParameterKeys.ClientSecret: Constants.ParameterValues.ClientSecret]
@@ -150,6 +150,68 @@ class FoursquareAPI {
         task.resume()
     }
     
+    // MARK: Function getVenueOpenHours(selectedVenueID venueID: String, completionHandler: @escaping(_ sucess: Bool)-> Void)
+    func getVenueOpenHours(selectedVenueID venueID: String, completionHandler: @escaping(_ sucess: Bool)-> Void) {
+        var openToday: Bool!
+        var openingHours: String!
+        let parameters = [Constants.ParameterKeys.ClientID: Constants.ParameterValues.ClientID,
+                          Constants.ParameterKeys.ClientSecret: Constants.ParameterValues.ClientSecret]
+        let APIPath = Constants.APIPaths.Venue + venueID + Constants.APIPaths.hours
+        let request = URLRequest(url: getFoursquareAPIParameters(withAPIPath: APIPath, withParameters: parameters as [String : AnyObject]))
+        let task = session.dataTask(with: request) { data, response, error in
+            guard error == nil else {
+                completionHandler(false)
+                return
+            }
+            guard let data = data else {
+                completionHandler(false)
+                return
+            }
+            let parseResult: Any
+            do {
+                parseResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+            }
+            catch {
+                completionHandler(false)
+                return
+            }
+            let results = parseResult as AnyObject
+            guard let response = results[Constants.ResponseKeys.response] as? [String: AnyObject] else {
+                completionHandler(false)
+                return
+            }
+            guard let hours = response[Constants.ResponseKeys.hours] as? [String: AnyObject] else {
+                completionHandler(false)
+                return
+            }
+            guard let timeframes = hours[Constants.ResponseKeys.timeframes] as? [[String: AnyObject]] else {
+                completionHandler(false)
+                return
+            }
+            for timeframe in timeframes {
+                guard let includesToday = timeframe[Constants.ResponseKeys.includesToday] as? Bool else {
+                    continue
+                }
+                openToday = includesToday
+                guard let open = timeframe[Constants.ResponseKeys.open] as? [[String: AnyObject]] else {
+                    break
+                }
+                var workingHours = ": "
+                for time in open {
+                    if let openingTime = time[Constants.ResponseKeys.start], let closingTime = time[Constants.ResponseKeys.end] {
+                        workingHours = workingHours + (openingTime as! String) + " - " + (closingTime as! String) + " "
+                    }
+                }
+                openingHours = workingHours
+                break
+            }
+            Constants.Cafe.openToday = openToday
+            Constants.Cafe.openTimeframe = openingHours
+            completionHandler(true)
+        }
+        task.resume()
+    }
+    
     // MARK: Function getVenuePhotos(selectedVenueID venueID: String, completionHandler: @escaping(_ sucess: Bool, _ error: String?)->Void )
     
     func getVenuePhotos(selectedVenueID venueID: String, completionHandler: @escaping(_ sucess: Bool, _ error: String?)-> Void ) {
@@ -165,7 +227,7 @@ class FoursquareAPI {
                 return
             }
             
-            // MARK: Function reportAnError()
+            // MARK: Function reportAnError() for failed photos loading
             
             func reportAnError() {
                 completionHandler(false, "Unable to obtains photos for this cafe now. Try again")
@@ -224,7 +286,7 @@ class FoursquareAPI {
                 return
             }
             
-            // MARK: Function reportAnError()
+            // MARK: Function reportAnError() for failed review loading
             
             func reportAnError() {
                 completionHandler(false, "Unable to obtain reviews for this cafe now. Try again")

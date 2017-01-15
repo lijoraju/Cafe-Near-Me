@@ -15,6 +15,8 @@ class CafeViewController: UIViewController {
     @IBOutlet weak var imageLoadingIndicator: UIActivityIndicatorView!
     @IBOutlet weak var imageLoadingLabel: UILabel!
     @IBOutlet weak var ratingLabel: UILabel!
+    @IBOutlet var cafeOpenedLabel: UILabel!
+    @IBOutlet weak var cafeOpenHours: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,6 +79,30 @@ class CafeViewController: UIViewController {
                     performUIUpdateOnMain {
                         self.ratingLabel.isHidden = false
                         self.ratingLabel.text = "Rating : \(rating) / 10.0"
+                    }
+                }
+            }
+            FoursquareAPI.sharedInstance.getVenueOpenHours(selectedVenueID: venueID) { sucess in
+                if sucess {
+                    if let opensToday = Constants.Cafe.openToday {
+                        if opensToday {
+                            performUIUpdateOnMain {
+                                self.cafeOpenedLabel.isHidden = false
+                                self.cafeOpenedLabel.text = "Open Today"
+                            }
+                        }
+                        else {
+                            performUIUpdateOnMain {
+                                self.cafeOpenedLabel.isHidden = false
+                                self.cafeOpenedLabel.text = "Close Today"
+                            }
+                        }
+                    }
+                    if let openingHours = Constants.Cafe.openTimeframe {
+                        performUIUpdateOnMain {
+                            self.cafeOpenHours.isHidden = false
+                            self.cafeOpenHours.text = openingHours
+                        }
                     }
                 }
             }

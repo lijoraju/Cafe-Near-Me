@@ -50,6 +50,7 @@ struct Constants {
         static let Venue = "/v2/venues/"
         static let Photos = "/photos"
         static let Tips = "/tips"
+        static let hours = "/hours"
     }
     
     // MARK: Response Keys
@@ -78,6 +79,12 @@ struct Constants {
         static let longitude = "lng"
         static let distance = "distance"
         static let rating = "rating"
+        static let hours = "hours"
+        static let timeframes = "timeframes"
+        static let includesToday = "includesToday"
+        static let open = "open"
+        static let start = "start"
+        static let end = "end"
     }
     
     // MARK: Searched Cafes
@@ -101,6 +108,8 @@ struct Constants {
     
     struct Cafe {
         static var rating: Float = 0
+        static var openToday: Bool!
+        static var openTimeframe: String!
         static var photo: Data!
         static var reviews: [String]!
         static var reviewerNames: [String]!
