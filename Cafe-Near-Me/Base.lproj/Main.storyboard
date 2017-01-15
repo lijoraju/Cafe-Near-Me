@@ -578,11 +578,18 @@
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rating : " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X5k-zM-QUU">
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="X5k-zM-QUU" firstAttribute="leading" secondItem="w8q-44-et7" secondAttribute="leading" constant="10" id="2So-WB-pDd"/>
                             <constraint firstItem="D2F-b2-waW" firstAttribute="top" secondItem="Ait-rJ-19f" secondAttribute="bottom" constant="8" id="BvX-IS-tj8"/>
                             <constraint firstItem="89L-hv-AIo" firstAttribute="top" secondItem="TIT-Cd-DdX" secondAttribute="bottom" constant="31.5" id="C6h-Tw-mya"/>
+                            <constraint firstAttribute="trailing" secondItem="X5k-zM-QUU" secondAttribute="trailing" id="MSj-hK-ZEM"/>
                             <constraint firstItem="Ait-rJ-19f" firstAttribute="top" secondItem="wF6-ab-VdR" secondAttribute="bottom" constant="8" id="O0l-jU-8BW"/>
                             <constraint firstItem="D2F-b2-waW" firstAttribute="leading" secondItem="w8q-44-et7" secondAttribute="leading" id="QQq-F9-f26"/>
                             <constraint firstItem="89L-hv-AIo" firstAttribute="centerX" secondItem="w8q-44-et7" secondAttribute="centerX" id="Rrd-ik-t0P"/>
@@ -592,12 +599,13 @@
                             <constraint firstItem="VIp-CA-qHp" firstAttribute="top" secondItem="wF6-ab-VdR" secondAttribute="bottom" constant="240" id="Xut-ZD-9YY"/>
                             <constraint firstItem="wF6-ab-VdR" firstAttribute="top" secondItem="guM-Db-dD1" secondAttribute="bottom" constant="-40" id="b2b-o1-qLk"/>
                             <constraint firstAttribute="trailing" secondItem="89L-hv-AIo" secondAttribute="trailing" id="bBS-mL-BUY"/>
-                            <constraint firstItem="Ait-rJ-19f" firstAttribute="leading" secondItem="w8q-44-et7" secondAttribute="leading" id="iLP-62-qz3"/>
+                            <constraint firstItem="Ait-rJ-19f" firstAttribute="leading" secondItem="w8q-44-et7" secondAttribute="leading" constant="2" id="iLP-62-qz3"/>
                             <constraint firstItem="wF6-ab-VdR" firstAttribute="leading" secondItem="w8q-44-et7" secondAttribute="leading" id="neV-X9-t1P"/>
                             <constraint firstItem="TIT-Cd-DdX" firstAttribute="centerX" secondItem="wF6-ab-VdR" secondAttribute="centerX" id="q8o-G7-9vG"/>
                             <constraint firstItem="TIT-Cd-DdX" firstAttribute="centerY" secondItem="wF6-ab-VdR" secondAttribute="centerY" id="qi9-Go-gRH"/>
                             <constraint firstAttribute="trailing" secondItem="Ait-rJ-19f" secondAttribute="trailing" id="w5j-41-Q9M"/>
-                            <constraint firstAttribute="trailing" secondItem="D2F-b2-waW" secondAttribute="trailing" id="xUt-S7-sos"/>
+                            <constraint firstAttribute="trailing" secondItem="D2F-b2-waW" secondAttribute="trailing" constant="2" id="xUt-S7-sos"/>
+                            <constraint firstItem="X5k-zM-QUU" firstAttribute="top" secondItem="D2F-b2-waW" secondAttribute="bottom" constant="8" id="xyG-Ze-rVs"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="0o1-El-R5f"/>
@@ -607,6 +615,7 @@
                         <outlet property="cafeName" destination="Ait-rJ-19f" id="cid-cT-KFX"/>
                         <outlet property="imageLoadingIndicator" destination="TIT-Cd-DdX" id="dDQ-lx-Cds"/>
                         <outlet property="imageLoadingLabel" destination="89L-hv-AIo" id="jxD-Pp-pNg"/>
+                        <outlet property="ratingLabel" destination="X5k-zM-QUU" id="yS9-KJ-CkW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ltk-MU-5hl" userLabel="First Responder" sceneMemberID="firstResponder"/>

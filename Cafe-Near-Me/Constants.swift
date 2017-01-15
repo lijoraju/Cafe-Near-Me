@@ -57,6 +57,7 @@ struct Constants {
     struct ResponseKeys {
         static let response = "response"
         static let venues = "venues"
+        static let venue = "venue"
         static let venueName = "name"
         static let venueId = "id"
         static let venueLocation = "location"
@@ -76,6 +77,7 @@ struct Constants {
         static let latitude = "lat"
         static let longitude = "lng"
         static let distance = "distance"
+        static let rating = "rating"
     }
     
     // MARK: Searched Cafes
@@ -98,6 +100,7 @@ struct Constants {
     // MARK: Selected Cafe Reviews
     
     struct Cafe {
+        static var rating: Float = 0
         static var photo: Data!
         static var reviews: [String]!
         static var reviewerNames: [String]!

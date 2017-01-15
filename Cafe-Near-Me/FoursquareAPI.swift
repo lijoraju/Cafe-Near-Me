@@ -108,9 +108,51 @@ class FoursquareAPI {
         task.resume()
     }
     
-    // MARK Function getVenuePhotos(selectedVenueID venueID: String, completionHandler: @escaping(_ sucess: Bool, _ error: String?)->Void )
+    // MARK: Function getVenueDetails(selectedVenueID venueID: String, completionHandler: @escaping(_ sucess: Bool, _ error: String?)->Void)
+    func getVenueDetails(selectedVenueID venueID: String, completionHandler: @escaping(_ sucess: Bool)-> Void) {
+        let parameters = [Constants.ParameterKeys.ClientID: Constants.ParameterValues.ClientID,
+                          Constants.ParameterKeys.ClientSecret: Constants.ParameterValues.ClientSecret]
+        let APIPath = Constants.APIPaths.Venue + venueID
+        let request = URLRequest(url: getFoursquareAPIParameters(withAPIPath: APIPath, withParameters: parameters as [String : AnyObject]))
+        let task = session.dataTask(with: request) { data, response, error in
+            guard error == nil else {
+                completionHandler(false)
+                return
+            }
+            guard let data = data else{
+                completionHandler(false)
+                return
+            }
+            var parseResult: Any
+            do {
+                parseResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+            }
+            catch {
+                completionHandler(false)
+                return
+            }
+            let results = parseResult as AnyObject
+            guard let response = results[Constants.ResponseKeys.response] as? [String: AnyObject] else {
+                completionHandler(false)
+                return
+            }
+            guard let venue = response[Constants.ResponseKeys.venue] as? [String: AnyObject] else {
+                completionHandler(false)
+                return
+            }
+            guard let rating = venue[Constants.ResponseKeys.rating] else {
+                completionHandler(false)
+                return
+            }
+            Constants.Cafe.rating = rating as! Float
+            completionHandler(true)
+        }
+        task.resume()
+    }
     
-    func getVenuePhotos(selectedVenueID venueID: String, completionHandler: @escaping(_ sucess: Bool, _ error: String?)->Void ) {
+    // MARK: Function getVenuePhotos(selectedVenueID venueID: String, completionHandler: @escaping(_ sucess: Bool, _ error: String?)->Void )
+    
+    func getVenuePhotos(selectedVenueID venueID: String, completionHandler: @escaping(_ sucess: Bool, _ error: String?)-> Void ) {
         var venuePhotoURLs: [String] = []
         let parameters = [Constants.ParameterKeys.photosLimit: Constants.ParameterValues.photosLimit,
                           Constants.ParameterKeys.ClientID: Constants.ParameterValues.ClientID,

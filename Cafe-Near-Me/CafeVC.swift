@@ -14,10 +14,12 @@ class CafeViewController: UIViewController {
     @IBOutlet weak var cafeAddress: UITextView!
     @IBOutlet weak var imageLoadingIndicator: UIActivityIndicatorView!
     @IBOutlet weak var imageLoadingLabel: UILabel!
+    @IBOutlet weak var ratingLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         showCafePhoto()
+        showDetailsForThisCafe()
     }
     
     // MARK: Function showCafePhoto()
@@ -59,8 +61,25 @@ class CafeViewController: UIViewController {
                     }
                 }
             }
+        }
+    }
+    
+    // MARK: Function showDetailsForThisCafe()
+    
+    func showDetailsForThisCafe() {
+        if let cafe = Constants.SelectedCafe.Index {
+            let venueID = Constants.SearchedCafes.VenueIDs[cafe]
             cafeName.text = Constants.SearchedCafes.Names[cafe]
-            cafeAddress.text = Constants.SearchedCafes.Addresses[cafe]
+            cafeAddress.text = "Address : \(Constants.SearchedCafes.Addresses[cafe])"
+            FoursquareAPI.sharedInstance.getVenueDetails(selectedVenueID: venueID) { sucess in
+                if sucess {
+                    let rating = "\(Constants.Cafe.rating)"
+                    performUIUpdateOnMain {
+                        self.ratingLabel.isHidden = false
+                        self.ratingLabel.text = "Rating : \(rating) / 10.0"
+                    }
+                }
+            }
         }
     }
     
