@@ -23,6 +23,7 @@
 		DAAD02021E2299C0004B1FB8 /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAD02011E2299C0004B1FB8 /* GCDBlackBox.swift */; };
 		DAB0CC0C1E29EE1000152C19 /* CafePhotosVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB0CC0B1E29EE1000152C19 /* CafePhotosVC.swift */; };
 		DAB0CC0E1E29EF9700152C19 /* CafePhotosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB0CC0D1E29EF9700152C19 /* CafePhotosCell.swift */; };
+		DAB0CC101E2A88CC00152C19 /* CafeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB0CC0F1E2A88CC00152C19 /* CafeVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		DAAD02011E2299C0004B1FB8 /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
 		DAB0CC0B1E29EE1000152C19 /* CafePhotosVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CafePhotosVC.swift; sourceTree = "<group>"; };
 		DAB0CC0D1E29EF9700152C19 /* CafePhotosCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CafePhotosCell.swift; sourceTree = "<group>"; };
+		DAB0CC0F1E2A88CC00152C19 /* CafeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CafeVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 				DA8D579F1E27641D002D21A3 /* CafeMapVC.swift */,
 				DAB0CC0B1E29EE1000152C19 /* CafePhotosVC.swift */,
 				DAB0CC0D1E29EF9700152C19 /* CafePhotosCell.swift */,
+				DAB0CC0F1E2A88CC00152C19 /* CafeVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -323,6 +326,7 @@
 				DA86A51B1E235AC600A2AB9E /* CafeReviewsVC.swift in Sources */,
 				DA6C4AE81E21E6AE001289BE /* SearchCafeVC.swift in Sources */,
 				DA8578C41E221C7B00821868 /* FoursquareAPI.swift in Sources */,
+				DAB0CC101E2A88CC00152C19 /* CafeVC.swift in Sources */,
 				DAAD02001E226EED004B1FB8 /* SearchResultsTableVC.swift in Sources */,
 				DA6C4AE61E21E6AE001289BE /* AppDelegate.swift in Sources */,
 				DAB0CC0C1E29EE1000152C19 /* CafePhotosVC.swift in Sources */,

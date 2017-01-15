@@ -10,17 +10,19 @@ import UIKit
 
 class CafePhotosViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var imageLoadingIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var imageLoadingLabel: UILabel!
     @IBOutlet weak var cafePhoto: UIImageView!
     @IBOutlet weak var flowlayout: UICollectionViewFlowLayout!
+    @IBOutlet weak var noPhotosLabel: UILabel!
+    @IBOutlet weak var photoLoadingIndicator: UIActivityIndicatorView!
     
     var Photos: [Data] = []
+    var downloadedPhotos: Bool = false
     let itemsPerRow: CGFloat = 3
     let sectionInsects = UIEdgeInsets(top: 50, left: 30, bottom: 50, right: 30)
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        showAllPhotosForThisCafe()
         Constants.Cafe.photosData = nil
     }
     
@@ -31,8 +33,60 @@ class CafePhotosViewController: UIViewController, UICollectionViewDelegate, UICo
         return 0
     }
 
+    // MARK: Function showAllPhotosForThisCafe()
+    
+    func showAllPhotosForThisCafe() {
+        guard Constants.Cafe.photo == nil else {
+            photoLoadingIndicator.stopAnimating()
+            cafePhoto.image = UIImage(data: Constants.Cafe.photo)
+            return
+        }
+        if let cafe = Constants.SelectedCafe.Index {
+            let venueID = Constants.SearchedCafes.VenueIDs[cafe]
+            FoursquareAPI.sharedInstance.getVenuePhotos(selectedVenueID: venueID) { sucess, errorString in
+                if sucess {
+                    guard let cafePhotoURL = Constants.Cafe.photoURLs.first else {
+                        performUIUpdateOnMain {
+                            self.noPhotosLabel.isHidden = false
+                            self.photoLoadingIndicator.stopAnimating()
+                        }
+                        return
+                    }
+                    FoursquareAPI.sharedInstance.downloadImages(atImagePath: cafePhotoURL) { imageData in
+                        if imageData != nil {
+                            performUIUpdateOnMain {
+                                self.photoLoadingIndicator.stopAnimating()
+                                self.cafePhoto.image = UIImage(data: imageData!)
+                            }
+                        }
+                        else {
+                            performUIUpdateOnMain {
+                                self.noPhotosLabel.text = "Loading Photos Failed!"
+                                self.noPhotosLabel.isHidden = false
+                                self.photoLoadingIndicator.stopAnimating()
+                            }
+                        }
+                     Constants.Cafe.photo = imageData
+                    }
+                }
+                else {
+                    performUIUpdateOnMain {
+                        self.noPhotosLabel.text = "Loading Photos Failed!"
+                        self.noPhotosLabel.isHidden = false
+                        self.photoLoadingIndicator.stopAnimating()
+                        self.displayAnAlert(title: "Error", message: errorString!)
+                    }
+                }
+            }
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as! PhotoCell
+        if downloadedPhotos {
+            cell.CellImage.image = UIImage(data: Photos[indexPath.row])
+            return cell
+        }
         cell.CellImage.image = #imageLiteral(resourceName: "CafeImagePlaceholder")
         configureCell(cell, atIndexPath: indexPath)
         return cell
@@ -44,40 +98,44 @@ class CafePhotosViewController: UIViewController, UICollectionViewDelegate, UICo
         collectionView.deselectItem(at: indexPath, animated: true)
     }
     
-    // MARK: Function configureCell
+    // MARK: Function configureCell(_ cell: PhotoCell, atIndexPath indexPath: IndexPath)
+    
     func configureCell(_ cell: PhotoCell, atIndexPath indexPath: IndexPath) {
         let photoURL = Constants.Cafe.photoURLs[indexPath.row]
-        let totalNumPhotos = Constants.Cafe.photoURLs.count - 1
+        let totalNumPhotos = Constants.Cafe.photoURLs.count
         FoursquareAPI.sharedInstance.downloadImages(atImagePath: photoURL) { imageData in
             if imageData != nil {
                 performUIUpdateOnMain {
+                    cell.imageLoadingLabel.isHidden = true
+                    cell.imageLoadingIndicator.stopAnimating()
                     cell.CellImage.image = UIImage(data: imageData!)
+                    self.Photos.append(imageData!)
                 }
-                self.Photos.append(imageData!)
             }
-            if indexPath.row == totalNumPhotos {
+            if self.Photos.count == totalNumPhotos {
+                Constants.Cafe.photosData = self.Photos
                 performUIUpdateOnMain {
-                    self.completedDownloading()
+                    self.completedDownloadingPhotos()
                 }
             }
         }
     }
     
-    // MARK: Function completedDownloading
-    func completedDownloading() {
-        cafePhoto.isHidden = false
-        cafePhoto.image = UIImage(data: Constants.imageData)
-        imageLoadingLabel.isHidden = true
-        imageLoadingIndicator.stopAnimating()
-        Constants.Cafe.photosData = Photos
+    // MARK: Function completedDownloadingPhotos()
+    
+    func completedDownloadingPhotos() {
+        downloadedPhotos = true
+        collectionView.reloadData()
     }
     
 }
 
 // MARK: UICollectionViewDelegateFlowLayout
+
 extension CafePhotosViewController: UICollectionViewDelegateFlowLayout {
     
     // MARK: Tells the size of a given cell in collection view
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let paddingSpace = sectionInsects.left * (itemsPerRow + 1)
         let availableWidth = view.frame.width - paddingSpace

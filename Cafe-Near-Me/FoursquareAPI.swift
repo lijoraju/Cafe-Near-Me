@@ -94,7 +94,7 @@ class FoursquareAPI {
                 venueDistances.append(distance as! Int)
             }
             Constants.SearchedCafes.Names = venueNames
-            Constants.SearchedCafes.CafeIDs = venueIDs
+            Constants.SearchedCafes.VenueIDs = venueIDs
             Constants.SearchedCafes.Addresses = venueAddresses
             Constants.SearchedCafes.Latitudes = venueLatitudes
             Constants.SearchedCafes.Longitudes = venueLongitudes
@@ -141,16 +141,6 @@ class FoursquareAPI {
             guard let items = photos[Constants.ResponseKeys.items] as? [[String: AnyObject]] else {
                 completionHandler(false, "Can't find key\(Constants.ResponseKeys.items)")
                 return
-            }
-            if let photo = items.first {
-                let prefix = photo[Constants.ResponseKeys.prefix] as! String
-                let suffix = photo[Constants.ResponseKeys.suffix] as! String
-                let widthXheight = Constants.ResponseKeys.cafePhotowidthXheight
-                let urlString = prefix + widthXheight + suffix
-                let url = URL(string: urlString)!
-                if let imageData = NSData(contentsOf: url) {
-                    Constants.imageData = imageData as Data!
-                }
             }
             for photo in items {
                 let prefix = photo[Constants.ResponseKeys.prefix] as! String
@@ -234,8 +224,8 @@ class FoursquareAPI {
                 userPhotoURLs.append(url)
             }
             Constants.Cafe.reviews = venueReviews
-            Constants.Cafe.userNames = userNames
-            Constants.Cafe.userPhotoURLs = userPhotoURLs
+            Constants.Cafe.reviewerNames = userNames
+            Constants.Cafe.reviewerPhotoURLs = userPhotoURLs
             completionHandler(true, nil)
         }
         task.resume()

@@ -18,15 +18,12 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var reviewDetailView: UIView!
     
     var reviewerPhotos: [Data] = []
+    var loadedReviews: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         if let selectedCafeIndex = Constants.SelectedCafe.Index {
-            let venueID = Constants.SearchedCafes.CafeIDs[selectedCafeIndex]
-            Constants.imageData = nil
-            Constants.Cafe.reviews = nil
-            Constants.Cafe.userNames = nil
-            Constants.Cafe.userPhotoURLs = nil
+            let venueID = Constants.SearchedCafes.VenueIDs[selectedCafeIndex]
             FoursquareAPI.sharedInstance.getVenueReviews(selectedVenueID: venueID) { sucess, errorString in
                 if sucess {
                     performUIUpdateOnMain {
@@ -52,14 +49,19 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReviewCell")!
-        if Constants.Cafe.reviews != nil {
-            return configureCell(cell: cell, atIndexPath: indexPath)
+        if loadedReviews {
+            let reviewerName = Constants.Cafe.reviewerNames[indexPath.row]
+            let review = Constants.Cafe.reviews[indexPath.row]
+            cell.imageView?.image = UIImage(data: reviewerPhotos[indexPath.row])
+            cell.textLabel?.text = reviewerName
+            cell.detailTextLabel?.text = review
+            return cell
         }
-        return cell
+        return configureCell(cell: cell, atIndexPath: indexPath)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let name = Constants.Cafe.userNames[indexPath.row]
+        let name = Constants.Cafe.reviewerNames[indexPath.row]
         let content = Constants.Cafe.reviews[indexPath.row]
         let userImageData = reviewerPhotos[indexPath.row]
         reviewerImage.image = UIImage(data: userImageData)
@@ -68,19 +70,27 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    // MARK: Function configureCell
+    // MARK: Function configureCell(cell: UITableViewCell, atIndexPath indexPath: IndexPath)-> UITableViewCell
+    
     func configureCell(cell: UITableViewCell, atIndexPath indexPath: IndexPath)-> UITableViewCell {
         let review = Constants.Cafe.reviews[indexPath.row]
-        let reviewerName = Constants.Cafe.userNames[indexPath.row]
-        let reviewerImagePath = Constants.Cafe.userPhotoURLs[indexPath.row]
+        let reviewerName = Constants.Cafe.reviewerNames[indexPath.row]
+        let reviewerImagePath = Constants.Cafe.reviewerPhotoURLs[indexPath.row]
+        let totalNumReviewerPhotos = Constants.Cafe.reviewerPhotoURLs.count
         FoursquareAPI.sharedInstance.downloadImages(atImagePath: reviewerImagePath) { imageData in
             if imageData != nil {
                 performUIUpdateOnMain {
                     cell.imageView?.image = UIImage(data: imageData!)
                     cell.textLabel?.text = reviewerName
                     cell.detailTextLabel?.text = review
+                    self.reviewerPhotos.append(imageData!)
                 }
-                self.reviewerPhotos.append(imageData!)
+                if self.reviewerPhotos.count == totalNumReviewerPhotos {
+                    Constants.Cafe.reviewerPhotos = self.reviewerPhotos
+                    performUIUpdateOnMain {
+                        self.completedLoadingPhotos()
+                    }
+                }
             }
             else {
                 performUIUpdateOnMain {
@@ -92,7 +102,8 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
         return cell
     }
     
-    // MARK: Function enableCafeReviews
+    // MARK: Function enableCafeReviews(enable: Bool)
+    
     func enableCafeReviews(enable: Bool) {
         if enable {
             reviewsLabel.isHidden = true
@@ -100,9 +111,9 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
             reviewActivityIndicator.stopAnimating()
             tableView.reloadData()
             reviewDetailView.isHidden = false
-            reviewerName.text = Constants.Cafe.userNames.first
+            reviewerName.text = Constants.Cafe.reviewerNames.first
             review.text = Constants.Cafe.reviews.first
-            FoursquareAPI.sharedInstance.downloadImages(atImagePath: Constants.Cafe.userPhotoURLs.first!) { imageData in
+            FoursquareAPI.sharedInstance.downloadImages(atImagePath: Constants.Cafe.reviewerPhotoURLs.first!) { imageData in
                 if imageData != nil {
                     performUIUpdateOnMain {
                         self.reviewerImage.image = UIImage(data: imageData!)
@@ -119,6 +130,13 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
             reviewActivityIndicator.stopAnimating()
             reviewsLabel.text = "No Reviews Available"
         }
+    }
+    
+    // MARK: Function completedLoadingReviews()
+    
+    func completedLoadingPhotos() {
+        loadedReviews = true
+        tableView.reloadData()
     }
     
 }

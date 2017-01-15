@@ -60,6 +60,13 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         Constants.SelectedCafe.Index = indexPath.row
+        Constants.Cafe.photo = nil
+        Constants.Cafe.reviews = nil
+        Constants.Cafe.reviewerNames = nil
+        Constants.Cafe.reviewerPhotoURLs = nil
+        Constants.Cafe.photosData = nil
+        Constants.Cafe.reviewerPhotos = nil
+        Constants.Cafe.photoURLs = nil
         tableView.deselectRow(at: indexPath, animated: true)
         performSegue(withIdentifier: "TableViewToTabView", sender: self)
     }

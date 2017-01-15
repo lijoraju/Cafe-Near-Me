@@ -79,7 +79,7 @@ struct Constants {
         static var Longitudes: [Double]!
         static var Distances: [Int]!
         static var Names: [String]!
-        static var CafeIDs: [String]!
+        static var VenueIDs: [String]!
         static var Addresses: [String]!
     }
     
@@ -90,15 +90,16 @@ struct Constants {
     
     // MARK: Selected Cafe Reviews
     struct Cafe {
+        static var photo: Data!
         static var reviews: [String]!
-        static var userNames: [String]!
-        static var userPhotoURLs: [String]!
+        static var reviewerNames: [String]!
+        static var reviewerPhotoURLs: [String]!
+        static var reviewerPhotos: [Data]!
         static var photoURLs: [String]!
         static var photosData: [Data]!
     }
     
     static var searchingLatLon: String!
     static var searchingLocation: String!
-    static var imageData: Data!
     
 }
