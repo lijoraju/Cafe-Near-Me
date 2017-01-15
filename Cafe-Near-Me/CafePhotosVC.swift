@@ -74,7 +74,7 @@ class CafePhotosViewController: UIViewController, UICollectionViewDelegate, UICo
                     performUIUpdateOnMain {
                         self.noPhotosLabel.text = "Loading Photos Failed!"
                         self.photoLoadingIndicator.stopAnimating()
-                        self.displayAnAlert(title: "Error", message: errorString!)
+                        self.displayAnAlert(title: "Failed Loading Cafe Photos", message: errorString!)
                     }
                 }
             }

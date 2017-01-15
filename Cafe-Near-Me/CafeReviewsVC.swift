@@ -37,7 +37,7 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
                 }
                 else {
                     performUIUpdateOnMain {
-                        self.displayAnAlert(title: "Error", message: errorString!)
+                        self.displayAnAlert(title: "Failed Loading Cafe Reviews", message: errorString!)
                         self.enableCafeReviews(enable: false)
                     }
                 }

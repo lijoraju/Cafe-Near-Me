@@ -55,7 +55,7 @@ class CafeViewController: UIViewController {
                     performUIUpdateOnMain {
                         self.imageLoadingIndicator.stopAnimating()
                         self.imageLoadingLabel.text = "Loading Photo Failed!"
-                        self.displayAnAlert(title: "Error", message: errorString!)
+                        self.displayAnAlert(title: "Error: Downloading Cafe Photo", message: errorString!)
                     }
                 }
             }
