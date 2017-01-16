@@ -30,12 +30,12 @@ class CafeViewController: UIViewController {
         super.viewDidLoad()
         let searchingLatLon = Constants.searchingLatLon
         if (searchingLatLon != nil) {
-            showPhotoForThisCafe()
-            showDetailsForThisCafe()
+            gettingPhotoForTheCafe()
+            gettingDetailsForTheCafe()
         }
         else {
             if let cafeIndex = Constants.SelectedCafe.Index {
-                fetchDetailsAndPhotoFromBookmarks(forIndex: cafeIndex)
+                getPhotoAndDetailsFromBookmarks(forIndex: cafeIndex)
             }
         }
     }
@@ -53,8 +53,8 @@ class CafeViewController: UIViewController {
         
     }
     
-    // MARK: Function fetchDetailsAndPhotoFromBookmarks(forIndex index: Int)
-    func fetchDetailsAndPhotoFromBookmarks(forIndex index: Int) {
+    // MARK: Function getPhotoAndDetailsFromBookmarks(forIndex index: Int)
+    func getPhotoAndDetailsFromBookmarks(forIndex index: Int) {
         do {
             cafes = try managedContext.fetch(fetchRequestForCafe)
         }
@@ -72,8 +72,8 @@ class CafeViewController: UIViewController {
         showCafeDetailsAndPhoto(cafeIndex: index)
     }
     
-    // MARK: Function showPhotoForThisCafe()
-    func showPhotoForThisCafe() {
+    // MARK: Function gettingPhotoForTheCafe()
+    func gettingPhotoForTheCafe() {
         if let cafe = Constants.SelectedCafe.Index {
                 let venueID = Constants.SearchedCafes.VenueIDs[cafe]
                 FoursquareAPI.sharedInstance.getVenuePhotos(selectedVenueID: venueID) { sucess, errorString in
@@ -113,8 +113,8 @@ class CafeViewController: UIViewController {
         }
     }
     
-    // MARK: Function showDetailsForThisCafe()
-    func showDetailsForThisCafe() {
+    // MARK: Function gettingDetailsForTheCafe()
+    func gettingDetailsForTheCafe() {
             if let cafe = Constants.SelectedCafe.Index {
                 let venueID = Constants.SearchedCafes.VenueIDs[cafe]
                 cafeName.text = Constants.SearchedCafes.Names[cafe]
@@ -160,7 +160,7 @@ class CafeViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    // MARK: Bookmark Button Action
+    // MARK: Action for Bookmark button
     @IBAction func bookmarkButtonAction(_ sender: AnyObject) {
         if let selectedCafe = Constants.SelectedCafe.Index {
             let cafe = Cafe(context: managedContext)
@@ -174,14 +174,14 @@ class CafeViewController: UIViewController {
             CoreData.sharedInstance.save(managedObjectContext: managedContext) { sucess in
                 if sucess {
                     print("Cafe added to bookmarks")
-                    self.bookmarkCafePhotos(forCafe: cafe)
+                    self.addCafePhotosToBookmark(forCafe: cafe)
                 }
             }
         }
     }
     
-    // MARK: Function bookmarkCafePhotos()
-    func bookmarkCafePhotos(forCafe thisCafe: Cafe) {
+    // MARK: Function addCafePhotosToBookmark(forCafe thisCafe: Cafe)
+    func addCafePhotosToBookmark(forCafe thisCafe: Cafe) {
         if let photoURLs = Constants.Cafe.photoURLs {
             for url in photoURLs {
                 FoursquareAPI.sharedInstance.downloadImages(atImagePath: url) { photoData in
