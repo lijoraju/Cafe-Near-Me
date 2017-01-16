@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
@@ -19,14 +20,25 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
     
     var reviewerPhotos: [Data] = []
     var loadedReviews: Bool = false
+    let managedContext: NSManagedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    let fetchRequest: NSFetchRequest<Review> = Review.fetchRequest()
+    var loadingReviewsFlag: Bool = false
+    var bookmarkedReviews: [Review] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        showAllReviewsForThisCafe()
+        let searchingLatLon = Constants.searchingLatLon
+        if (searchingLatLon != nil) {
+            showAllReviewsForThisCafe()
+        }
+        else {
+            showAllBookmarkedReviewsForTheCafe()
+        }
     }
     
     // MARK: Function showAllReviewsForThisCafe()
     func showAllReviewsForThisCafe() {
+        loadingReviewsFlag = true
         if let cafe = Constants.SelectedCafe.Index {
             let venueID = Constants.SearchedCafes.VenueIDs[cafe]
             FoursquareAPI.sharedInstance.getVenueReviews(selectedVenueID: venueID) { sucess, errorString in
@@ -45,11 +57,40 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let reviews = Constants.Cafe.reviews {
-            return reviews.count
+    // MARK: Function showAllBookmarkedReviewsForTheCafe() 
+    func showAllBookmarkedReviewsForTheCafe() {
+        let cafe = CoreData.sharedInstance.gettingCafeInfo(managedObjectContext: managedContext)
+        let predicate: NSPredicate = NSPredicate(format: "cafe = %@", cafe)
+        fetchRequest.predicate = predicate
+        do {
+            bookmarkedReviews = try managedContext.fetch(fetchRequest)
         }
-        return 0
+        catch let error as NSError {
+            print("Error fetching reviews \(error) \(error.userInfo)")
+        }
+        if bookmarkedReviews.count == 0 {
+            reviewsLabel.text = "No Reviews Available"
+            reviewActivityIndicator.stopAnimating()
+        }
+        else {
+            reviewsLabel.isHidden = true
+            tableView.isHidden = false
+            reviewActivityIndicator.stopAnimating()
+            tableView.reloadData()
+            reviewDetailView.isHidden = false
+            let firstReview = bookmarkedReviews.first!
+            reviewerName.text = firstReview.reviewer
+            review.text = firstReview.review
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if loadingReviewsFlag {
+            if let reviews = Constants.Cafe.reviews {
+                return reviews.count
+            }
+        }
+        return bookmarkedReviews.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -62,16 +103,37 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
             cell.detailTextLabel?.text = review
             return cell
         }
-        return configureCell(cell: cell, atIndexPath: indexPath)
+        else {
+            if loadingReviewsFlag {
+                return configureCell(cell: cell, atIndexPath: indexPath)
+            }
+            let cafeReview = bookmarkedReviews[indexPath.row]
+            let reviewerPhoto = cafeReview.photo!
+            let photoData = reviewerPhoto.photoData
+            cell.imageView?.image = UIImage(data: photoData as! Data)
+            cell.textLabel?.text = cafeReview.reviewer
+            cell.detailTextLabel?.text = cafeReview.review
+            return cell
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let name = Constants.Cafe.reviewerNames[indexPath.row]
-        let content = Constants.Cafe.reviews[indexPath.row]
-        let userImageData = reviewerPhotos[indexPath.row]
-        reviewerImage.image = UIImage(data: userImageData)
-        reviewerName.text = name
-        review.text = content
+        if loadingReviewsFlag {
+            let name = Constants.Cafe.reviewerNames[indexPath.row]
+            let content = Constants.Cafe.reviews[indexPath.row]
+            let userImageData = reviewerPhotos[indexPath.row]
+            reviewerImage.image = UIImage(data: userImageData)
+            reviewerName.text = name
+            review.text = content
+        }
+        else {
+            let cafeReview = bookmarkedReviews[indexPath.row]
+            let reviewerPhoto = cafeReview.photo!
+            let photoData = reviewerPhoto.photoData
+            reviewerImage.image = UIImage(data: photoData as! Data)
+            reviewerName.text = cafeReview.reviewer
+            review.text = cafeReview.review
+        }
         tableView.deselectRow(at: indexPath, animated: true)
     }
     

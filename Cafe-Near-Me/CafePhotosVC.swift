@@ -55,8 +55,8 @@ class CafePhotosViewController: UIViewController, UICollectionViewDelegate, UICo
             photoLoadingIndicator.stopAnimating()
         }
         else {
-            let photo = bookmarkedPhotos.first
-            let photoData = photo?.photoData
+            let photo = bookmarkedPhotos.first!
+            let photoData = photo.photoData
             photoLoadingIndicator.stopAnimating()
             noPhotosLabel.isHidden = true
             cafePhoto.image = UIImage(data: photoData as! Data)
