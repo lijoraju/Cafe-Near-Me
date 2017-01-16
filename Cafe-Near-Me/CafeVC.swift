@@ -47,6 +47,8 @@ class CafeViewController: UIViewController {
         let photoData = cafePhoto.photoData
         cafeName.text = cafe.name
         cafeAddress.text = cafe.address
+        ratingLabel.text = "Rating : \(cafe.rating) / 10.0"
+        ratingLabel.isHidden = false
         imageLoadingIndicator.stopAnimating()
         imageLoadingLabel.isHidden = true
         cafeImage.image = UIImage(data: photoData as! Data)
@@ -174,14 +176,14 @@ class CafeViewController: UIViewController {
             CoreData.sharedInstance.save(managedObjectContext: managedContext) { sucess in
                 if sucess {
                     print("Cafe added to bookmarks")
-                    self.addCafePhotosToBookmark(forCafe: cafe)
+                    self.addCafePhotosToBookmarks(forCafe: cafe)
                 }
             }
         }
     }
     
-    // MARK: Function addCafePhotosToBookmark(forCafe thisCafe: Cafe)
-    func addCafePhotosToBookmark(forCafe thisCafe: Cafe) {
+    // MARK: Function addCafePhotosToBookmarks(forCafe thisCafe: Cafe)
+    func addCafePhotosToBookmarks(forCafe thisCafe: Cafe) {
         if let photoURLs = Constants.Cafe.photoURLs {
             for url in photoURLs {
                 FoursquareAPI.sharedInstance.downloadImages(atImagePath: url) { photoData in
