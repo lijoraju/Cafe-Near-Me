@@ -113,7 +113,6 @@ class CafePhotosViewController: UIViewController, UICollectionViewDelegate, UICo
                 self.Photos.append(imageData!)
             }
             if self.Photos.count == totalNumPhotos {
-                Constants.Cafe.photosData = self.Photos
                 performUIUpdateOnMain {
                     self.completedDownloadingPhotos()
                 }

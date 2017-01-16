@@ -116,7 +116,7 @@ struct Constants {
         static var reviewerPhotoURLs: [String]!
         static var reviewerPhotos: [Data]!
         static var photoURLs: [String]!
-        static var photosData: [Data]!
+        //static var photosData: [Data]!
     }
     
     static var searchingLatLon: String!

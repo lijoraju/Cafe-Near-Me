@@ -640,7 +640,7 @@
                                 <action selector="cancelButtonAction:" destination="4m1-q2-pEh" id="1px-70-1Ak"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="bookmarks" id="9sl-xe-GZN">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="9sl-xe-GZN">
                             <connections>
                                 <action selector="bookmarkButtonAction:" destination="4m1-q2-pEh" id="bkC-cR-hP8"/>
                             </connections>

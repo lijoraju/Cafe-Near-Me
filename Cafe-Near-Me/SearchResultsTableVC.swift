@@ -70,7 +70,7 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
         }
         if cafes.count == 0 {
             performUIUpdateOnMain {
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: nil)
+                self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(self.deleteBookmarks))
                 self.navigationItem.rightBarButtonItem?.isEnabled = false
                 self.tableView.isHidden = true
                 self.noResultsLabel.isHidden = false
@@ -116,7 +116,6 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
             Constants.Cafe.reviews = nil
             Constants.Cafe.reviewerNames = nil
             Constants.Cafe.reviewerPhotoURLs = nil
-            Constants.Cafe.photosData = nil
             Constants.Cafe.reviewerPhotos = nil
             Constants.Cafe.photoURLs = nil
             tableView.deselectRow(at: indexPath, animated: true)
@@ -125,6 +124,11 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
         else {
             if editBookmarksMode {
                 removeSeletedCafeFromBookmarks(cafeAtIndex: indexPath.row)
+            }
+            else {
+                Constants.SelectedCafe.Index = indexPath.row
+                tableView.deselectRow(at: indexPath, animated: true)
+                performSegue(withIdentifier: "TableViewToTabView", sender: self)
             }
         }
     }
