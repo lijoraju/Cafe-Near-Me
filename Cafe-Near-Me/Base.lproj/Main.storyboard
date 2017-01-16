@@ -635,14 +635,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="KKx-59-vNa">
-                        <barButtonItem key="leftBarButtonItem" title="Back" id="7V6-E4-AOo">
+                        <barButtonItem key="leftBarButtonItem" title="Back" style="plain" id="7V6-E4-AOo">
                             <connections>
                                 <action selector="cancelButtonAction:" destination="4m1-q2-pEh" id="1px-70-1Ak"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="9sl-xe-GZN">
-                            <connections>
-                                <action selector="bookmarkButtonAction:" destination="4m1-q2-pEh" id="bkC-cR-hP8"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

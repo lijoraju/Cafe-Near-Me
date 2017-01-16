@@ -23,6 +23,7 @@ class CafeViewController: UIViewController {
     let fetchRequestForPhoto: NSFetchRequest<Photo> = Photo.fetchRequest()
     var cafes: [Cafe] = []
     var cafePhotos: [Photo] = []
+    var cafeBookmarked: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +31,7 @@ class CafeViewController: UIViewController {
         if (searchingLatLon != nil) {
             gettingPhotoForTheCafe()
             gettingDetailsForTheCafe()
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Make Bookmark", style: .plain, target: self, action: #selector(makeBookmark))
         }
         else {
             getPhotoAndDetailsFromBookmarks()
@@ -157,8 +159,9 @@ class CafeViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    // MARK: Action for Bookmark button
-    @IBAction func bookmarkButtonAction(_ sender: AnyObject) {
+    // MARK: Function makeBookmark()
+    func makeBookmark() {
+        navigationItem.rightBarButtonItem?.isEnabled = false
         if let selectedCafe = Constants.SelectedCafe.Index {
             let cafe = Cafe(context: managedContext)
             cafe.venueID = Constants.SearchedCafes.VenueIDs[selectedCafe]
@@ -180,7 +183,20 @@ class CafeViewController: UIViewController {
                     }
                 }
             }
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Remove Bookmark", style: .plain, target: self, action: #selector(removeBookmark))
         }
+    }
+    
+    // MARK: Function removeBookmark() 
+    func removeBookmark() {
+        let cafe = CoreData.sharedInstance.gettingCafeInfo(managedObjectContext: managedContext)
+        managedContext.delete(cafe)
+        CoreData.sharedInstance.save(managedObjectContext: managedContext) { sucess in
+            if sucess {
+                print("Removed bookmarked cafe")
+            }
+        }
+         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Make Bookmark", style: .plain, target: self, action: #selector(self.makeBookmark))
     }
     
     // MARK: Function addCafePhotosToBookmarks(forCafe thisCafe: Cafe)
