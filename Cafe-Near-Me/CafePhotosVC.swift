@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class CafePhotosViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     @IBOutlet weak var collectionView: UICollectionView!
@@ -19,19 +20,47 @@ class CafePhotosViewController: UIViewController, UICollectionViewDelegate, UICo
     var downloadedPhotos: Bool = false
     let itemsPerRow: CGFloat = 4
     let sectionInsects = UIEdgeInsets(top: 5, left: -17, bottom: 5, right: -17)
+    let managedContext: NSManagedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    let fetchRequest: NSFetchRequest<Photo> = Photo.fetchRequest()
+    var bookmarkedPhotos: [Photo] = []
+    var downloadingPhotosFlag: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        showAllPhotosForThisCafe()
+        let searchingLatLon = Constants.searchingLatLon
+        if (searchingLatLon != nil) {
+            downloadingPhotosFlag = true
+            showAllPhotosForThisCafe()
+        }
+        else {
+            showAllBookmarkedPhotosForThisCafe()
+        }
         flowlayout.minimumLineSpacing = 3.0
         flowlayout.minimumInteritemSpacing = 3.0
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let photos = Constants.Cafe.photoURLs {
-            return photos.count
+    // MARK: Function showAllBookmarkedPhotosForThisCafe()
+    func showAllBookmarkedPhotosForThisCafe() {
+        let cafe = CoreData.sharedInstance.gettingCafeInfo(managedObjectContext: managedContext)
+        let predicate: NSPredicate = NSPredicate(format: "cafe = %@", cafe)
+        fetchRequest.predicate = predicate
+        do {
+            bookmarkedPhotos = try managedContext.fetch(fetchRequest)
         }
-        return 0
+        catch let error as NSError {
+            print("Unable to fetch photos \(error) \(error.userInfo)")
+        }
+        if bookmarkedPhotos.count == 0 {
+            noPhotosLabel.text = "No Photos Available"
+            photoLoadingIndicator.stopAnimating()
+        }
+        else {
+            let photo = bookmarkedPhotos.first
+            let photoData = photo?.photoData
+            photoLoadingIndicator.stopAnimating()
+            noPhotosLabel.isHidden = true
+            cafePhoto.image = UIImage(data: photoData as! Data)
+        }
     }
 
     // MARK: Function showAllPhotosForThisCafe()
@@ -81,19 +110,43 @@ class CafePhotosViewController: UIViewController, UICollectionViewDelegate, UICo
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if downloadingPhotosFlag {
+            if let photos = Constants.Cafe.photoURLs {
+                return photos.count
+            }
+        }
+        return bookmarkedPhotos.count
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as! PhotoCell
         if downloadedPhotos {
             cell.CellImage.image = UIImage(data: Photos[indexPath.row])
             return cell
         }
-        configureCell(cell, atIndexPath: indexPath)
+        if downloadingPhotosFlag {
+            configureCell(cell, atIndexPath: indexPath)
+            return cell
+        }
+        let photo = bookmarkedPhotos[indexPath.row]
+        let photoData = photo.photoData
+        cell.CellImage.image = UIImage(data: photoData as! Data)
+        cell.imageLoadingLabel.isHidden = true
+        cell.imageLoadingIndicator.stopAnimating()
         return cell
     }
    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let imageData = Photos[indexPath.row]
-        cafePhoto.image = UIImage(data: imageData)
+        if downloadingPhotosFlag {
+            let imageData = Photos[indexPath.row]
+            cafePhoto.image = UIImage(data: imageData)
+        }
+        else {
+            let photo = bookmarkedPhotos[indexPath.row]
+            let photoData = photo.photoData
+            cafePhoto.image = UIImage(data: photoData as! Data)
+        }
         collectionView.deselectItem(at: indexPath, animated: true)
     }
     
