@@ -41,7 +41,6 @@ class CafeViewController: UIViewController {
     }
     
     // MARK: Function showCafeDetailsAndPhoto(cafeIndex: Int)
-    
     func showCafeDetailsAndPhoto(cafeIndex: Int) {
         let cafe = cafes[cafeIndex]
         let cafePhoto = photos.first!
@@ -55,7 +54,6 @@ class CafeViewController: UIViewController {
     }
     
     // MARK: Function fetchDetailsAndPhotoFromBookmarks(forIndex index: Int)
-    
     func fetchDetailsAndPhotoFromBookmarks(forIndex index: Int) {
         do {
             cafes = try managedContext.fetch(fetchRequestForCafe)
@@ -75,7 +73,6 @@ class CafeViewController: UIViewController {
     }
     
     // MARK: Function showPhotoForThisCafe()
-    
     func showPhotoForThisCafe() {
         if let cafe = Constants.SelectedCafe.Index {
                 let venueID = Constants.SearchedCafes.VenueIDs[cafe]
@@ -117,7 +114,6 @@ class CafeViewController: UIViewController {
     }
     
     // MARK: Function showDetailsForThisCafe()
-    
     func showDetailsForThisCafe() {
             if let cafe = Constants.SelectedCafe.Index {
                 let venueID = Constants.SearchedCafes.VenueIDs[cafe]
@@ -160,13 +156,11 @@ class CafeViewController: UIViewController {
     }
     
     // MARK: Cancel Button Action
-    
     @IBAction func cancelButtonAction(_ sender: AnyObject) {
         dismiss(animated: true, completion: nil)
     }
     
     // MARK: Bookmark Button Action
-    
     @IBAction func bookmarkButtonAction(_ sender: AnyObject) {
         if let selectedCafe = Constants.SelectedCafe.Index {
             let cafe = Cafe(context: managedContext)
@@ -187,7 +181,6 @@ class CafeViewController: UIViewController {
     }
     
     // MARK: Function bookmarkCafePhotos()
-    
     func bookmarkCafePhotos(forCafe thisCafe: Cafe) {
         if let photoURLs = Constants.Cafe.photoURLs {
             for url in photoURLs {

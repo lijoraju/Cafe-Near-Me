@@ -36,7 +36,6 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
     }
     
     // MARK: Function performFoursquareSearch()
-    
     func performFoursquareSearch() {
         foursquareSearchFlag = true
         if let LatLon = Constants.searchingLatLon {
@@ -60,7 +59,6 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
     }
     
     // MARK: Function showingAllBookmarks()
-    
     func showingAllBookmarks() {
         do {
             cafes = try managedContext.fetch(fetchRequest)
@@ -146,7 +144,6 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
     }
     
     // MARK: Function configureUI(enable: Bool)
-    
     func configureUI(enable: Bool) {
         if enable {
             tableView.isHidden = false
@@ -162,14 +159,12 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
     }
 
     // MARK: Cancel button action
-    
     @IBAction func cancelButtonAction(_ sender: AnyObject) {
         dismiss(animated: true, completion: nil)
         Constants.searchingLatLon = nil
     }
     
     // MARK: Function deleteBookmarks()
-    
     func deleteBookmarks() {
         if editBookmarksMode {
             editBookmarksMode = false

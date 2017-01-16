@@ -32,7 +32,6 @@ class SearchCafeViewController: UIViewController {
     }
     
     // MARK: Search button action
-    
     @IBAction func searchButtonAction(_ sender: AnyObject) {
         configureUI(enable: false)
         if locationTextField.text != "" {
@@ -46,7 +45,6 @@ class SearchCafeViewController: UIViewController {
     }
     
     // MARK: Function getLatLonForLocation()
-    
     func getLatLonForLocation() {
         geocoder.geocodeAddressString(locationTextField.text!) { (placemarks, error) in
             self.processResponse(withPlacemarks: placemarks, error: error)
@@ -54,7 +52,6 @@ class SearchCafeViewController: UIViewController {
     }
     
     // MARK: Function processResponse(withPlacemarks placemarks: [CLPlacemark]?, error: Error?)
-    
     func processResponse(withPlacemarks placemarks: [CLPlacemark]?, error: Error?) {
         if let error = error {
             configureUI(enable: true)
@@ -76,14 +73,12 @@ class SearchCafeViewController: UIViewController {
     }
     
     // MARK: Function completeSearchForCafes()
-    
     func completeSearchForCafes() {
         configureUI(enable: true)
         performSegue(withIdentifier: "SearchToResult", sender: self)
     }
     
     // MARK: Function configureUI(enable: Bool)
-    
     func configureUI(enable: Bool) {
         if enable {
             locationTextField.isEnabled = true
@@ -97,16 +92,14 @@ class SearchCafeViewController: UIViewController {
         }
     }
     
-    // Shift the view's frame up from when keyboard appears
-    
+    // MARK: Function keyboardWillShow(_ notification: NSNotification)
     func keyboardWillShow(_ notification: NSNotification) {
         if locationTextField.isFirstResponder {
             view.frame.origin.y = -getKeyboardHeight(notification)
         }
     }
     
-    // Shift the view's frame down from when keyboard disappears
-    
+    // MARK : Function keyboardWillHide(_ notification: NSNotification)
     func keyboardWillHide(_ notification: NSNotification) {
         if locationTextField.isFirstResponder {
             view.frame.origin.y = 0
@@ -115,21 +108,18 @@ class SearchCafeViewController: UIViewController {
     }
     
     // MARK: Function subscribeToKeyboardNotifications()
-    
     func subscribeToKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(SearchCafeViewController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SearchCafeViewController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    // MARK: Function unsubscribeToKeyboardNotifications()
-    
+    // MARK: Function unsubscribeToKeyboardNotifications(
     func unsubscribeToKeyboardNotifications() {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     // MARK: Function getKeyboardHeight(_ notification: NSNotification)-> CGFloat
-    
     func getKeyboardHeight(_ notification: NSNotification)-> CGFloat {
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
@@ -137,7 +127,6 @@ class SearchCafeViewController: UIViewController {
     }
     
     // MARK: Function hideKeyboardWhenTappedAround()
-    
     func hideKeyboardWhenTappedAround() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(SearchCafeViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
@@ -153,7 +142,6 @@ class SearchCafeViewController: UIViewController {
     }
     
     // MARK: Bookmarks Button Action
-    
     @IBAction func showAllBookmarks(_ sender: AnyObject) {
         performSegue(withIdentifier: "ToBookmarks", sender: self)
     }
@@ -161,11 +149,9 @@ class SearchCafeViewController: UIViewController {
 }
 
 // MARK: Extension UIViewController
-
 extension UIViewController {
     
     // MARK: Function displayAnAlert(title: String, message: String)
-    
     func  displayAnAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let alertAction = UIAlertAction(title: "Ok", style: .default, handler: nil)

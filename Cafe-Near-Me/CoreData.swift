@@ -13,7 +13,6 @@ class CoreData {
     static let sharedInstance = CoreData()
     
     // MARK: Function save(managedObjectContext context: NSManagedObjectContext, completionHandler: @escaping(_ sucess: Bool)-> void)
-    
     func save(managedObjectContext context: NSManagedObjectContext, completionHandler: @escaping(_ sucess: Bool)-> Void) {
         do {
             try context.save()

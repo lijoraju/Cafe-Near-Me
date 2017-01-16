@@ -35,7 +35,6 @@ class CafePhotosViewController: UIViewController, UICollectionViewDelegate, UICo
     }
 
     // MARK: Function showAllPhotosForThisCafe()
-    
     func showAllPhotosForThisCafe() {
         guard Constants.Cafe.photo == nil else {
             photoLoadingIndicator.stopAnimating()
@@ -99,7 +98,6 @@ class CafePhotosViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     // MARK: Function configureCell(_ cell: PhotoCell, atIndexPath indexPath: IndexPath)
-    
     func configureCell(_ cell: PhotoCell, atIndexPath indexPath: IndexPath) {
         let photoURL = Constants.Cafe.photoURLs[indexPath.row]
         let totalNumPhotos = Constants.Cafe.photoURLs.count
@@ -121,7 +119,6 @@ class CafePhotosViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     // MARK: Function completedDownloadingPhotos()
-    
     func completedDownloadingPhotos() {
         downloadedPhotos = true
         collectionView.reloadData()
@@ -130,11 +127,9 @@ class CafePhotosViewController: UIViewController, UICollectionViewDelegate, UICo
 }
 
 // MARK: UICollectionViewDelegateFlowLayout
-
 extension CafePhotosViewController: UICollectionViewDelegateFlowLayout {
     
     // MARK: Tells the size of a given cell in collection view
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let paddingSpace = sectionInsects.left * (itemsPerRow + 1)
         let availableWidth = view.frame.width - paddingSpace

@@ -15,7 +15,6 @@ class FoursquareAPI {
     let formatter = DateFormatter()
     
     // MARK: Function searchCafesForALocation(LatitudeAndLongitude LatLon: String, completionHandler: @escaping(_ sucess: Bool, _ errorString: String?)-> Void )
-    
     func searchCafesForALocation(LatitudeAndLongitude LatLon: String, completionHandler: @escaping(_ sucess: Bool, _ errorString: String?)-> Void ) {
         var venueIDs: [String] = []
         var venueNames: [String] = []
@@ -38,7 +37,6 @@ class FoursquareAPI {
             }
             
             // MARK: Function reportAnError() for failed cafes loading for a search location
-            
             func reportAnError() {
                 completionHandler(false, "Unable to obtain cafes for the location")
             }
@@ -213,7 +211,6 @@ class FoursquareAPI {
     }
     
     // MARK: Function getVenuePhotos(selectedVenueID venueID: String, completionHandler: @escaping(_ sucess: Bool, _ error: String?)->Void )
-    
     func getVenuePhotos(selectedVenueID venueID: String, completionHandler: @escaping(_ sucess: Bool, _ error: String?)-> Void ) {
         var venuePhotoURLs: [String] = []
         let parameters = [Constants.ParameterKeys.photosLimit: Constants.ParameterValues.photosLimit,
@@ -228,7 +225,6 @@ class FoursquareAPI {
             }
             
             // MARK: Function reportAnError() for failed photos loading
-            
             func reportAnError() {
                 completionHandler(false, "Unable to obtains photos for this cafe now. Try again")
             }
@@ -271,7 +267,6 @@ class FoursquareAPI {
     }
     
     // MARK: Function getVenueReviews(selectedVenueID venueID: String, completionHandler: @escaping(_ sucess: Bool, _ error: String?)-> Void)
-    
     func getVenueReviews(selectedVenueID venueID: String, completionHandler: @escaping(_ sucess: Bool, _ error: String?)-> Void) {
         var venueReviews: [String] = []
         var userPhotoURLs: [String] = []
@@ -287,7 +282,6 @@ class FoursquareAPI {
             }
             
             // MARK: Function reportAnError() for failed review loading
-            
             func reportAnError() {
                 completionHandler(false, "Unable to obtain reviews for this cafe now. Try again")
             }
@@ -347,7 +341,6 @@ class FoursquareAPI {
     }
     
     // MARK: Function downloadImages(atImagePath imagePath: String, completionHandler: @escaping(_ imageData: Data?)-> Void)
-    
     func downloadImages(atImagePath imagePath: String, completionHandler: @escaping(_ imageData: Data?)-> Void) {
         let imageURL = NSURL(string: imagePath)
         let request = NSURLRequest(url: imageURL! as URL)
@@ -362,7 +355,6 @@ class FoursquareAPI {
     }
     
     // MARK: Function getFoursquareAPIParameters(withAPIPath APIPath: String, withParameters parameters: [String: AnyObject])-> URL
-    
     func getFoursquareAPIParameters(withAPIPath APIPath: String, withParameters parameters: [String: AnyObject])-> URL {
         var parameters = parameters
         var components = URLComponents()

@@ -26,7 +26,6 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     // MARK: Function showAllReviewsForThisCafe()
-    
     func showAllReviewsForThisCafe() {
         if let cafe = Constants.SelectedCafe.Index {
             let venueID = Constants.SearchedCafes.VenueIDs[cafe]
@@ -77,7 +76,6 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     // MARK: Function configureCell(cell: UITableViewCell, atIndexPath indexPath: IndexPath)-> UITableViewCell
-    
     func configureCell(cell: UITableViewCell, atIndexPath indexPath: IndexPath)-> UITableViewCell {
         let review = Constants.Cafe.reviews[indexPath.row]
         let reviewerName = Constants.Cafe.reviewerNames[indexPath.row]
@@ -109,7 +107,6 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     // MARK: Function enableCafeReviews(enable: Bool)
-    
     func enableCafeReviews(enable: Bool) {
         DisplayingReviews: if enable {
             if Constants.Cafe.reviews.count == 0 {
@@ -144,7 +141,6 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     // MARK: Function completedLoadingReviews()
-    
     func completedLoadingPhotos() {
         loadedReviews = true
         tableView.reloadData()
