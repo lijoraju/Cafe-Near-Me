@@ -172,6 +172,11 @@ class CafeViewController: UIViewController {
                     print("Cafe added to bookmarks")
                     self.addCafePhotosToBookmarks(forCafe: cafe)
                 }
+                else {
+                    performUIUpdateOnMain {
+                        self.displayAnAlert(title: "Error", message: "Failed bookmarking cafe")
+                    }
+                }
             }
         }
     }
@@ -189,7 +194,7 @@ class CafeViewController: UIViewController {
                             photo.cafe = thisCafe
                             CoreData.sharedInstance.save(managedObjectContext: self.managedContext) { sucess in
                                 if sucess {
-                                    print("downloaded and bookmarked photo from \(url)")
+                                    print("Bookmarked a cafe photo")
                                 }
                             }
                         }
@@ -215,7 +220,7 @@ class CafeViewController: UIViewController {
                 cafeReview.cafe = thisCafe
                 CoreData.sharedInstance.save(managedObjectContext: managedContext) { sucess in
                     if sucess {
-                        print("bookmarked review for \(cafeReview.reviewer)")
+                        print("Bookmarked a cafe review")
                         self.addReviewerPhotosToBookmarks(atIndex: index, forReview: cafeReview)
                     }
                 }
@@ -251,7 +256,7 @@ class CafeViewController: UIViewController {
                     photo.review = review
                     CoreData.sharedInstance.save(managedObjectContext: self.managedContext) { sucess in
                         if sucess {
-                            print("Bookmarked reviewer photos from \(url)")
+                            print("Bookmarked a reviewer photo")
                         }
                     }
                 }
