@@ -167,6 +167,7 @@ class CafeViewController: UIViewController {
             cafe.latitude = Constants.SearchedCafes.Latitudes[selectedCafe]
             cafe.longitude = Constants.SearchedCafes.Longitudes[selectedCafe]
             cafe.rating = Constants.Cafe.rating
+            cafe.nearLocation = Constants.searchingLocation
             CoreData.sharedInstance.save(managedObjectContext: managedContext) { sucess in
                 if sucess {
                     print("Cafe added to bookmarks")
