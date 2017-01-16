@@ -48,6 +48,7 @@ class CafeViewController: UIViewController {
             imageLoadingLabel.text = "No Photo Available"
         }
         else {
+            imageLoadingLabel.isHidden = true
             let photo = cafePhotos.first
             let photoData = photo?.photoData
             cafeImage.image = UIImage(data: photoData as! Data)
