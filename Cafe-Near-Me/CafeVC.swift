@@ -189,9 +189,69 @@ class CafeViewController: UIViewController {
                             photo.cafe = thisCafe
                             CoreData.sharedInstance.save(managedObjectContext: self.managedContext) { sucess in
                                 if sucess {
-                                    print("downloaded and saved photo from \(url)")
+                                    print("downloaded and bookmarked photo from \(url)")
                                 }
                             }
+                        }
+                    }
+                }
+            }
+            addCafeReviewsToBookmarks(forCafe: thisCafe)
+        }
+    }
+    
+    // MARK: Function addCafeReviewsToBookmarks(forCafe thisCafe: Cafe)
+    func addCafeReviewsToBookmarks(forCafe thisCafe: Cafe) {
+        let reviews = Constants.Cafe.reviews
+        if (reviews == nil) {
+            getReviewsForTheCafe(forCafe: thisCafe)
+        }
+        else {
+            let totalReviews = (Constants.Cafe.reviews).count - 1
+            for index in 0...totalReviews {
+                let cafeReview = Review(context: managedContext)
+                cafeReview.review = Constants.Cafe.reviews[index]
+                cafeReview.reviewer = Constants.Cafe.reviewerNames[index]
+                cafeReview.cafe = thisCafe
+                CoreData.sharedInstance.save(managedObjectContext: managedContext) { sucess in
+                    if sucess {
+                        print("bookmarked review for \(cafeReview.reviewer)")
+                        self.addReviewerPhotosToBookmarks(atIndex: index, forReview: cafeReview)
+                    }
+                }
+            }
+        }
+    }
+    
+    // MARK: Function getReviewsForTheCafe(cafeVenueID: String)
+    func getReviewsForTheCafe(forCafe thisCafe: Cafe) {
+        FoursquareAPI.sharedInstance.getVenueReviews(selectedVenueID: thisCafe.venueID!) { sucess, errorString in
+            if sucess {
+                performUIUpdateOnMain {
+                    self.addCafeReviewsToBookmarks(forCafe: thisCafe)
+                }
+            }
+            else {
+                performUIUpdateOnMain {
+                    self.displayAnAlert(title: "Failed Bookmarking Cafe Reviews", message: errorString!)
+                }
+            }
+        }
+    }
+    
+    // MARK: Function addReviewerPhotosToBookmarks(atIndex index: Int, forReview: Review)
+    func addReviewerPhotosToBookmarks(atIndex index: Int, forReview review: Review) {
+        let url = Constants.Cafe.reviewerPhotoURLs[index]
+        FoursquareAPI.sharedInstance.downloadImages(atImagePath: url) { imageData in
+            if imageData != nil {
+                performUIUpdateOnMain {
+                    let photo = Photo(context: self.managedContext)
+                    photo.photoURL = url
+                    photo.photoData = imageData! as NSData?
+                    photo.review = review
+                    CoreData.sharedInstance.save(managedObjectContext: self.managedContext) { sucess in
+                        if sucess {
+                            print("Bookmarked reviewer photos from \(url)")
                         }
                     }
                 }
