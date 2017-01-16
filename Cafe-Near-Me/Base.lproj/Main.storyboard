@@ -170,17 +170,11 @@
                                 <action selector="cancelButtonAction:" destination="fNg-o8-r59" id="CIh-0o-rkf"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="trash" id="wC9-zk-gYt">
-                            <connections>
-                                <action selector="deleteBookmarks:" destination="fNg-o8-r59" id="PzV-2G-HmI"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="cj7-S1-1OZ" id="VmK-6T-E2r"/>
                         <outlet property="noResultsLabel" destination="MX6-t4-ACd" id="Xim-zN-zWi"/>
                         <outlet property="tableView" destination="2s4-wB-BDT" id="tfx-KZ-cqn"/>
-                        <outlet property="trashButton" destination="wC9-zk-gYt" id="hbc-HI-TWN"/>
                         <segue destination="UZl-I5-rok" kind="presentation" identifier="TableViewToTabView" id="AMb-ZX-w3l"/>
                     </connections>
                 </viewController>

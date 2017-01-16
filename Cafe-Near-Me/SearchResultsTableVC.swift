@@ -13,7 +13,6 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var noResultsLabel: UILabel!
-    @IBOutlet weak var trashButton: UIBarButtonItem!
     
     let fetchRequest: NSFetchRequest<Cafe> = Cafe.fetchRequest()
     let managedContext: NSManagedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -26,12 +25,12 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
         configureUI(enable: false)
         let searchingLatLon = Constants.searchingLatLon
         if (searchingLatLon != nil) {
-            trashButton.isEnabled = false
             let searchLocation = Constants.searchingLocation.capitalized
             self.title = "Cafes In " + searchLocation
             performFoursquareSearch()
         }
         else {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteBookmarks))
             showingAllBookmarks()
         }
     }
@@ -71,7 +70,8 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
         }
         if cafes.count == 0 {
             performUIUpdateOnMain {
-                self.trashButton.isEnabled = false
+                self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: nil)
+                self.navigationItem.rightBarButtonItem?.isEnabled = false
                 self.tableView.isHidden = true
                 self.noResultsLabel.isHidden = false
                 self.noResultsLabel.text = "No Cafes Bookmarked"
@@ -164,11 +164,18 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
         Constants.searchingLatLon = nil
     }
     
-    // MARK: Trash Button Action
+    // MARK: Function deleteBookmarks()
     
-    @IBAction func deleteBookmarks(_ sender: AnyObject) {
-        editBookmarksMode = true
-        displayAnAlert(title: "Warning: Deleting!", message: "Selecting a cafe will remove from bookmarks")
+    func deleteBookmarks() {
+        if editBookmarksMode {
+            editBookmarksMode = false
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteBookmarks))
+        }
+        else {
+            editBookmarksMode = true
+            displayAnAlert(title: "Warning: Deleting!", message: "Selecting a cafe will remove from bookmarks")
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(deleteBookmarks))
+        }
     }
     
 }
