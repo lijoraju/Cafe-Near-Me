@@ -152,6 +152,12 @@ class SearchCafeViewController: UIViewController {
         return true
     }
     
+    // MARK: Bookmarks Button Action
+    
+    @IBAction func showAllBookmarks(_ sender: AnyObject) {
+        performSegue(withIdentifier: "ToBookmarks", sender: self)
+    }
+    
 }
 
 // MARK: Extension UIViewController

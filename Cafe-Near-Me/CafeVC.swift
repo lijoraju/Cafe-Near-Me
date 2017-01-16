@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class CafeViewController: UIViewController {
     @IBOutlet weak var cafeImage: UIImageView!
@@ -17,6 +18,9 @@ class CafeViewController: UIViewController {
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet var cafeOpenedLabel: UILabel!
     @IBOutlet weak var cafeOpenHours: UILabel!
+    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let managedContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,6 +108,32 @@ class CafeViewController: UIViewController {
                             self.cafeOpenHours.text = openingHours
                         }
                     }
+                }
+            }
+        }
+    }
+    
+    // MARK: Cancel Button Action
+    
+    @IBAction func cancelButtonAction(_ sender: AnyObject) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    // MARK: Bookmark Button Action
+    
+    @IBAction func bookmarkButtonAction(_ sender: AnyObject) {
+        if let selectedCafe = Constants.SelectedCafe.Index {
+            let cafe = Cafe(context: managedContext)
+            cafe.venueID = Constants.SearchedCafes.VenueIDs[selectedCafe]
+            cafe.name = Constants.SearchedCafes.Names[selectedCafe]
+            cafe.address = Constants.SearchedCafes.Addresses[selectedCafe]
+            cafe.distance = Int16(Constants.SearchedCafes.Distances[selectedCafe])
+            cafe.latitude = Constants.SearchedCafes.Latitudes[selectedCafe]
+            cafe.longitude = Constants.SearchedCafes.Longitudes[selectedCafe]
+            cafe.rating = Constants.Cafe.rating
+            CoreData.sharedInstance.save(managedObjectContext: managedContext) { sucess in
+                if sucess {
+                    print("Cafe added to bookmarks")
                 }
             }
         }

@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA556E8E1E2C8ACB00C2D7D2 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA556E8D1E2C8ACB00C2D7D2 /* CoreData.swift */; };
+		DA6717B11E2BF1F800E6F8D4 /* Photo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6717AB1E2BF1F800E6F8D4 /* Photo+CoreDataClass.swift */; };
+		DA6717B21E2BF1F800E6F8D4 /* Photo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6717AC1E2BF1F800E6F8D4 /* Photo+CoreDataProperties.swift */; };
+		DA6717B31E2BF1F800E6F8D4 /* Cafe+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6717AD1E2BF1F800E6F8D4 /* Cafe+CoreDataClass.swift */; };
+		DA6717B41E2BF1F800E6F8D4 /* Cafe+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6717AE1E2BF1F800E6F8D4 /* Cafe+CoreDataProperties.swift */; };
+		DA6717B51E2BF1F800E6F8D4 /* Review+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6717AF1E2BF1F800E6F8D4 /* Review+CoreDataClass.swift */; };
+		DA6717B61E2BF1F800E6F8D4 /* Review+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6717B01E2BF1F800E6F8D4 /* Review+CoreDataProperties.swift */; };
 		DA6C4AE61E21E6AE001289BE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6C4AE51E21E6AE001289BE /* AppDelegate.swift */; };
 		DA6C4AE81E21E6AE001289BE /* SearchCafeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6C4AE71E21E6AE001289BE /* SearchCafeVC.swift */; };
 		DA6C4AEB1E21E6AE001289BE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA6C4AE91E21E6AE001289BE /* Main.storyboard */; };
@@ -44,6 +51,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DA556E8D1E2C8ACB00C2D7D2 /* CoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
+		DA6717AB1E2BF1F800E6F8D4 /* Photo+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Photo+CoreDataClass.swift"; path = "../Photo+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA6717AC1E2BF1F800E6F8D4 /* Photo+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Photo+CoreDataProperties.swift"; path = "../Photo+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DA6717AD1E2BF1F800E6F8D4 /* Cafe+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Cafe+CoreDataClass.swift"; path = "../Cafe+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA6717AE1E2BF1F800E6F8D4 /* Cafe+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Cafe+CoreDataProperties.swift"; path = "../Cafe+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DA6717AF1E2BF1F800E6F8D4 /* Review+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Review+CoreDataClass.swift"; path = "../Review+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA6717B01E2BF1F800E6F8D4 /* Review+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Review+CoreDataProperties.swift"; path = "../Review+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		DA6C4AE21E21E6AE001289BE /* Cafe-Near-Me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cafe-Near-Me.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA6C4AE51E21E6AE001289BE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA6C4AE71E21E6AE001289BE /* SearchCafeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCafeVC.swift; sourceTree = "<group>"; };
@@ -94,6 +108,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DA6717B71E2BF23F00E6F8D4 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				DA6717AB1E2BF1F800E6F8D4 /* Photo+CoreDataClass.swift */,
+				DA6717AC1E2BF1F800E6F8D4 /* Photo+CoreDataProperties.swift */,
+				DA6717AD1E2BF1F800E6F8D4 /* Cafe+CoreDataClass.swift */,
+				DA6717AE1E2BF1F800E6F8D4 /* Cafe+CoreDataProperties.swift */,
+				DA6717AF1E2BF1F800E6F8D4 /* Review+CoreDataClass.swift */,
+				DA6717B01E2BF1F800E6F8D4 /* Review+CoreDataProperties.swift */,
+				DA6C4AEC1E21E6AE001289BE /* Cafe_Near_Me.xcdatamodeld */,
+			);
+			name = "Core Data";
+			sourceTree = "<group>";
+		};
 		DA6C4AD91E21E6AD001289BE = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +179,7 @@
 				DA6C4AEF1E21E6AE001289BE /* Assets.xcassets */,
 				DA6C4AF41E21E6AE001289BE /* Info.plist */,
 				DA8578C51E2220E700821868 /* Constants.swift */,
+				DA556E8D1E2C8ACB00C2D7D2 /* CoreData.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -181,8 +210,8 @@
 		DA6C4B191E21E6FC001289BE /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				DA6C4AEC1E21E6AE001289BE /* Cafe_Near_Me.xcdatamodeld */,
 				DA8578C31E221C7B00821868 /* FoursquareAPI.swift */,
+				DA6717B71E2BF23F00E6F8D4 /* Core Data */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -321,14 +350,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA6717B21E2BF1F800E6F8D4 /* Photo+CoreDataProperties.swift in Sources */,
 				DAB0CC0E1E29EF9700152C19 /* CafePhotosCell.swift in Sources */,
+				DA6717B41E2BF1F800E6F8D4 /* Cafe+CoreDataProperties.swift in Sources */,
+				DA6717B11E2BF1F800E6F8D4 /* Photo+CoreDataClass.swift in Sources */,
+				DA6717B31E2BF1F800E6F8D4 /* Cafe+CoreDataClass.swift in Sources */,
 				DA8578C61E2220E700821868 /* Constants.swift in Sources */,
 				DA86A51B1E235AC600A2AB9E /* CafeReviewsVC.swift in Sources */,
 				DA6C4AE81E21E6AE001289BE /* SearchCafeVC.swift in Sources */,
+				DA556E8E1E2C8ACB00C2D7D2 /* CoreData.swift in Sources */,
+				DA6717B51E2BF1F800E6F8D4 /* Review+CoreDataClass.swift in Sources */,
 				DA8578C41E221C7B00821868 /* FoursquareAPI.swift in Sources */,
 				DAB0CC101E2A88CC00152C19 /* CafeVC.swift in Sources */,
 				DAAD02001E226EED004B1FB8 /* SearchResultsTableVC.swift in Sources */,
 				DA6C4AE61E21E6AE001289BE /* AppDelegate.swift in Sources */,
+				DA6717B61E2BF1F800E6F8D4 /* Review+CoreDataProperties.swift in Sources */,
 				DAB0CC0C1E29EE1000152C19 /* CafePhotosVC.swift in Sources */,
 				DA8D57A01E27641D002D21A3 /* CafeMapVC.swift in Sources */,
 				DA6C4AEE1E21E6AE001289BE /* Cafe_Near_Me.xcdatamodeld in Sources */,

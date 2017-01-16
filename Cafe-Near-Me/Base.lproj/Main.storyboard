@@ -72,7 +72,14 @@
                             <constraint firstAttribute="leadingMargin" secondItem="t3g-8o-UNP" secondAttribute="leading" id="s3t-g7-JvT"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Cafe Near Me" id="iSc-9c-TQk"/>
+                    <navigationItem key="navigationItem" title="Cafe Near Me" id="iSc-9c-TQk">
+                        <barButtonItem key="rightBarButtonItem" systemItem="bookmarks" id="4vL-ej-DpI" userLabel="Bookmarks Button">
+                            <connections>
+                                <action selector="showAllBookmarks:" destination="BYZ-38-t0r" id="FLC-hz-siu"/>
+                                <segue destination="iEl-yf-EY9" kind="presentation" identifier="ToBookmarks" id="eLN-wY-Qli"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="gJo-mN-Nuk" id="1YU-Y7-bmr"/>
                         <outlet property="locationTextField" destination="t3g-8o-UNP" id="efP-3u-aqS"/>
@@ -163,12 +170,18 @@
                                 <action selector="cancelButtonAction:" destination="fNg-o8-r59" id="CIh-0o-rkf"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="trash" id="wC9-zk-gYt">
+                            <connections>
+                                <action selector="deleteBookmarks:" destination="fNg-o8-r59" id="PzV-2G-HmI"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="cj7-S1-1OZ" id="VmK-6T-E2r"/>
                         <outlet property="noResultsLabel" destination="MX6-t4-ACd" id="Xim-zN-zWi"/>
                         <outlet property="tableView" destination="2s4-wB-BDT" id="tfx-KZ-cqn"/>
-                        <segue destination="UZl-I5-rok" kind="show" identifier="TableViewToTabView" id="AMb-ZX-w3l"/>
+                        <outlet property="trashButton" destination="wC9-zk-gYt" id="hbc-HI-TWN"/>
+                        <segue destination="UZl-I5-rok" kind="presentation" identifier="TableViewToTabView" id="AMb-ZX-w3l"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3xo-Zz-eEE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -179,6 +192,7 @@
         <scene sceneID="RZL-WV-dhM">
             <objects>
                 <tabBarController id="UZl-I5-rok" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="zq1-Cy-b2G"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="nwt-Kw-osn">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -293,9 +307,9 @@
                             <constraint firstAttribute="trailingMargin" secondItem="1di-I1-BBb" secondAttribute="trailing" constant="-12" id="7Ki-pu-LvL"/>
                             <constraint firstItem="0WH-wk-nMm" firstAttribute="top" secondItem="1di-I1-BBb" secondAttribute="bottom" id="985-r3-WlI"/>
                             <constraint firstItem="etk-T7-7MC" firstAttribute="centerX" secondItem="fTe-7P-frB" secondAttribute="centerX" id="9Hd-Gw-EQV"/>
-                            <constraint firstItem="1di-I1-BBb" firstAttribute="top" secondItem="fTe-7P-frB" secondAttribute="bottom" constant="52" id="JHK-dl-yf3"/>
+                            <constraint firstItem="1di-I1-BBb" firstAttribute="top" secondItem="fTe-7P-frB" secondAttribute="bottom" constant="10" id="JHK-dl-yf3"/>
                             <constraint firstItem="z4X-Yb-PlR" firstAttribute="top" secondItem="etk-T7-7MC" secondAttribute="bottom" constant="187" id="NGz-Jy-Ff0"/>
-                            <constraint firstItem="0WH-wk-nMm" firstAttribute="top" secondItem="fTe-7P-frB" secondAttribute="bottom" constant="300" id="Sa7-j9-qXM"/>
+                            <constraint firstItem="0WH-wk-nMm" firstAttribute="top" secondItem="fTe-7P-frB" secondAttribute="bottom" constant="250" id="Sa7-j9-qXM"/>
                             <constraint firstAttribute="trailing" secondItem="fTe-7P-frB" secondAttribute="trailing" id="VkO-ME-SUt"/>
                             <constraint firstItem="1di-I1-BBb" firstAttribute="leading" secondItem="ZmO-yK-7eQ" secondAttribute="leadingMargin" constant="-12" id="YMu-uz-TtT"/>
                             <constraint firstAttribute="trailing" secondItem="z4X-Yb-PlR" secondAttribute="trailing" id="bhN-hp-ppf"/>
@@ -531,8 +545,8 @@
                             <constraint firstAttribute="trailing" secondItem="LYk-N1-atM" secondAttribute="trailing" id="IqV-lb-SKj"/>
                             <constraint firstItem="Ru3-4s-tD2" firstAttribute="leading" secondItem="mbT-09-VlY" secondAttribute="leading" id="Kbm-pD-SAF"/>
                             <constraint firstItem="LYk-N1-atM" firstAttribute="leading" secondItem="mbT-09-VlY" secondAttribute="leading" id="fBH-nq-q73"/>
-                            <constraint firstItem="Ru3-4s-tD2" firstAttribute="top" secondItem="lpF-GG-THI" secondAttribute="bottom" constant="50" id="gtw-gR-hST"/>
-                            <constraint firstItem="LYk-N1-atM" firstAttribute="top" secondItem="lpF-GG-THI" secondAttribute="bottom" constant="-45" id="ty4-Ib-AEB"/>
+                            <constraint firstItem="Ru3-4s-tD2" firstAttribute="top" secondItem="lpF-GG-THI" secondAttribute="bottom" constant="90" id="gtw-gR-hST"/>
+                            <constraint firstItem="LYk-N1-atM" firstAttribute="top" secondItem="lpF-GG-THI" secondAttribute="bottom" id="ty4-Ib-AEB"/>
                             <constraint firstAttribute="trailing" secondItem="Ru3-4s-tD2" secondAttribute="trailing" id="xul-3v-L0M"/>
                         </constraints>
                     </view>
@@ -614,7 +628,7 @@
                             <constraint firstItem="89L-hv-AIo" firstAttribute="leading" secondItem="w8q-44-et7" secondAttribute="leading" id="U9E-WR-VaW"/>
                             <constraint firstItem="VIp-CA-qHp" firstAttribute="top" secondItem="D2F-b2-waW" secondAttribute="bottom" constant="140" id="XMB-Dh-fTP"/>
                             <constraint firstItem="VIp-CA-qHp" firstAttribute="top" secondItem="wF6-ab-VdR" secondAttribute="bottom" constant="240" id="Xut-ZD-9YY"/>
-                            <constraint firstItem="wF6-ab-VdR" firstAttribute="top" secondItem="guM-Db-dD1" secondAttribute="bottom" constant="-40" id="b2b-o1-qLk"/>
+                            <constraint firstItem="wF6-ab-VdR" firstAttribute="top" secondItem="guM-Db-dD1" secondAttribute="bottom" id="b2b-o1-qLk"/>
                             <constraint firstAttribute="trailing" secondItem="89L-hv-AIo" secondAttribute="trailing" id="bBS-mL-BUY"/>
                             <constraint firstItem="Ait-rJ-19f" firstAttribute="leading" secondItem="w8q-44-et7" secondAttribute="leading" constant="2" id="iLP-62-qz3"/>
                             <constraint firstItem="wF6-ab-VdR" firstAttribute="leading" secondItem="w8q-44-et7" secondAttribute="leading" id="neV-X9-t1P"/>
@@ -626,7 +640,18 @@
                             <constraint firstItem="X5k-zM-QUU" firstAttribute="top" secondItem="D2F-b2-waW" secondAttribute="bottom" constant="8" id="xyG-Ze-rVs"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="0o1-El-R5f"/>
+                    <navigationItem key="navigationItem" id="KKx-59-vNa">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="7V6-E4-AOo">
+                            <connections>
+                                <action selector="cancelButtonAction:" destination="4m1-q2-pEh" id="1px-70-1Ak"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="bookmarks" id="9sl-xe-GZN">
+                            <connections>
+                                <action selector="bookmarkButtonAction:" destination="4m1-q2-pEh" id="bkC-cR-hP8"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="cafeAddress" destination="D2F-b2-waW" id="nMF-0J-lWe"/>
                         <outlet property="cafeImage" destination="wF6-ab-VdR" id="J55-uJ-pCh"/>
@@ -691,4 +716,7 @@
         <image name="SearchBackgroundImage" width="1600" height="1067"/>
         <image name="SearchResultsBackgroundImage" width="880" height="587"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="eLN-wY-Qli"/>
+    </inferredMetricsTieBreakers>
 </document>

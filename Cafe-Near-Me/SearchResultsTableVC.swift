@@ -7,17 +7,39 @@
 //
 
 import UIKit
+import CoreData
 
 class SearchResultsTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var noResultsLabel: UILabel!
+    @IBOutlet weak var trashButton: UIBarButtonItem!
+    
+    let fetchRequest: NSFetchRequest<Cafe> = Cafe.fetchRequest()
+    let managedContext: NSManagedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var cafes: [Cafe] = []
+    var foursquareSearchFlag: Bool = false
+    var editBookmarksMode: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI(enable: false)
-        let searchLocation = Constants.searchingLocation.capitalized
-        self.title = "Cafes In " + searchLocation
+        let searchingLatLon = Constants.searchingLatLon
+        if (searchingLatLon != nil) {
+            trashButton.isEnabled = false
+            let searchLocation = Constants.searchingLocation.capitalized
+            self.title = "Cafes In " + searchLocation
+            performFoursquareSearch()
+        }
+        else {
+            showingAllBookmarks()
+        }
+    }
+    
+    // MARK: Function performFoursquareSearch()
+    
+    func performFoursquareSearch() {
+        foursquareSearchFlag = true
         if let LatLon = Constants.searchingLatLon {
             FoursquareAPI.sharedInstance.searchCafesForALocation(LatitudeAndLongitude: LatLon) { sucess, error in
                 if sucess {
@@ -37,38 +59,86 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
             }
         }
     }
- 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
+    
+    // MARK: Function showingAllBookmarks()
+    
+    func showingAllBookmarks() {
+        do {
+            cafes = try managedContext.fetch(fetchRequest)
+        }
+        catch let error as NSError {
+            print("Failed showing bookmaks \(error) \(error.userInfo)")
+        }
+        if cafes.count == 0 {
+            performUIUpdateOnMain {
+                self.trashButton.isEnabled = false
+                self.tableView.isHidden = true
+                self.noResultsLabel.isHidden = false
+                self.noResultsLabel.text = "No Cafes Bookmarked"
+                self.activityIndicator.stopAnimating()
+            }
+        }
+        else {
+            performUIUpdateOnMain {
+                self.configureUI(enable: true)
+                self.tableView.reloadData()
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let searchResults = Constants.SearchedCafes.Names {
-            return searchResults.count
+        if foursquareSearchFlag {
+            if let searchResults = Constants.SearchedCafes.Names {
+                return searchResults.count
+            }
         }
-        return 0
+        return cafes.count
     }
    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")!
         let index = "\(indexPath.row + 1).  "
-        cell.textLabel?.text = index + Constants.SearchedCafes.Names[indexPath.row]
-        cell.detailTextLabel?.text = Constants.SearchedCafes.Addresses[indexPath.row]
+        if foursquareSearchFlag {
+            cell.textLabel?.text = index + Constants.SearchedCafes.Names[indexPath.row]
+            cell.detailTextLabel?.text = Constants.SearchedCafes.Addresses[indexPath.row]
+            return cell
+        }
+        let cafe = cafes[indexPath.row]
+        cell.textLabel?.text = index + cafe.name!
+        cell.detailTextLabel?.text = cafe.address
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Constants.SelectedCafe.Index = indexPath.row
-        Constants.Cafe.photo = nil
-        Constants.Cafe.reviews = nil
-        Constants.Cafe.reviewerNames = nil
-        Constants.Cafe.reviewerPhotoURLs = nil
-        Constants.Cafe.photosData = nil
-        Constants.Cafe.reviewerPhotos = nil
-        Constants.Cafe.photoURLs = nil
-        tableView.deselectRow(at: indexPath, animated: true)
-        performSegue(withIdentifier: "TableViewToTabView", sender: self)
+        if foursquareSearchFlag {
+            Constants.SelectedCafe.Index = indexPath.row
+            Constants.Cafe.photo = nil
+            Constants.Cafe.reviews = nil
+            Constants.Cafe.reviewerNames = nil
+            Constants.Cafe.reviewerPhotoURLs = nil
+            Constants.Cafe.photosData = nil
+            Constants.Cafe.reviewerPhotos = nil
+            Constants.Cafe.photoURLs = nil
+            tableView.deselectRow(at: indexPath, animated: true)
+            performSegue(withIdentifier: "TableViewToTabView", sender: self)
+        }
+        else {
+            if editBookmarksMode {
+                removeSeletedCafeFromBookmarks(cafeAtIndex: indexPath.row)
+            }
+        }
+    }
+    
+    // MARK: Function removeSeletedCafeFromBookmarks()
+    func removeSeletedCafeFromBookmarks(cafeAtIndex index: Int) {
+        let cafe = cafes[index]
+        managedContext.delete(cafe)
+        CoreData.sharedInstance.save(managedObjectContext: managedContext) { sucess in
+            if sucess {
+                print("Cafe removed from bookmarks")
+                self.showingAllBookmarks()
+            }
+        }
     }
     
     // MARK: Function configureUI(enable: Bool)
@@ -91,6 +161,14 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
     
     @IBAction func cancelButtonAction(_ sender: AnyObject) {
         dismiss(animated: true, completion: nil)
+        Constants.searchingLatLon = nil
+    }
+    
+    // MARK: Trash Button Action
+    
+    @IBAction func deleteBookmarks(_ sender: AnyObject) {
+        editBookmarksMode = true
+        displayAnAlert(title: "Warning: Deleting!", message: "Selecting a cafe will remove from bookmarks")
     }
     
 }
