@@ -6,6 +6,7 @@
         <attribute name="latitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="longitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="nearLocation" attributeType="String" syncable="YES"/>
         <attribute name="rating" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="venueID" attributeType="String" syncable="YES"/>
         <relationship name="photos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Photo" inverseName="cafe" inverseEntity="Photo" syncable="YES"/>
@@ -24,7 +25,7 @@
         <relationship name="photo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Photo" inverseName="review" inverseEntity="Photo" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Cafe" positionX="-63" positionY="-18" width="128" height="180"/>
+        <element name="Cafe" positionX="-63" positionY="-18" width="128" height="195"/>
         <element name="Photo" positionX="-54" positionY="45" width="128" height="105"/>
         <element name="Review" positionX="-36" positionY="54" width="128" height="105"/>
     </elements>

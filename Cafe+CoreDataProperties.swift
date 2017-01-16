@@ -2,12 +2,13 @@
 //  Cafe+CoreDataProperties.swift
 //  Cafe-Near-Me
 //
-//  Created by LIJO RAJU on 16/01/17.
+//  Created by LIJO RAJU on 17/01/17.
 //  Copyright © 2017 LIJORAJU. All rights reserved.
 //
 
 import Foundation
 import CoreData
+ 
 
 extension Cafe {
 
@@ -22,6 +23,7 @@ extension Cafe {
     @NSManaged public var name: String?
     @NSManaged public var rating: Float
     @NSManaged public var venueID: String?
+    @NSManaged public var nearLocation: String?
     @NSManaged public var photos: NSSet?
     @NSManaged public var reviews: NSSet?
 
