@@ -19,12 +19,10 @@ class CafeViewController: UIViewController {
     @IBOutlet var cafeOpenedLabel: UILabel!
     @IBOutlet weak var cafeOpenHours: UILabel!
     
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let managedContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    let fetchRequestForCafe: NSFetchRequest<Cafe> = Cafe.fetchRequest()
     let fetchRequestForPhoto: NSFetchRequest<Photo> = Photo.fetchRequest()
     var cafes: [Cafe] = []
-    var photos: [Photo] = []
+    var cafePhotos: [Photo] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,44 +32,40 @@ class CafeViewController: UIViewController {
             gettingDetailsForTheCafe()
         }
         else {
-            if let cafeIndex = Constants.SelectedCafe.Index {
-                getPhotoAndDetailsFromBookmarks(forIndex: cafeIndex)
-            }
+            getPhotoAndDetailsFromBookmarks()
         }
     }
     
     // MARK: Function showCafeDetailsAndPhoto(cafeIndex: Int)
-    func showCafeDetailsAndPhoto(cafeIndex: Int) {
-        let cafe = cafes[cafeIndex]
-        let cafePhoto = photos.first!
-        let photoData = cafePhoto.photoData
+    func showCafeDetailsAndPhoto() {
+        let cafe = CoreData.sharedInstance.gettingCafeInfo(managedObjectContext: managedContext)
         cafeName.text = cafe.name
         cafeAddress.text = cafe.address
         ratingLabel.text = "Rating : \(cafe.rating) / 10.0"
         ratingLabel.isHidden = false
         imageLoadingIndicator.stopAnimating()
-        imageLoadingLabel.isHidden = true
-        cafeImage.image = UIImage(data: photoData as! Data)
-        
+        if cafePhotos.count == 0 {
+            imageLoadingLabel.text = "No Photo Available"
+        }
+        else {
+            let photo = cafePhotos.first
+            let photoData = photo?.photoData
+            cafeImage.image = UIImage(data: photoData as! Data)
+        }
     }
     
     // MARK: Function getPhotoAndDetailsFromBookmarks(forIndex index: Int)
-    func getPhotoAndDetailsFromBookmarks(forIndex index: Int) {
-        do {
-            cafes = try managedContext.fetch(fetchRequestForCafe)
-        }
-        catch let error as NSError {
-            print("Failed fetching cafe details \(error) \(error.userInfo)")
-        }
-        let predicate: NSPredicate = NSPredicate(format: "cafe = %@", cafes[index])
+    func getPhotoAndDetailsFromBookmarks() {
+        let cafe = CoreData.sharedInstance.gettingCafeInfo(managedObjectContext: managedContext)
+        let predicate: NSPredicate = NSPredicate(format: "cafe = %@", cafe)
         fetchRequestForPhoto.predicate = predicate
         do {
-            photos = try managedContext.fetch(fetchRequestForPhoto)
+            cafePhotos = try managedContext.fetch(fetchRequestForPhoto)
         }
         catch let error as NSError {
             print("Failed fetching cafe photos \(error) \(error.userInfo)")
         }
-        showCafeDetailsAndPhoto(cafeIndex: index)
+        showCafeDetailsAndPhoto()
     }
     
     // MARK: Function gettingPhotoForTheCafe()
