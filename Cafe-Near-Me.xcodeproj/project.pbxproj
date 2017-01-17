@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA0E441B1E2DF83100DE1CDD /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = DA0E441A1E2DF83100DE1CDD /* README.md */; };
 		DA556E8E1E2C8ACB00C2D7D2 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA556E8D1E2C8ACB00C2D7D2 /* CoreData.swift */; };
 		DA556EA11E2D4CAF00C2D7D2 /* Review+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA556E9B1E2D4CAF00C2D7D2 /* Review+CoreDataClass.swift */; };
 		DA556EA21E2D4CAF00C2D7D2 /* Review+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA556E9C1E2D4CAF00C2D7D2 /* Review+CoreDataProperties.swift */; };
@@ -51,6 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DA0E441A1E2DF83100DE1CDD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		DA556E8D1E2C8ACB00C2D7D2 /* CoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 		DA556E9B1E2D4CAF00C2D7D2 /* Review+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Review+CoreDataClass.swift"; path = "../Review+CoreDataClass.swift"; sourceTree = "<group>"; };
 		DA556E9C1E2D4CAF00C2D7D2 /* Review+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Review+CoreDataProperties.swift"; path = "../Review+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 		DA6C4AD91E21E6AD001289BE = {
 			isa = PBXGroup;
 			children = (
+				DA0E441A1E2DF83100DE1CDD /* README.md */,
 				DA6C4AE41E21E6AE001289BE /* Cafe-Near-Me */,
 				DA6C4AFC1E21E6AE001289BE /* Cafe-Near-MeTests */,
 				DA6C4B071E21E6AE001289BE /* Cafe-Near-MeUITests */,
@@ -352,6 +355,7 @@
 			files = (
 				DA556EA61E2D4CAF00C2D7D2 /* Photo+CoreDataProperties.swift in Sources */,
 				DA556EA41E2D4CAF00C2D7D2 /* Cafe+CoreDataProperties.swift in Sources */,
+				DA0E441B1E2DF83100DE1CDD /* README.md in Sources */,
 				DAB0CC0E1E29EF9700152C19 /* CafePhotosCell.swift in Sources */,
 				DA8578C61E2220E700821868 /* Constants.swift in Sources */,
 				DA86A51B1E235AC600A2AB9E /* CafeReviewsVC.swift in Sources */,
