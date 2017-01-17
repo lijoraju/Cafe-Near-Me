@@ -94,17 +94,12 @@ class SearchCafeViewController: UIViewController {
     
     // MARK: Function keyboardWillShow(_ notification: NSNotification)
     func keyboardWillShow(_ notification: NSNotification) {
-        if locationTextField.isFirstResponder {
-            view.frame.origin.y = -getKeyboardHeight(notification)
-        }
+        view.frame.origin.y = getKeyboardHeight(notification) * (-1)
     }
     
     // MARK : Function keyboardWillHide(_ notification: NSNotification)
     func keyboardWillHide(_ notification: NSNotification) {
-        if locationTextField.isFirstResponder {
-            view.frame.origin.y = 0
-        }
-        
+        view.frame.origin.y = 0
     }
     
     // MARK: Function subscribeToKeyboardNotifications()
@@ -123,7 +118,10 @@ class SearchCafeViewController: UIViewController {
     func getKeyboardHeight(_ notification: NSNotification)-> CGFloat {
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        return keyboardSize.cgRectValue.height
+        if locationTextField.isFirstResponder {
+            return keyboardSize.cgRectValue.height
+        }
+        return 0
     }
     
     // MARK: Function hideKeyboardWhenTappedAround()

@@ -349,25 +349,25 @@
                                         <rect key="frame" x="0.0" y="28" width="1000" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ary-wP-uab" id="rHh-TP-sqS">
-                                            <frame key="frameInset" width="1000" height="47.5"/>
+                                            <frame key="frameInset" width="375" height="47"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Hry-zj-bSt" userLabel="Title">
-                                                    <frame key="frameInset" minX="227" minY="7" width="45" height="20.5"/>
+                                                    <frame key="frameInset" minX="77" minY="6" width="45" height="21"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Review" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YSX-0s-dIT" userLabel="Subtitle">
-                                                    <frame key="frameInset" minX="227" minY="27.5" width="40.5" height="14.5"/>
+                                                    <frame key="frameInset" minX="77" minY="27" width="41" height="15"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="ReviewerPlaceholderImage" id="mpP-w4-HNR">
-                                                    <frame key="frameInset" minX="164" width="48" height="47.5"/>
+                                                    <frame key="frameInset" minX="15" width="47" height="47"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
