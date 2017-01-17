@@ -231,6 +231,9 @@ class CafeViewController: UIViewController {
         }
         else {
             let totalReviews = (Constants.Cafe.reviews).count - 1
+            guard (totalReviews > 0) else {
+                return
+            }
             for index in 0...totalReviews {
                 let cafeReview = Review(context: managedContext)
                 cafeReview.review = Constants.Cafe.reviews[index]
