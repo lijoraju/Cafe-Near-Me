@@ -55,7 +55,7 @@ class SearchCafeViewController: UIViewController {
     func processResponse(withPlacemarks placemarks: [CLPlacemark]?, error: Error?) {
         if let error = error {
             configureUI(enable: true)
-            displayAnAlert(title: "Error", message: error.localizedDescription)
+            displayAnAlert(title: "Error: No Network Connection", message: error.localizedDescription)
         }
         else {
             var location: CLLocation?
