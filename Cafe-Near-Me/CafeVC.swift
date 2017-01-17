@@ -31,7 +31,7 @@ class CafeViewController: UIViewController {
         if (searchingLatLon != nil) {
             gettingPhotoForTheCafe()
             gettingDetailsForTheCafe()
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Make Bookmark", style: .plain, target: self, action: #selector(makeBookmark))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Make Bookmark", style: .done, target: self, action: #selector(makeBookmark))
         }
         else {
             getPhotoAndDetailsFromBookmarks()
@@ -183,7 +183,7 @@ class CafeViewController: UIViewController {
                     }
                 }
             }
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Remove Bookmark", style: .plain, target: self, action: #selector(removeBookmark))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Remove Bookmark", style: .done, target: self, action: #selector(removeBookmark))
         }
     }
     
@@ -196,7 +196,7 @@ class CafeViewController: UIViewController {
                 print("Removed bookmarked cafe")
             }
         }
-         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Make Bookmark", style: .plain, target: self, action: #selector(self.makeBookmark))
+         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Make Bookmark", style: .done, target: self, action: #selector(self.makeBookmark))
     }
     
     // MARK: Function addCafePhotosToBookmarks(forCafe thisCafe: Cafe)
