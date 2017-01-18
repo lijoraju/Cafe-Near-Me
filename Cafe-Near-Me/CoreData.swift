@@ -27,6 +27,24 @@ class CoreData {
         return cafe
     }
     
+    //MARK: Function checkCafeAleardyBookmarked(managedContext context: NSManagedObjectContext, venueID: String)-> Bool
+    func checkCafeAleardyBookmarked(managedContext context: NSManagedObjectContext, venueID: String)-> Bool {
+        let fetchRequest: NSFetchRequest<Cafe> = Cafe.fetchRequest()
+        let predicate: NSPredicate = NSPredicate(format: "venueID = %@", venueID)
+        fetchRequest.predicate = predicate
+        var cafe: [Cafe] = []
+        do {
+            cafe = try context.fetch(fetchRequest)
+        }
+        catch {
+            return false
+        }
+        if cafe.count != 0 {
+            return true
+        }
+        return false
+    }
+    
     // MARK: Function save(managedObjectContext context: NSManagedObjectContext, completionHandler: @escaping(_ sucess: Bool)-> void)
     func save(managedObjectContext context: NSManagedObjectContext, completionHandler: @escaping(_ sucess: Bool)-> Void) {
         do {

@@ -24,14 +24,24 @@ class CafeViewController: UIViewController {
     var cafes: [Cafe] = []
     var cafePhotos: [Photo] = []
     var cafeBookmarked: Bool = false
+    let coreData = CoreData.sharedInstance
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let searchingLatLon = Constants.searchingLatLon
         if (searchingLatLon != nil) {
-            gettingPhotoForTheCafe()
-            gettingDetailsForTheCafe()
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Make Bookmark", style: .done, target: self, action: #selector(makeBookmark))
+            if let cafeIndex = Constants.SelectedCafe.Index {
+                let cafeVenueID = Constants.SearchedCafes.VenueIDs[cafeIndex]
+                let alreadyBookmarked = coreData.checkCafeAleardyBookmarked(managedContext: managedContext, venueID: cafeVenueID)
+                if !(alreadyBookmarked) {
+                    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Make Bookmark", style: .done, target: self, action: #selector(makeBookmark))
+                }
+                else {
+                    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Remove Bookmark", style: .done, target: self, action: #selector(removeBookmark))
+                }
+                gettingPhotoForTheCafe(selectedCafeIndex: cafeIndex)
+                gettingDetailsForTheCafe(selectedCafeIndex: cafeIndex)
+            }
         }
         else {
             getPhotoAndDetailsFromBookmarks()
@@ -40,7 +50,7 @@ class CafeViewController: UIViewController {
     
     // MARK: Function showCafeDetailsAndPhoto(cafeIndex: Int)
     func showCafeDetailsAndPhoto() {
-        let cafe = CoreData.sharedInstance.gettingCafeInfo(managedObjectContext: managedContext)
+        let cafe = coreData.gettingCafeInfo(managedObjectContext: managedContext)
         cafeName.text = cafe.name
         cafeAddress.text = cafe.address
         ratingLabel.text = "Rating : \(cafe.rating) / 10.0"
@@ -59,7 +69,7 @@ class CafeViewController: UIViewController {
     
     // MARK: Function getPhotoAndDetailsFromBookmarks(forIndex index: Int)
     func getPhotoAndDetailsFromBookmarks() {
-        let cafe = CoreData.sharedInstance.gettingCafeInfo(managedObjectContext: managedContext)
+        let cafe = coreData.gettingCafeInfo(managedObjectContext: managedContext)
         let predicate: NSPredicate = NSPredicate(format: "cafe = %@", cafe)
         fetchRequestForPhoto.predicate = predicate
         do {
@@ -71,87 +81,83 @@ class CafeViewController: UIViewController {
         showCafeDetailsAndPhoto()
     }
     
-    // MARK: Function gettingPhotoForTheCafe()
-    func gettingPhotoForTheCafe() {
-        if let cafe = Constants.SelectedCafe.Index {
-                let venueID = Constants.SearchedCafes.VenueIDs[cafe]
-                FoursquareAPI.sharedInstance.getVenuePhotos(selectedVenueID: venueID) { sucess, errorString in
-                    if sucess {
-                        guard let cafePhotoURL = Constants.Cafe.photoURLs.first else {
-                            performUIUpdateOnMain {
-                                self.imageLoadingIndicator.stopAnimating()
-                                self.imageLoadingLabel.text = "No Photo Available"
-                            }
-                            return
-                        }
-                        FoursquareAPI.sharedInstance.downloadImages(atImagePath: cafePhotoURL) { imageData in
-                            if imageData != nil {
-                                performUIUpdateOnMain {
-                                    self.imageLoadingIndicator.stopAnimating()
-                                    self.imageLoadingLabel.isHidden = true
-                                    self.cafeImage.image = UIImage(data: imageData!)
-                                }
-                            }
-                            else {
-                                performUIUpdateOnMain {
-                                    self.imageLoadingIndicator.stopAnimating()
-                                    self.imageLoadingLabel.text = "Loading Photo Failed!"
-                                }
-                            }
-                            Constants.Cafe.photo = imageData
+    // MARK: Function gettingPhotoForTheCafe(selectedCafeIndex cafeIndex: Int)
+    func gettingPhotoForTheCafe(selectedCafeIndex cafeIndex: Int) {
+        let venueID = Constants.SearchedCafes.VenueIDs[cafeIndex]
+        FoursquareAPI.sharedInstance.getVenuePhotos(selectedVenueID: venueID) { sucess, errorString in
+            if sucess {
+                guard let cafePhotoURL = Constants.Cafe.photoURLs.first else {
+                    performUIUpdateOnMain {
+                        self.imageLoadingIndicator.stopAnimating()
+                        self.imageLoadingLabel.text = "No Photo Available"
+                    }
+                    return
+                }
+                FoursquareAPI.sharedInstance.downloadImages(atImagePath: cafePhotoURL) { imageData in
+                    if imageData != nil {
+                        performUIUpdateOnMain {
+                            self.imageLoadingIndicator.stopAnimating()
+                            self.imageLoadingLabel.isHidden = true
+                            self.cafeImage.image = UIImage(data: imageData!)
                         }
                     }
                     else {
                         performUIUpdateOnMain {
                             self.imageLoadingIndicator.stopAnimating()
                             self.imageLoadingLabel.text = "Loading Photo Failed!"
-                            self.displayAnAlert(title: "Error: Downloading Cafe Photo", message: errorString!)
                         }
                     }
+                    Constants.Cafe.photo = imageData
                 }
+            }
+            else {
+                performUIUpdateOnMain {
+                    self.imageLoadingIndicator.stopAnimating()
+                    self.imageLoadingLabel.text = "Loading Photo Failed!"
+                    self.displayAnAlert(title: "Error: Downloading Cafe Photo", message: errorString!)
+                }
+            }
         }
     }
     
-    // MARK: Function gettingDetailsForTheCafe()
-    func gettingDetailsForTheCafe() {
-            if let cafe = Constants.SelectedCafe.Index {
-                let venueID = Constants.SearchedCafes.VenueIDs[cafe]
-                cafeName.text = Constants.SearchedCafes.Names[cafe]
-                cafeAddress.text = "Address : \(Constants.SearchedCafes.Addresses[cafe])"
-                FoursquareAPI.sharedInstance.getVenueDetails(selectedVenueID: venueID) { sucess in
-                    if sucess {
-                        let rating = "\(Constants.Cafe.rating)"
+    // MARK: Function gettingDetailsForTheCafe(selectedCafeIndex cafeIndex: Int)
+    func gettingDetailsForTheCafe(selectedCafeIndex cafeIndex: Int) {
+        let venueID = Constants.SearchedCafes.VenueIDs[cafeIndex]
+        cafeName.text = Constants.SearchedCafes.Names[cafeIndex]
+        cafeAddress.text = "Address : \(Constants.SearchedCafes.Addresses[cafeIndex])"
+        FoursquareAPI.sharedInstance.getVenueDetails(selectedVenueID: venueID) { sucess in
+            if sucess {
+                let rating = "\(Constants.Cafe.rating)"
+                performUIUpdateOnMain {
+                    self.ratingLabel.isHidden = false
+                    self.ratingLabel.text = "Rating : \(rating) / 10.0"
+                }
+            }
+        }
+        FoursquareAPI.sharedInstance.getVenueOpenHours(selectedVenueID: venueID) { sucess in
+            if sucess {
+                if let opensToday = Constants.Cafe.openToday {
+                    if opensToday {
                         performUIUpdateOnMain {
-                            self.ratingLabel.isHidden = false
-                            self.ratingLabel.text = "Rating : \(rating) / 10.0"
+                            self.cafeOpenedLabel.isHidden = false
+                            self.cafeOpenedLabel.text = "Open Today"
+                        }
+                    }
+                    else {
+                        performUIUpdateOnMain {
+                            self.cafeOpenedLabel.isHidden = false
+                            self.cafeOpenedLabel.text = "Close Today"
                         }
                     }
                 }
-                FoursquareAPI.sharedInstance.getVenueOpenHours(selectedVenueID: venueID) { sucess in
-                    if sucess {
-                        if let opensToday = Constants.Cafe.openToday {
-                            if opensToday {
-                                performUIUpdateOnMain {
-                                    self.cafeOpenedLabel.isHidden = false
-                                    self.cafeOpenedLabel.text = "Open Today"
-                                }
-                            }
-                            else {
-                                performUIUpdateOnMain {
-                                    self.cafeOpenedLabel.isHidden = false
-                                    self.cafeOpenedLabel.text = "Close Today"
-                                }
-                            }
-                        }
-                        if let openingHours = Constants.Cafe.openTimeframe {
-                            performUIUpdateOnMain {
-                                self.cafeOpenHours.isHidden = false
-                                self.cafeOpenHours.text = openingHours
-                            }
-                        }
+                if let openingHours = Constants.Cafe.openTimeframe {
+                    performUIUpdateOnMain {
+                        self.cafeOpenHours.isHidden = false
+                        self.cafeOpenHours.text = openingHours
                     }
                 }
             }
+        }
     }
     
     // MARK: Cancel Button Action
@@ -172,7 +178,7 @@ class CafeViewController: UIViewController {
             cafe.longitude = Constants.SearchedCafes.Longitudes[selectedCafe]
             cafe.rating = Constants.Cafe.rating
             cafe.nearLocation = Constants.searchingLocation
-            CoreData.sharedInstance.save(managedObjectContext: managedContext) { sucess in
+            coreData.save(managedObjectContext: managedContext) { sucess in
                 if sucess {
                     print("Cafe added to bookmarks")
                     self.addCafePhotosToBookmarks(forCafe: cafe)
@@ -189,9 +195,9 @@ class CafeViewController: UIViewController {
     
     // MARK: Function removeBookmark() 
     func removeBookmark() {
-        let cafe = CoreData.sharedInstance.gettingCafeInfo(managedObjectContext: managedContext)
+        let cafe = coreData.gettingCafeInfo(managedObjectContext: managedContext)
         managedContext.delete(cafe)
-        CoreData.sharedInstance.save(managedObjectContext: managedContext) { sucess in
+        coreData.save(managedObjectContext: managedContext) { sucess in
             if sucess {
                 print("Removed bookmarked cafe")
             }
@@ -210,7 +216,7 @@ class CafeViewController: UIViewController {
                             photo.photoURL = url
                             photo.photoData = photoData as NSData?
                             photo.cafe = thisCafe
-                            CoreData.sharedInstance.save(managedObjectContext: self.managedContext) { sucess in
+                            self.coreData.save(managedObjectContext: self.managedContext) { sucess in
                                 if sucess {
                                     print("Bookmarked a cafe photo")
                                 }
@@ -239,7 +245,7 @@ class CafeViewController: UIViewController {
                 cafeReview.review = Constants.Cafe.reviews[index]
                 cafeReview.reviewer = Constants.Cafe.reviewerNames[index]
                 cafeReview.cafe = thisCafe
-                CoreData.sharedInstance.save(managedObjectContext: managedContext) { sucess in
+                coreData.save(managedObjectContext: managedContext) { sucess in
                     if sucess {
                         print("Bookmarked a cafe review")
                         self.addReviewerPhotosToBookmarks(atIndex: index, forReview: cafeReview)
@@ -275,7 +281,7 @@ class CafeViewController: UIViewController {
                     photo.photoURL = url
                     photo.photoData = imageData! as NSData?
                     photo.review = review
-                    CoreData.sharedInstance.save(managedObjectContext: self.managedContext) { sucess in
+                    self.coreData.save(managedObjectContext: self.managedContext) { sucess in
                         if sucess {
                             print("Bookmarked a reviewer photo")
                         }
