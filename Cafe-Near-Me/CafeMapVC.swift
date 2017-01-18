@@ -29,7 +29,7 @@ class CafeMapViewController: UIViewController {
             }
         }
         else {
-            let cafe = CoreData.sharedInstance.gettingCafeInfo(managedObjectContext: managedContext, forDeleting: false, venueID: nil)
+            let cafe = CoreData.sharedInstance.gettingCafeInfo(managedObjectContext: managedContext, venueID: nil)
             let distance = Float(cafe.distance) / 1000
             let nearLocation = cafe.nearLocation!
             distanceLabel.text = "Within \(distance) km From \(nearLocation)"
@@ -50,7 +50,7 @@ class CafeMapViewController: UIViewController {
             }
         }
         else {
-            let cafe = CoreData.sharedInstance.gettingCafeInfo(managedObjectContext: managedContext, forDeleting: false, venueID: nil)
+            let cafe = CoreData.sharedInstance.gettingCafeInfo(managedObjectContext: managedContext, venueID: nil)
             latitude = cafe.latitude
             longitude = cafe.longitude
             cafeName = cafe.name

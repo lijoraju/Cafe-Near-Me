@@ -44,13 +44,13 @@ class CafeViewController: UIViewController {
             }
         }
         else {
-            getPhotoAndDetailsFromBookmarks()
+            let cafe = coreData.gettingCafeInfo(managedObjectContext: managedContext, venueID: nil)
+            getPhotoAndDetailsFromBookmarks(forCafe: cafe)
         }
     }
     
     // MARK: Function showCafeDetailsAndPhoto(cafeIndex: Int)
-    func showCafeDetailsAndPhoto() {
-        let cafe = coreData.gettingCafeInfo(managedObjectContext: managedContext, forDeleting: false, venueID: nil)
+    func showCafeDetailsAndPhoto(forCafe cafe: Cafe) {
         cafeName.text = cafe.name
         cafeAddress.text = cafe.address
         ratingLabel.text = "Rating : \(cafe.rating) / 10.0"
@@ -68,8 +68,8 @@ class CafeViewController: UIViewController {
     }
     
     // MARK: Function getPhotoAndDetailsFromBookmarks(forIndex index: Int)
-    func getPhotoAndDetailsFromBookmarks() {
-        let cafe = coreData.gettingCafeInfo(managedObjectContext: managedContext, forDeleting: false, venueID: nil)
+    func getPhotoAndDetailsFromBookmarks(forCafe cafe: Cafe) {
+        let fetchRequestForPhoto: NSFetchRequest<Photo> = Photo.fetchRequest()
         let predicate: NSPredicate = NSPredicate(format: "cafe = %@", cafe)
         fetchRequestForPhoto.predicate = predicate
         do {
@@ -78,7 +78,7 @@ class CafeViewController: UIViewController {
         catch let error as NSError {
             print("Failed fetching cafe photos \(error) \(error.userInfo)")
         }
-        showCafeDetailsAndPhoto()
+        showCafeDetailsAndPhoto(forCafe: cafe)
     }
     
     // MARK: Function gettingPhotoForTheCafe(selectedCafeIndex cafeIndex: Int)
@@ -185,6 +185,7 @@ class CafeViewController: UIViewController {
                     }
                     else {
                         performUIUpdateOnMain {
+                            self.bookmarkButton.isEnabled = true
                             self.displayAnAlert(title: "Error", message: "Failed bookmarking cafe")
                         }
                     }
@@ -192,7 +193,7 @@ class CafeViewController: UIViewController {
             }
             else {
                 let cafeVenueID = Constants.SearchedCafes.VenueIDs[selectedCafe]
-                let cafe = coreData.gettingCafeInfo(managedObjectContext: managedContext, forDeleting: true, venueID: cafeVenueID)
+                let cafe = coreData.gettingCafeInfo(managedObjectContext: managedContext, venueID: cafeVenueID)
                 performUIUpdateOnMain {
                     self.managedContext.delete(cafe)
                     self.coreData.save(managedObjectContext: self.managedContext) { sucess in
@@ -219,7 +220,7 @@ class CafeViewController: UIViewController {
                             photo.cafe = thisCafe
                             self.coreData.save(managedObjectContext: self.managedContext) { sucess in
                                 if sucess {
-                                    print("Bookmarked a cafe photo")
+                                    //print("Bookmarked a cafe photo")
                                 }
                             }
                         }
@@ -239,6 +240,7 @@ class CafeViewController: UIViewController {
         else {
             let totalReviews = (Constants.Cafe.reviews).count - 1
             guard (totalReviews > 0) else {
+                completedBookmarking()
                 return
             }
             for index in 0...totalReviews {
@@ -252,6 +254,7 @@ class CafeViewController: UIViewController {
                     }
                 }
             }
+            completedBookmarking()
         }
     }
     
@@ -265,6 +268,7 @@ class CafeViewController: UIViewController {
             }
             else {
                 performUIUpdateOnMain {
+                    self.completedBookmarking()
                     self.displayAnAlert(title: "Failed Bookmarking Cafe Reviews", message: errorString!)
                 }
             }
@@ -283,15 +287,18 @@ class CafeViewController: UIViewController {
                     photo.review = review
                     self.coreData.save(managedObjectContext: self.managedContext) { sucess in
                         if sucess {
-                            performUIUpdateOnMain {
-                                self.bookmarkButton.title = "Remove Bookmark"
-                                self.bookmarkButton.isEnabled = true
-                            }
+                            //print("Bookmarked and saved a reviewer photo")
                         }
                     }
                 }
             }
         }
+    }
+    
+    // MARK: Function completedBookmarking()
+    func completedBookmarking() {
+        bookmarkButton.title = "Remove Bookmark"
+        bookmarkButton.isEnabled = true
     }
     
 }
