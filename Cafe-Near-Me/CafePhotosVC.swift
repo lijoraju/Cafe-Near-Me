@@ -179,15 +179,3 @@ class CafePhotosViewController: UIViewController, UICollectionViewDelegate, UICo
     
 }
 
-// MARK: UICollectionViewDelegateFlowLayout
-extension CafePhotosViewController: UICollectionViewDelegateFlowLayout {
-    
-    // MARK: Tells the size of a given cell in collection view
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let paddingSpace = sectionInsects.left * (itemsPerRow + 1)
-        let availableWidth = view.frame.width - paddingSpace
-        let widthPerItem = availableWidth / itemsPerRow
-        return CGSize(width: widthPerItem, height: widthPerItem)
-    }
-    
-}

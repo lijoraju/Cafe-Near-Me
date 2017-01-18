@@ -39,6 +39,9 @@ class CafeViewController: UIViewController {
                 if alreadyBookmarked {
                     bookmarkButton.title = "Remove Bookmark"
                 }
+                else {
+                    bookmarkButton.isEnabled = false
+                }
                 gettingPhotoForTheCafe(selectedCafeIndex: cafeIndex)
                 gettingDetailsForTheCafe(selectedCafeIndex: cafeIndex)
             }
@@ -90,6 +93,7 @@ class CafeViewController: UIViewController {
                     performUIUpdateOnMain {
                         self.imageLoadingIndicator.stopAnimating()
                         self.imageLoadingLabel.text = "No Photo Available"
+                        self.bookmarkButton.isEnabled = true
                     }
                     return
                 }
@@ -99,6 +103,7 @@ class CafeViewController: UIViewController {
                             self.imageLoadingIndicator.stopAnimating()
                             self.imageLoadingLabel.isHidden = true
                             self.cafeImage.image = UIImage(data: imageData!)
+                            self.bookmarkButton.isEnabled = true
                         }
                     }
                     else {

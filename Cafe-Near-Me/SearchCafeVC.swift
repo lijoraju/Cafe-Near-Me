@@ -146,15 +146,3 @@ class SearchCafeViewController: UIViewController {
     
 }
 
-// MARK: Extension UIViewController
-extension UIViewController {
-    
-    // MARK: Function displayAnAlert(title: String, message: String)
-    func  displayAnAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let alertAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
-        alert.addAction(alertAction)
-        present(alert, animated: true, completion: nil)
-    }
-    
-}

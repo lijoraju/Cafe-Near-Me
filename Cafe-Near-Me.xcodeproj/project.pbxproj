@@ -31,6 +31,7 @@
 		DAB0CC0C1E29EE1000152C19 /* CafePhotosVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB0CC0B1E29EE1000152C19 /* CafePhotosVC.swift */; };
 		DAB0CC0E1E29EF9700152C19 /* CafePhotosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB0CC0D1E29EF9700152C19 /* CafePhotosCell.swift */; };
 		DAB0CC101E2A88CC00152C19 /* CafeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB0CC0F1E2A88CC00152C19 /* CafeVC.swift */; };
+		DAD475ED1E2FBDE0008EF9CD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD475EC1E2FBDE0008EF9CD /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,7 @@
 		DAB0CC0B1E29EE1000152C19 /* CafePhotosVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CafePhotosVC.swift; sourceTree = "<group>"; };
 		DAB0CC0D1E29EF9700152C19 /* CafePhotosCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CafePhotosCell.swift; sourceTree = "<group>"; };
 		DAB0CC0F1E2A88CC00152C19 /* CafeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CafeVC.swift; sourceTree = "<group>"; };
+		DAD475EC1E2FBDE0008EF9CD /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +184,7 @@
 				DA6C4AF41E21E6AE001289BE /* Info.plist */,
 				DA8578C51E2220E700821868 /* Constants.swift */,
 				DA556E8D1E2C8ACB00C2D7D2 /* CoreData.swift */,
+				DAD475EC1E2FBDE0008EF9CD /* Extensions.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -367,6 +370,7 @@
 				DA6C4AE61E21E6AE001289BE /* AppDelegate.swift in Sources */,
 				DA556EA11E2D4CAF00C2D7D2 /* Review+CoreDataClass.swift in Sources */,
 				DAB0CC0C1E29EE1000152C19 /* CafePhotosVC.swift in Sources */,
+				DAD475ED1E2FBDE0008EF9CD /* Extensions.swift in Sources */,
 				DA8D57A01E27641D002D21A3 /* CafeMapVC.swift in Sources */,
 				DA6C4AEE1E21E6AE001289BE /* Cafe_Near_Me.xcdatamodeld in Sources */,
 				DA556EA21E2D4CAF00C2D7D2 /* Review+CoreDataProperties.swift in Sources */,
