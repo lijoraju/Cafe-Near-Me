@@ -25,19 +25,19 @@ class CafeViewController: UIViewController {
     var cafePhotos: [Photo] = []
     var cafeBookmarked: Bool = false
     let coreData = CoreData.sharedInstance
+    var bookmarkButton: UIBarButtonItem = UIBarButtonItem()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let searchingLatLon = Constants.searchingLatLon
+        bookmarkButton = UIBarButtonItem.init(title: "Make Bookmark", style: .done, target: self, action: #selector(makeBookmark))
         if (searchingLatLon != nil) {
             if let cafeIndex = Constants.SelectedCafe.Index {
                 let cafeVenueID = Constants.SearchedCafes.VenueIDs[cafeIndex]
                 let alreadyBookmarked = coreData.checkCafeAleardyBookmarked(managedContext: managedContext, venueID: cafeVenueID)
-                if !(alreadyBookmarked) {
-                    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Make Bookmark", style: .done, target: self, action: #selector(makeBookmark))
-                }
-                else {
-                    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Remove Bookmark", style: .done, target: self, action: #selector(removeBookmark))
+                navigationItem.rightBarButtonItem = bookmarkButton
+                if alreadyBookmarked {
+                    bookmarkButton.title = "Remove Bookmark"
                 }
                 gettingPhotoForTheCafe(selectedCafeIndex: cafeIndex)
                 gettingDetailsForTheCafe(selectedCafeIndex: cafeIndex)
@@ -50,7 +50,7 @@ class CafeViewController: UIViewController {
     
     // MARK: Function showCafeDetailsAndPhoto(cafeIndex: Int)
     func showCafeDetailsAndPhoto() {
-        let cafe = coreData.gettingCafeInfo(managedObjectContext: managedContext)
+        let cafe = coreData.gettingCafeInfo(managedObjectContext: managedContext, forDeleting: false, venueID: nil)
         cafeName.text = cafe.name
         cafeAddress.text = cafe.address
         ratingLabel.text = "Rating : \(cafe.rating) / 10.0"
@@ -69,7 +69,7 @@ class CafeViewController: UIViewController {
     
     // MARK: Function getPhotoAndDetailsFromBookmarks(forIndex index: Int)
     func getPhotoAndDetailsFromBookmarks() {
-        let cafe = coreData.gettingCafeInfo(managedObjectContext: managedContext)
+        let cafe = coreData.gettingCafeInfo(managedObjectContext: managedContext, forDeleting: false, venueID: nil)
         let predicate: NSPredicate = NSPredicate(format: "cafe = %@", cafe)
         fetchRequestForPhoto.predicate = predicate
         do {
@@ -167,42 +167,43 @@ class CafeViewController: UIViewController {
     
     // MARK: Function makeBookmark()
     func makeBookmark() {
-        navigationItem.rightBarButtonItem?.isEnabled = false
+        bookmarkButton.isEnabled = false
         if let selectedCafe = Constants.SelectedCafe.Index {
-            let cafe = Cafe(context: managedContext)
-            cafe.venueID = Constants.SearchedCafes.VenueIDs[selectedCafe]
-            cafe.name = Constants.SearchedCafes.Names[selectedCafe]
-            cafe.address = Constants.SearchedCafes.Addresses[selectedCafe]
-            cafe.distance = Int16(Constants.SearchedCafes.Distances[selectedCafe])
-            cafe.latitude = Constants.SearchedCafes.Latitudes[selectedCafe]
-            cafe.longitude = Constants.SearchedCafes.Longitudes[selectedCafe]
-            cafe.rating = Constants.Cafe.rating
-            cafe.nearLocation = Constants.searchingLocation
-            coreData.save(managedObjectContext: managedContext) { sucess in
-                if sucess {
-                    print("Cafe added to bookmarks")
-                    self.addCafePhotosToBookmarks(forCafe: cafe)
-                }
-                else {
-                    performUIUpdateOnMain {
-                        self.displayAnAlert(title: "Error", message: "Failed bookmarking cafe")
+            if bookmarkButton.title == "Make Bookmark" {
+                let cafe = Cafe(context: managedContext)
+                cafe.venueID = Constants.SearchedCafes.VenueIDs[selectedCafe]
+                cafe.name = Constants.SearchedCafes.Names[selectedCafe]
+                cafe.address = Constants.SearchedCafes.Addresses[selectedCafe]
+                cafe.distance = Int16(Constants.SearchedCafes.Distances[selectedCafe])
+                cafe.latitude = Constants.SearchedCafes.Latitudes[selectedCafe]
+                cafe.longitude = Constants.SearchedCafes.Longitudes[selectedCafe]
+                cafe.rating = Constants.Cafe.rating
+                cafe.nearLocation = Constants.searchingLocation
+                coreData.save(managedObjectContext: managedContext) { sucess in
+                    if sucess {
+                        self.addCafePhotosToBookmarks(forCafe: cafe)
+                    }
+                    else {
+                        performUIUpdateOnMain {
+                            self.displayAnAlert(title: "Error", message: "Failed bookmarking cafe")
+                        }
                     }
                 }
             }
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Remove Bookmark", style: .done, target: self, action: #selector(removeBookmark))
-        }
-    }
-    
-    // MARK: Function removeBookmark() 
-    func removeBookmark() {
-        let cafe = coreData.gettingCafeInfo(managedObjectContext: managedContext)
-        managedContext.delete(cafe)
-        coreData.save(managedObjectContext: managedContext) { sucess in
-            if sucess {
-                print("Removed bookmarked cafe")
+            else {
+                let cafeVenueID = Constants.SearchedCafes.VenueIDs[selectedCafe]
+                let cafe = coreData.gettingCafeInfo(managedObjectContext: managedContext, forDeleting: true, venueID: cafeVenueID)
+                performUIUpdateOnMain {
+                    self.managedContext.delete(cafe)
+                    self.coreData.save(managedObjectContext: self.managedContext) { sucess in
+                        if sucess {
+                            self.bookmarkButton.title = "Make Bookmark"
+                            self.bookmarkButton.isEnabled = true
+                        }
+                    }
+                }
             }
         }
-         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Make Bookmark", style: .done, target: self, action: #selector(self.makeBookmark))
     }
     
     // MARK: Function addCafePhotosToBookmarks(forCafe thisCafe: Cafe)
@@ -247,7 +248,6 @@ class CafeViewController: UIViewController {
                 cafeReview.cafe = thisCafe
                 coreData.save(managedObjectContext: managedContext) { sucess in
                     if sucess {
-                        print("Bookmarked a cafe review")
                         self.addReviewerPhotosToBookmarks(atIndex: index, forReview: cafeReview)
                     }
                 }
@@ -283,7 +283,10 @@ class CafeViewController: UIViewController {
                     photo.review = review
                     self.coreData.save(managedObjectContext: self.managedContext) { sucess in
                         if sucess {
-                            print("Bookmarked a reviewer photo")
+                            performUIUpdateOnMain {
+                                self.bookmarkButton.title = "Remove Bookmark"
+                                self.bookmarkButton.isEnabled = true
+                            }
                         }
                     }
                 }

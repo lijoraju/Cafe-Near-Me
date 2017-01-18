@@ -13,14 +13,21 @@ class CoreData {
     static let sharedInstance = CoreData()
     
     // MARK: Function gettingCafeInfo(managedObjectContext context: NSManagedObjectContext)-> Cafe
-    func gettingCafeInfo(managedObjectContext context: NSManagedObjectContext)-> Cafe {
+    func gettingCafeInfo(managedObjectContext context: NSManagedObjectContext, forDeleting: Bool, venueID: String?)-> Cafe {
         let fetchRequest: NSFetchRequest<Cafe> = Cafe.fetchRequest()
         var cafes: [Cafe] = []
+        if forDeleting {
+            let predicate: NSPredicate = NSPredicate(format: "venueID = %@", venueID!)
+            fetchRequest.predicate = predicate
+        }
         do {
             cafes = try context.fetch(fetchRequest)
         }
         catch let error as NSError {
             print("Unable to fetch \(error) \(error.userInfo)")
+        }
+        if forDeleting {
+            return cafes.first!
         }
         let cafeIndex = (Constants.SelectedCafe.Index)!
         let cafe = cafes[cafeIndex]

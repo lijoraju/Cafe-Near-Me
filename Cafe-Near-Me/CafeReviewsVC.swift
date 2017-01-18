@@ -59,7 +59,7 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
     
     // MARK: Function showAllBookmarkedReviewsForTheCafe() 
     func showAllBookmarkedReviewsForTheCafe() {
-        let cafe = CoreData.sharedInstance.gettingCafeInfo(managedObjectContext: managedContext)
+        let cafe = CoreData.sharedInstance.gettingCafeInfo(managedObjectContext: managedContext, forDeleting: false, venueID: nil)
         let predicate: NSPredicate = NSPredicate(format: "cafe = %@", cafe)
         fetchRequest.predicate = predicate
         do {

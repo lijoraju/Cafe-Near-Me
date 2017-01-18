@@ -137,7 +137,6 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
         managedContext.delete(cafe)
         CoreData.sharedInstance.save(managedObjectContext: managedContext) { sucess in
             if sucess {
-                print("Cafe removed from bookmarks")
                 self.showingAllBookmarks()
             }
         }
