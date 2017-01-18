@@ -40,7 +40,7 @@ class SearchCafeViewController: UIViewController {
         }
         else {
             configureUI(enable: true)
-            displayAnAlert(title: "Alert", message: "No location specified. Type your desired location")
+            displayAnAlert(title: "Warning: Empty Location Field!", message: "No location specified. Type your desired location")
         }
     }
     

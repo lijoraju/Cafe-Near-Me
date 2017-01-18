@@ -26,7 +26,7 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
         let searchingLatLon = Constants.searchingLatLon
         if (searchingLatLon != nil) {
             let searchLocation = Constants.searchingLocation.capitalized
-            self.title = "Cafes In " + searchLocation
+            title = "Cafes In " + searchLocation
             performFoursquareSearch()
         }
         else {
@@ -172,7 +172,7 @@ class SearchResultsTableViewController: UIViewController, UITableViewDelegate, U
         }
         else {
             editBookmarksMode = true
-            displayAnAlert(title: "Warning: Deleting!", message: "Selecting a cafe will remove from bookmarks")
+            displayAnAlert(title: "Warning: Deleting A Bookmark!", message: "Selecting a cafe will remove from bookmarks")
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(deleteBookmarks))
         }
     }
