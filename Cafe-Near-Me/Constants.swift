@@ -80,6 +80,7 @@ struct Constants {
         static let open = "open"
         static let start = "start"
         static let end = "end"
+        static let reviewID = "id"
     }
     
     // MARK: Searched Cafes
@@ -108,6 +109,8 @@ struct Constants {
         static var reviewerPhotoURLs: [String]!
         static var reviewerPhotos: [Data]!
         static var photoURLs: [String]!
+        static var reviewIDs: [String]!
+        static var reviewerPhoto: [String: Data]!
     }
     
     static var searchingLatLon: String!

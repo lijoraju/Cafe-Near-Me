@@ -268,9 +268,10 @@ class FoursquareAPI {
     
     // MARK: Function getVenueReviews(selectedVenueID venueID: String, completionHandler: @escaping(_ sucess: Bool, _ error: String?)-> Void)
     func getVenueReviews(selectedVenueID venueID: String, completionHandler: @escaping(_ sucess: Bool, _ error: String?)-> Void) {
+        var reviewIDs: [String] = []
         var venueReviews: [String] = []
-        var userPhotoURLs: [String] = []
-        var userNames: [String] = []
+        var reviewerPhotoURLs: [String] = []
+        var reviewers: [String] = []
         let parameters = [Constants.ParameterKeys.ClientID: Constants.ParameterValues.ClientID,
                           Constants.ParameterKeys.ClientSecret: Constants.ParameterValues.ClientSecret]
         let APIPath = Constants.APIPaths.Venue + venueID + Constants.APIPaths.Tips
@@ -311,6 +312,9 @@ class FoursquareAPI {
                 return
             }
             for item in items {
+                guard let id = item[Constants.ResponseKeys.reviewID] else {
+                    continue
+                }
                 guard let text = item[Constants.ResponseKeys.text] else {
                     continue
                 }
@@ -328,13 +332,15 @@ class FoursquareAPI {
                 }
                 let name = (firstname as! String) + " " + (lastname as! String)
                 let url = (prefix as! String) + Constants.ResponseKeys.userPhotoWidthxHeight + (suffix as! String)
+                reviewIDs.append(id as! String)
                 venueReviews.append(text as! String)
-                userNames.append(name)
-                userPhotoURLs.append(url)
+                reviewers.append(name)
+                reviewerPhotoURLs.append(url)
             }
+            Constants.Cafe.reviewIDs = reviewIDs
             Constants.Cafe.reviews = venueReviews
-            Constants.Cafe.reviewerNames = userNames
-            Constants.Cafe.reviewerPhotoURLs = userPhotoURLs
+            Constants.Cafe.reviewerNames = reviewers
+            Constants.Cafe.reviewerPhotoURLs = reviewerPhotoURLs
             completionHandler(true, nil)
         }
         task.resume()

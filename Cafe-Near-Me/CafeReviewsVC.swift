@@ -18,7 +18,7 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var review: UITextView!
     @IBOutlet weak var reviewDetailView: UIView!
     
-    var reviewerPhotos: [Data] = []
+    var reviewerPhotos: [String: Data] = [:]
     var loadedReviews: Bool = false
     let managedContext: NSManagedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     let fetchRequest: NSFetchRequest<Review> = Review.fetchRequest()
@@ -95,10 +95,11 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReviewCell")!
+        let reviewID = Constants.Cafe.reviewIDs[indexPath.row]
         if loadedReviews {
             let reviewerName = Constants.Cafe.reviewerNames[indexPath.row]
             let review = Constants.Cafe.reviews[indexPath.row]
-            cell.imageView?.image = UIImage(data: reviewerPhotos[indexPath.row])
+            cell.imageView?.image = UIImage(data: reviewerPhotos[reviewID]!)
             cell.textLabel?.text = reviewerName
             cell.detailTextLabel?.text = review
             return cell
@@ -119,10 +120,11 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if loadingReviewsFlag {
+            let reviewID = Constants.Cafe.reviewIDs[indexPath.row]
             let name = Constants.Cafe.reviewerNames[indexPath.row]
             let content = Constants.Cafe.reviews[indexPath.row]
-            let userImageData = reviewerPhotos[indexPath.row]
-            reviewerImage.image = UIImage(data: userImageData)
+            let userImageData = reviewerPhotos[reviewID]
+            reviewerImage.image = UIImage(data: userImageData!)
             reviewerName.text = name
             review.text = content
         }
@@ -139,6 +141,7 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
     
     // MARK: Function configureCell(cell: UITableViewCell, atIndexPath indexPath: IndexPath)-> UITableViewCell
     func configureCell(cell: UITableViewCell, atIndexPath indexPath: IndexPath)-> UITableViewCell {
+        let reviewID = Constants.Cafe.reviewIDs[indexPath.row]
         let review = Constants.Cafe.reviews[indexPath.row]
         let reviewerName = Constants.Cafe.reviewerNames[indexPath.row]
         let reviewerImagePath = Constants.Cafe.reviewerPhotoURLs[indexPath.row]
@@ -149,11 +152,9 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
                     cell.imageView?.image = UIImage(data: imageData!)
                     cell.textLabel?.text = reviewerName
                     cell.detailTextLabel?.text = review
-                }
-                self.reviewerPhotos.append(imageData!)
-                if self.reviewerPhotos.count == totalNumReviewerPhotos {
-                    Constants.Cafe.reviewerPhotos = self.reviewerPhotos
-                    performUIUpdateOnMain {
+                    self.reviewerPhotos[reviewID] = imageData
+                    if self.reviewerPhotos.count == totalNumReviewerPhotos {
+                        Constants.Cafe.reviewerPhoto = self.reviewerPhotos
                         self.completedLoadingPhotos()
                     }
                 }
