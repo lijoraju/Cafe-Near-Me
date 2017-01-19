@@ -79,6 +79,9 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
             tableView.reloadData()
             reviewDetailView.isHidden = false
             let firstReview = bookmarkedReviews.first!
+            let photo = firstReview.photo!
+            let photoData = photo.photoData
+            reviewerImage.image = UIImage(data: photoData as! Data)
             reviewerName.text = firstReview.reviewer
             review.text = firstReview.review
         }
@@ -95,8 +98,8 @@ class CafeReviewsViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReviewCell")!
-        let reviewID = Constants.Cafe.reviewIDs[indexPath.row]
         if loadedReviews {
+            let reviewID = Constants.Cafe.reviewIDs[indexPath.row]
             let reviewerName = Constants.Cafe.reviewerNames[indexPath.row]
             let review = Constants.Cafe.reviews[indexPath.row]
             cell.imageView?.image = UIImage(data: reviewerPhotos[reviewID]!)
