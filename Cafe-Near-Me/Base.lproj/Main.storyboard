@@ -116,7 +116,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="OOa-3s-PAJ" detailTextLabel="ruS-fu-8XZ" style="IBUITableViewCellStyleSubtitle" id="pcY-Tq-vGr">
-                                        <rect key="frame" x="0.0" y="28" width="1000" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pcY-Tq-vGr" id="ohb-BL-eWY">
                                             <frame key="frameInset" width="375" height="43"/>
@@ -203,12 +203,12 @@
             </objects>
             <point key="canvasLocation" x="3559" y="124"/>
         </scene>
-        <!--Reviews-->
+        <!--Navigation Controller-->
         <scene sceneID="JAS-kR-dU0">
             <objects>
                 <navigationController id="J0g-Yr-tR0" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Reviews" id="Ftx-Rl-43Z">
-                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-20"/>
+                    <tabBarItem key="tabBarItem" title="" image="reviewIcon" id="Ftx-Rl-43Z">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="WJh-bB-3wd">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -346,7 +346,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ReviewCell" textLabel="Hry-zj-bSt" detailTextLabel="YSX-0s-dIT" imageView="mpP-w4-HNR" style="IBUITableViewCellStyleSubtitle" id="Ary-wP-uab">
-                                        <rect key="frame" x="0.0" y="28" width="1000" height="48"/>
+                                        <rect key="frame" x="0.0" y="28" width="375" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ary-wP-uab" id="rHh-TP-sqS">
                                             <frame key="frameInset" width="375" height="47"/>
@@ -484,12 +484,12 @@
             </objects>
             <point key="canvasLocation" x="1852" y="123"/>
         </scene>
-        <!--Map-->
+        <!--Navigation Controller-->
         <scene sceneID="GUb-yq-1KP">
             <objects>
                 <navigationController id="Pfx-5l-KO7" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Map" id="kkb-E5-Au7">
-                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-20"/>
+                    <tabBarItem key="tabBarItem" title="" image="mapIcon" id="kkb-E5-Au7">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="CYn-6t-ePw">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -656,12 +656,12 @@
             </objects>
             <point key="canvasLocation" x="5316" y="1244.527736131934"/>
         </scene>
-        <!--Photos-->
+        <!--Navigation Controller-->
         <scene sceneID="f4i-lS-NF2">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YGC-ka-7jk" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Photos" id="yhl-0J-uXc">
-                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-20"/>
+                    <tabBarItem key="tabBarItem" title="" image="photoIcon" id="yhl-0J-uXc">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ABv-uA-QHF">
@@ -677,12 +677,12 @@
             </objects>
             <point key="canvasLocation" x="4494" y="-1125"/>
         </scene>
-        <!--Cafe-->
+        <!--Navigation Controller-->
         <scene sceneID="MHO-p1-y9y">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7RI-8c-kOc" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Cafe" id="L33-VC-AfO">
-                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-20"/>
+                    <tabBarItem key="tabBarItem" title="" image="detailsIcon" id="L33-VC-AfO">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="XIF-0d-eSl">
@@ -704,6 +704,10 @@
         <image name="ReviewerPlaceholderImage" width="80" height="80"/>
         <image name="SearchBackgroundImage" width="1600" height="1067"/>
         <image name="SearchResultsBackgroundImage" width="880" height="587"/>
+        <image name="detailsIcon" width="30" height="30"/>
+        <image name="mapIcon" width="30" height="30"/>
+        <image name="photoIcon" width="30" height="30"/>
+        <image name="reviewIcon" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="eLN-wY-Qli"/>
