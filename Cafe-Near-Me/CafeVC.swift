@@ -183,7 +183,7 @@ class CafeViewController: UIViewController {
                 cafe.latitude = Constants.SearchedCafes.Latitudes[selectedCafe]
                 cafe.longitude = Constants.SearchedCafes.Longitudes[selectedCafe]
                 cafe.rating = Constants.Cafe.rating
-                cafe.nearLocation = Constants.searchingLocation
+                cafe.nearLocation = Constants.searchingLocation.capitalized
                 coreData.save(managedObjectContext: managedContext) { sucess in
                     if sucess {
                         self.addCafePhotosToBookmarks(forCafe: cafe)
