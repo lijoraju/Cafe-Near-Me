@@ -1,5 +1,6 @@
 # Cafe-Near-Me
 Cafe Near Me is an iOS app that allows people to search cafes for any location in the world. The app shows a table list of cafes for a search location with their addresses. A user can select the cafe from this table list to view more about that cafe, the app shows photos, reviews and location on the map for this cafe. If the user wishes to bookmark the cafe for future the app will save the cafe photo, reviews and location. 
+
 CONTENTS OF THIS FILE
 ---------------------
 
